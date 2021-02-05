@@ -1,0 +1,15 @@
+{
+	"name": "sellpoint",
+	"version": "1.0.0",
+	"description": "tdt4140 group project - group 58",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "concurrently \"cd server && npm start\" \"cd client && npm start\""
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"concurrently": "^5.3.0"
+	}
+}
