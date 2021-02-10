@@ -4,10 +4,6 @@ import express from 'express';
 
 const router = express.Router();
 
-// routes go brrrrr!
-//router.get("/example1", example1);
-//router.get("/example1/example2", example2);
-
 // Endpoints
 router.use("/post", postController); 
 
