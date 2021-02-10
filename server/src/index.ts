@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 // Configuring json response
 app.set("json spaces", 2);
 
-app.use("/", routes);
+app.use("/api", routes);
 
 /*
 // create the connection to database
