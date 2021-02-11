@@ -6,7 +6,7 @@ export class Post implements Deserializable, Serializable {
     private title: string;
     private description: string;
     private timestamp: Date;
-    private user: string;
+    private owner: string;
     private imageUrl: string;
 
     constructor(input: any = null) {
@@ -15,14 +15,14 @@ export class Post implements Deserializable, Serializable {
             this.title = input.title;
             this.description = input.description;
             this.timestamp = new Date(input.timestamp);
-            this.user = input.user;
+            this.owner = input.owner;
             this.imageUrl = input.imageUrl;
         } else {
             this.id = 0;
             this.title = "";
             this.description = "";
             this.timestamp = new Date();
-            this.user = "";
+            this.owner = "";
             this.imageUrl = "";
         }
     }
@@ -41,7 +41,7 @@ export class Post implements Deserializable, Serializable {
             title: this.title,
             description: this.description,
             timestamp: this.timestamp.valueOf(),
-            user: this.user,
+            owner: this.owner,
             imageUrl: this.imageUrl
         };
     }
@@ -78,12 +78,12 @@ export class Post implements Deserializable, Serializable {
         this.timestamp = timestamp;
     }
 
-    get getUser () {
-        return this.user;
+    get getOwner () {
+        return this.owner;
     }
 
-    set setUser (user: string) {
-        this.user = user;
+    set setOwner (owner: string) {
+        this.owner = owner;
     }
 
     get getImageUrl () {

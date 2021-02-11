@@ -11,6 +11,7 @@ export class PostFormComponent implements OnInit {
 
   serializedPost: Object = {};
   deserializedPost: Post = new Post();
+  displayPost: Post = new Post();
   
   constructor(private postService: PostService) { }
 
@@ -27,9 +28,11 @@ export class PostFormComponent implements OnInit {
     this.serializedPost = post.serialize();
     this.deserializedPost.deserialize(post.serialize());
 
-    this.postService.getPost("0").then((gettedPost: Post) => {
-        console.log(gettedPost);
-      }
-    );
+    this.postService.getPost(0)
+    .then((gettedPost: Post) => {
+      this.displayPost = gettedPost;
+    }).catch((err: any) => {
+      console.log(err);
+    });
   }
 }

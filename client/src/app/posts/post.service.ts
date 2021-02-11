@@ -11,13 +11,16 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  getPost(id: string): Promise<Post>{
+  getPost(id: number): Promise<Post> {
     return new Promise<Post>(
       (resolve, reject) => {
         this.get_post(id).subscribe((data: any) => {
-          try{
+          try {
             const post = new Post();
-            post.deserialize(data);
+            post.deserialize(data.data[0]);
+            if (post.getId == 0) {
+              reject("Could not find with Post with id: " + id);
+            }
             resolve(post);
           } catch (err: any) {
             reject(err);
@@ -27,15 +30,15 @@ export class PostService {
     );
   }
 
-  get_post(id: string) {
+  get_post(id: number) {
     return this.http.get(this.postUrl + id);
   }
 
-  addPost(post: Post): Promise<boolean>{
+  addPost(post: Post): Promise<boolean> {
     return new Promise<boolean>(
       (resolve, reject) => {
         this.add_post(post).subscribe((data: any) => {
-          try{
+          try {
             resolve(data.status);
           } catch (err: any) {
             reject(err);
