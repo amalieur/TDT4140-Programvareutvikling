@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostFormComponent } from './post-form.component';
@@ -8,7 +9,8 @@ describe('PostFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostFormComponent ]
+      declarations: [ PostFormComponent ],
+      imports: [ HttpClientModule ]
     })
     .compileComponents();
   });
@@ -27,7 +29,7 @@ describe('PostFormComponent', () => {
     expect(component.serializedPost == "").toBeFalse();
 
     try{
-      const obj = JSON.parse(component.serializedPost);
+      JSON.stringify(component.serializedPost);
     }catch{
       fail("Could not serialize");
     }
