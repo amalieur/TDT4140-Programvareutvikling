@@ -21,14 +21,14 @@ export class PostFormComponent implements OnInit {
       title: "TestAnnonse",
       description: "Beskrivelse",
       timestamp: 1612952332000,
-      user: "Admin",
+      owner: "Admin",
       imageUrl: "url"
     });
 
     this.serializedPost = post.serialize();
     this.deserializedPost.deserialize(post.serialize());
 
-    this.postService.getPost(0)
+    this.postService.getPost(1)
     .then((gettedPost: Post) => {
       this.displayPost = gettedPost;
     }).catch((err: any) => {

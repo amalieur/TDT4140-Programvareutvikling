@@ -30,7 +30,7 @@ export class PostService {
     );
   }
 
-  get_post(id: number) {
+  private get_post(id: number) {
     return this.http.get(this.postUrl + id);
   }
 
@@ -48,7 +48,7 @@ export class PostService {
     );
   }
 
-  add_post(post: Post) {
+  private add_post(post: Post) {
     return this.http.post(this.postUrl, post.serialize());
   }
 }

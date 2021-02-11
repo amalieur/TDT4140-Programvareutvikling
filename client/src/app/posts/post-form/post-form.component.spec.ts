@@ -36,6 +36,6 @@ describe('PostFormComponent', () => {
   })
 
   it('should deserialize Post', () => {
-    expect(component.deserializedPost.getUser).toEqual("Admin");
+    expect(component.deserializedPost.getOwner).toEqual("Admin");
   })
 });
