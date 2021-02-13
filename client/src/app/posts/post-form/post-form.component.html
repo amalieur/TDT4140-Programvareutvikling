@@ -1,8 +1,20 @@
-<p>Post from DB:</p>
+<h3>Lag annonse</h3>
 
-<p>Title: {{displayPost.getTitle}}</p>
-<p>Description: {{displayPost.getDescription}}</p>
-<p>Timestamp: {{displayPost.getTimestamp}}</p>
-<p>Owner: {{displayPost.getOwner}}</p>
+<label for="title">Title</label>
+<input id="title" [(ngModel)]="title">
 
-<app-text-input></app-text-input>
+<label for="description">Description</label>
+
+<input id="description" [(ngModel)]="description">
+
+<label for="price">Pris</label>
+<input id="price" [(ngModel)]="price">
+
+<label for="category">Kategori</label>
+<select id="category" [(ngModel)]="categoryid">
+    <option value="1">Antikviteter og Kunst</option>
+    <option value="2">Dyr og Utstyr</option>
+    <option value="3">Elektronikk og Hvitevarer</option>
+</select>
+
+<button (click)="publishPost()">Publiser</button>

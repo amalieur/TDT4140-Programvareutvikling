@@ -9,30 +9,33 @@ import { PostService } from '../post.service';
 })
 export class PostFormComponent implements OnInit {
 
-  serializedPost: Object = {};
-  deserializedPost: Post = new Post();
-  displayPost: Post = new Post();
-  
+  title: string = "";
+  description: string = "";
+  price: number = 0;
+  categoryid: number;
+
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    let post = new Post({
-      id: 0,
-      title: "TestAnnonse",
-      description: "Beskrivelse",
-      timestamp: 1612952332000,
-      owner: "Admin",
-      imageUrl: "url"
+
+  }
+
+  publishPost() {
+    let newPost = new Post({
+      title: this.title,
+      description: this.description,
+      timestamp: new Date(),
+      owner: "admin",
+      imageUrl: "",
+      price: this.price,
+      categoryid: this.categoryid
     });
-
-    this.serializedPost = post.serialize();
-    this.deserializedPost.deserialize(post.serialize());
-
-    this.postService.getPost(1)
-    .then((gettedPost: Post) => {
-      this.displayPost = gettedPost;
-    }).catch((err: any) => {
-      console.log(err);
+    console.log(newPost);
+    this.postService.addPost(newPost).then(status => {
+      // Flytte til annonsevisning
+      console.log("Post was added: " + status);
+    }).catch(error => {
+      console.log("Error adding post: " + error);
     });
   }
 }

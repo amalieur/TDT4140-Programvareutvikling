@@ -19,12 +19,16 @@ export class PostService {
             const post = new Post();
             post.deserialize(data.data[0]);
             if (post.getId == 0) {
-              reject("Could not find with Post with id: " + id);
+              reject("Could not find Post with id: " + id);
             }
             resolve(post);
           } catch (err: any) {
             reject(err);
           }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
         });
       }
     );
@@ -34,15 +38,20 @@ export class PostService {
     return this.http.get(this.postUrl + id);
   }
 
-  addPost(post: Post): Promise<boolean> {
-    return new Promise<boolean>(
+  addPost(post: Post): Promise<string> {
+    return new Promise<string>(
       (resolve, reject) => {
         this.add_post(post).subscribe((data: any) => {
           try {
+            console.log(data);
             resolve(data.status);
           } catch (err: any) {
             reject(err);
           }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
         });
       }
     );
