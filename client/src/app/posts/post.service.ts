@@ -11,6 +11,9 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Get post from database by id.
+   */
   getPost(id: number): Promise<Post> {
     return new Promise<Post>(
       (resolve, reject) => {
@@ -20,6 +23,7 @@ export class PostService {
             post.deserialize(data.data[0]);
             if (post.getId == 0) {
               reject("Could not find Post with id: " + id);
+              return;
             }
             resolve(post);
           } catch (err: any) {
@@ -38,12 +42,14 @@ export class PostService {
     return this.http.get(this.postUrl + id);
   }
 
+  /**
+   * Adds post to database.
+   */
   addPost(post: Post): Promise<string> {
     return new Promise<string>(
       (resolve, reject) => {
         this.add_post(post).subscribe((data: any) => {
           try {
-            console.log(data);
             resolve(data.status);
           } catch (err: any) {
             reject(err);
