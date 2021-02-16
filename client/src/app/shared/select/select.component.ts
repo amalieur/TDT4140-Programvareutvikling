@@ -1,23 +1,23 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-text-input',
-  templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.scss']
+  selector: 'app-select',
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.scss']
 })
-export class TextInputComponent {
-  
+export class SelectComponent {
+
   @Input()
   label: string = "";
 
   @Input()
-  inputModel: string;
+  inputModel: any;
 
   @Input()
   placeholder: string = "";
 
   @Output()
-  inputModelChange = new EventEmitter<string>();
+  inputModelChange = new EventEmitter<any>();
 
   @Output()
   change = new EventEmitter();

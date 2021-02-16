@@ -1,22 +1,18 @@
 <h3>Lag annonse</h3>
 
-<label for="title">Tittel</label>
-<input id="title" [(ngModel)]="title" (blur)="checkForm()">
+<app-text-input [(inputModel)]="title" label="Tittel" (blur)="checkForm()"></app-text-input>
 
-<label for="description">Beskrivelse</label>
-<input id="description" [(ngModel)]="description" (blur)="checkForm()">
+<app-text-input [(inputModel)]="description" label="Beskrivelse" (blur)="checkForm()"></app-text-input>
 
-<label for="price">Pris</label>
-<input type="number" id="price" [(ngModel)]="price" (blur)="checkForm()">
+<app-number-input [(inputModel)]="price" label="Pris" (blur)="checkForm()"></app-number-input>
 
-<label for="category">Kategori</label>
-<select id="category" [(ngModel)]="categoryid" (change)="checkForm()" >
+<app-select [(inputModel)]="categoryid" (change)="checkForm()" label="Kategori">
     <option value="0" selected>Velg kategori</option>
     <option value="1">Antikviteter og Kunst</option>
     <option value="2">Dyr og Utstyr</option>
     <option value="3">Elektronikk og Hvitevarer</option>
-</select>
+</app-select>
 
 <p>{{statusMessage}}</p>
 
-<button (click)="publishPost()">Publiser</button>
+<app-button (click)="publishPost()" text="Publiser"></app-button>
