@@ -1,32 +1,28 @@
 import { Response, Request } from "express";
-import query from '../services/db_query';
+import query from '../../services/db_query';
 import express from 'express';
-const router = express.Router();
+import IPost from '../../models/post';
+import Category from '../../models/category';
 
-interface IPost {
-	title: string;
-	description: string;
-	timestamp: number;
-	owner: string;
-	categoryid: number;
-	imageUrl: string;
-}
+const router = express.Router();
+const category = new Category();
+
 /* ============================= CREATE ============================= */
 // Create posts `/api/post/`
 //'{"title":"test3","description":"test3","timestamp":123123,"owner":"test3","category":"test3","imageUrl":"test3"}'
 router.route('/').post(async (request: Request, response: Response) => {
-	const {title, description, timestamp, owner, categoryid, imageUrl} = request.body;
+	const {title, description, timestamp, owner, category, imageUrl} = request.body;
 	try {
 		const post: IPost = {
 			"title": title,
 			"description": description,
 			"timestamp": timestamp,
 			"owner": owner,
-			"categoryid": categoryid,
+			"category": category,
 			"imageUrl": imageUrl
 		};
 		if (Object.values(post).filter(p => p == undefined).length > 0) return response.status(500).send("Error");
-		const input = (`INSERT INTO post(title, description, timestamp, owner, categoryid, imageUrl) VALUES (?,?,?,?,?,?)`)
+		const input = (`INSERT INTO post(title, description, timestamp, owner, category, imageUrl) VALUES (?,?,?,?,?,?)`)
 		return response.status(200).json(
 			await query(input,Object.values(post))
 		);
@@ -39,7 +35,11 @@ router.route('/').post(async (request: Request, response: Response) => {
 // Get all posts `/api/post/`
 router.route('/').get(async (_: Request, response: Response) => {
 	try {
-		response.status(200).json(await query("SELECT * FROM post;",""));
+		//response.status(200).json(await query("SELECT * FROM post;",""));
+		const input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.navn, p.imageUrl 
+		FROM post as p
+		INNER JOIN category ON category.categoryid = p.categoryid;`
+		response.status(200).json(await query(input,""));
 	} catch (error) {
 		response.status(400).send("Bad Request");
 	}
@@ -49,7 +49,11 @@ router.route('/').get(async (_: Request, response: Response) => {
 router.route('/:id').get(async (request: Request, response: Response) => {
 	const postId = request.params.id;
 	try {
-		response.status(200).json(await query("SELECT * FROM post WHERE id=?;",[postId]));
+		//response.status(200).json(await query("SELECT * FROM post WHERE id=?;",[postId]));
+		const input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.navn, p.imageUrl 
+		FROM post as p
+		INNER JOIN category ON category.categoryid = p.categoryid WHERE p.id=?;`
+		response.status(200).json(await query(input,[postId]));
 	} catch (error) {
 		response.status(400).send("Bad Request");
 	}
