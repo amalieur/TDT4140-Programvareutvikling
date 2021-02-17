@@ -11,7 +11,7 @@ const category = new Category();
 // - hente et bestemt kategori (get)
 // SELECT * FROM category WHERE categoryid = #num;
 // - remove specific cateogry (post)
-// INSERT INTO `jonnynl_tdt4140`.`category` (`categoryid`, `navn`) VALUES ('4', 'ad');
+// INSERT INTO `jonnynl_tdt4140`.`category` (`categoryid`, `name`) VALUES ('4', 'ad');
 // - add category (post)
 // DELETE FROM `jonnynl_tdt4140`.`category` WHERE (`categoryid` = '3');
 
@@ -20,7 +20,7 @@ const category = new Category();
 router.route('/').post(async (request: Request, response: Response) => {
 	const {category} = request.body;
 	try {
-		const input = (` INSERT INTO category(navn) VALUES (?);`)
+		const input = (` INSERT INTO category(name) VALUES (?);`)
 		return response.status(200).json(
             await query(input,[category])
         );

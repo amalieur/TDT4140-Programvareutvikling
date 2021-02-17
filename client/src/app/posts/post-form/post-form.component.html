@@ -7,10 +7,8 @@
 <app-number-input [(inputModel)]="price" label="Pris" (blur)="checkForm()"></app-number-input>
 
 <app-select [(inputModel)]="categoryid" (change)="checkForm()" label="Kategori">
-    <option value="0" selected>Velg kategori</option>
-    <option value="1">Antikviteter og Kunst</option>
-    <option value="2">Dyr og Utstyr</option>
-    <option value="3">Elektronikk og Hvitevarer</option>
+    <option value="0" selected hidden>Velg kategori</option>
+    <option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
 </app-select>
 
 <p>{{statusMessage}}</p>

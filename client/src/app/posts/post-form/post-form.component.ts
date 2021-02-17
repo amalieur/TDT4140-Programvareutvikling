@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Category } from 'src/app/models/category.model';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from '../post.service';
 
@@ -17,9 +18,17 @@ export class PostFormComponent implements OnInit {
 
   statusMessage: string = "";
 
+  categories: Array<Category>;
+
   constructor(private postService: PostService, private router: Router) { }
 
   ngOnInit() {
+    // Gets all categories and displays them in dropdown
+    this.postService.getAllCategories().then(categories => {
+      this.categories = categories;
+    }).catch (error => {
+      console.log("Error adding catrgories:" + error);
+    });
   }
 
   /**
@@ -66,6 +75,7 @@ export class PostFormComponent implements OnInit {
         categoryid: this.categoryid
       });
 
+      // Adds post to database and changes page afterwards
       this.postService.addPost(newPost).then(status => {
         console.log("Post was added: " + status);
         this.router.navigateByUrl("/");

@@ -13,14 +13,7 @@ export class Post implements Deserializable, Serializable {
 
     constructor(input: any = null) {
         if (input) {
-            this.id = input.id;
-            this.title = input.title;
-            this.description = input.description;
-            this.timestamp = input.timestamp;
-            this.owner = input.owner;
-            this.imageUrl = input.imageUrl;
-            this.price = input.price;
-            this.categoryid = input.categoryid;
+            this.deserialize(input);
         } else {
             this.id = 0;
             this.title = null;
