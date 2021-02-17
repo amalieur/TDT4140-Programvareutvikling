@@ -11,7 +11,9 @@ describe('Test categoryController', () => {
     });
 
     it('Request /api/category should return request of 200!', async () => {
-        const result = await request(app).get('/api/category').send();
+        const result = await request(app)
+        .get('/api/category')
+        .send()
 
         expect(result.status).toBe(200);
     });
@@ -20,6 +22,6 @@ describe('Test categoryController', () => {
         const result = await request(app).get('/api/category/1').send();
 
         expect(result.status).toBe(200);
-        expect(result.body.data[0]?.navn).toBe('Antikviteter og Kunst');
+        expect(result.body.data[0]?.name).toBe('Antikviteter og Kunst');
     });
 });

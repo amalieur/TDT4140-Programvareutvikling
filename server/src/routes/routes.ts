@@ -1,4 +1,4 @@
-import postController from '../controllers/postcontroller';
+import postController from '../controllers/postController';
 import categoryController from '../controllers/categoryController';
 import userController from '../controllers/userController';
 import express from 'express';

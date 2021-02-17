@@ -20,7 +20,7 @@ const category = new Category();
 router.route('/').post(async (request: Request, response: Response) => {
 	const {category} = request.body;
 	try {
-		const input = (` INSERT INTO category(navn) VALUES (?);`)
+		const input = (` INSERT INTO category(name) VALUES (?);`)
 		return response.status(200).json(
             await query(input,[category])
         );
