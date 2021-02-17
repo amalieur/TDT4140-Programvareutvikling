@@ -11,6 +11,9 @@
     <option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
 </app-select>
 
+<app-text-input [(inputModel)]="imageUrl" label="Bilde URL" (blur)="showImage(imageUrl)"></app-text-input>
+<img [src]="displayImageUrl" (error)="showImage('https://i.stack.imgur.com/y9DpT.jpg')">
+
 <p>{{statusMessage}}</p>
 
 <app-button (click)="publishPost()" text="Publiser"></app-button>

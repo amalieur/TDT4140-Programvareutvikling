@@ -15,6 +15,8 @@ export class PostFormComponent implements OnInit {
   description: string = "";
   price: number = 0;
   categoryid: number = 0;
+  imageUrl: string;
+  displayImageUrl: string;
 
   statusMessage: string = "";
 
@@ -70,7 +72,7 @@ export class PostFormComponent implements OnInit {
         description: this.description,
         timestamp: new Date(),
         owner: "admin",
-        imageUrl: "",
+        imageUrl: this.imageUrl,
         price: this.price,
         categoryid: this.categoryid
       });
@@ -86,9 +88,16 @@ export class PostFormComponent implements OnInit {
   }
 
   /**
+   * Sets the image source to be the url.
+   */
+  showImage(url) {
+    this.displayImageUrl = url;
+  }
+
+  /**
    * Sets a status message.
    */
-  setStatusMessage(message: string){
+  setStatusMessage(message: string) {
     this.statusMessage = message;
   }
 }

@@ -31,7 +31,6 @@ describe('PostFormComponent', () => {
         })
     );
 
-
     await TestBed.configureTestingModule({
       declarations: [ PostFormComponent ],
       imports: [ HttpClientTestingModule, RouterTestingModule, FormsModule, SharedModule ],
@@ -103,5 +102,11 @@ describe('PostFormComponent', () => {
 
     expect(mockPostService.addPost).toHaveBeenCalled();
     expect(router.url).toBe('/');
+  });
+
+  it('should show image', () => {
+    // Tests that image is updated with new URL
+    component.showImage("test");
+    expect(component.displayImageUrl).toBe("test");
   });
 });
