@@ -14,6 +14,41 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
   /**
+   * Get all posts from database.
+   */
+  getAllPosts(): Promise<Array<Post>> {
+    return new Promise<Array<Post>>(
+      (resolve, reject) => {
+        this.get_all_posts().subscribe((data: any) => {
+          try {
+            let outputPosts = [];
+            for (let post of data.data) {
+              outputPosts.push(new Post(post));
+
+              if (post.getId == 0) {
+                reject("Could not deserialize Post");
+                return;
+              }
+            }
+
+            resolve(outputPosts);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_all_posts() {
+    return this.http.get(this.postUrl);
+  }
+
+  /**
    * Get post from database by id.
    */
   getPost(id: number): Promise<Post> {
