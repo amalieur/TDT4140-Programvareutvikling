@@ -22,6 +22,8 @@ export class PostDetailsComponent implements OnInit {
       // Gets Post with id from database
       this.postService.getPost(id).then(post => {
         this.post = post;
+      }).catch(error => {
+        console.log(error);
       });
     });
   }
