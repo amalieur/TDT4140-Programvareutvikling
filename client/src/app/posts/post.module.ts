@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { PostFormComponent } from './post-form/post-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 
 
 @NgModule({
   declarations: [
-    PostFormComponent
+    PostFormComponent,
+    PostDetailsComponent
   ],
   imports: [
     CommonModule,
