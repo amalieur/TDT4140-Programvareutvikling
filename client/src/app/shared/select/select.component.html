@@ -1,0 +1,13 @@
+<label>
+    {{label}}
+    
+    <select
+        [(ngModel)]="inputModel"
+        (ngModelChange)="inputModelChange.emit($event)"
+        (change)="change.emit($event)"
+        (focus)="focus.emit($event)"
+        (blur)="blur.emit($event)">
+
+        <ng-content></ng-content>
+    </select>
+</label>

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostFormComponent } from './post-form/post-form.component';
+import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -9,7 +11,10 @@ import { PostFormComponent } from './post-form/post-form.component';
     PostFormComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
+    FormsModule
   ]
 })
+
 export class PostModule { }
