@@ -36,7 +36,7 @@ router.route('/').post(async (request: Request, response: Response) => {
 router.route('/').get(async (_: Request, response: Response) => {
 	try {
 		//response.status(200).json(await query("SELECT * FROM post;",""));
-		const input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.navn, p.imageUrl 
+		const input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.name, p.imageUrl 
 		FROM post as p
 		INNER JOIN category ON category.categoryid = p.categoryid;`
 		response.status(200).json(await query(input,""));
@@ -50,7 +50,7 @@ router.route('/:id').get(async (request: Request, response: Response) => {
 	const postId = request.params.id;
 	try {
 		//response.status(200).json(await query("SELECT * FROM post WHERE id=?;",[postId]));
-		const input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.navn, p.imageUrl 
+		const input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.name, p.imageUrl 
 		FROM post as p
 		INNER JOIN category ON category.categoryid = p.categoryid WHERE p.id=?;`
 		response.status(200).json(await query(input,[postId]));

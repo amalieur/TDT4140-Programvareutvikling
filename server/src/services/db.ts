@@ -9,5 +9,5 @@ async function query(sql:any, params:any) {
 }
 
 export default {
-	query
+	query,
 }

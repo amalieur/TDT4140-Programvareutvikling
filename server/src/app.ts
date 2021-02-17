@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import routes from "./routes/routes";
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import mysql from 'mysql2';
 // Boot express
 const app: Application = express();
 
