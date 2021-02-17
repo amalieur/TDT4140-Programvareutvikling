@@ -41,13 +41,11 @@ router.route("/").post(async (request: Request, response: Response) => {
 // Get all posts `/api/post/?categoryid=`
 router.route("/").get(async (request: Request, response: Response) => {
   const { categoryid } = request.query as { [key: string]: string };
-  console.log(categoryid);
   try {
     let input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.name, p.imageUrl 
 		FROM post as p
 		INNER JOIN category ON category.categoryid = p.categoryid`;
     if (categoryid) input += ` WHERE p.categoryid=${categoryid}`;
-    console.log(input);
     response.status(200).json(await query(input, ""));
   } catch (error) {
     response.status(400).send("Bad Request");
