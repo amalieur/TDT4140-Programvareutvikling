@@ -176,5 +176,37 @@ describe('PostService', () => {
       req.error(new ErrorEvent("400"));
     });
   });
+
+  describe('deletePost', () => {
+    it('should delete post', () => {
+
+      // Deletes post with id = 2
+      service.deletePost(2)
+      .then(data => {})
+      .catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/2");
+      expect(req.request.method).toBe("DELETE");
+      req.flush({
+        data: []
+      });
+    });
+
+    it('should reject on http error', () => {
+
+      // Deletes post with id = 5, should catch HTTP error
+      service.deletePost(5).then(data => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/5");
+      expect(req.request.method).toBe("DELETE");
+      req.error(new ErrorEvent("400"));
+    });
+  });
 });
 

@@ -16,7 +16,7 @@ router.route("/").post(async (request: Request, response: Response) => {
     description,
     timestamp,
     owner,
-    category,
+    categoryid,
     imageUrl,
   } = request.body;
   try {
@@ -25,12 +25,12 @@ router.route("/").post(async (request: Request, response: Response) => {
       description: description,
       timestamp: timestamp,
       owner: owner,
-      category: category,
+      categoryid: categoryid,
       imageUrl: imageUrl,
     };
     if (Object.values(post).filter((p) => p == undefined).length > 0)
       return response.status(500).send("Error");
-    const input = `INSERT INTO post(title, description, timestamp, owner, category, imageUrl) VALUES (?,?,?,?,?,?)`;
+    const input = `INSERT INTO post(title, description, timestamp, owner, categoryid, imageUrl) VALUES (?,?,?,?,?,?)`;
     return response.status(200).json(await query(input, Object.values(post)));
   } catch (error) {
     return response.status(400).send("Bad Request");
@@ -85,7 +85,7 @@ router.route("/:id").delete(async (request: Request, response: Response) => {
   try {
     response
       .status(200)
-      .json(await query("SELECT * FROM post WHERE id=?;", [postId]));
+      .json(await query("DELETE FROM post WHERE id=?;", [postId]));
   } catch (error) {
     response.status(400).send("Bad Request");
   }

@@ -138,4 +138,29 @@ export class PostService {
   private get_all_categories() {
     return this.http.get(this.categoryUrl);
   }
+
+  /**
+   * Delete post in database by id.
+   */
+  deletePost(id: number): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.delete_post(id).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private delete_post(id: number) {
+    return this.http.delete(this.postUrl + id);
+  }
 }
