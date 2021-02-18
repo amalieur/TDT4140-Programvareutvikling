@@ -25,7 +25,7 @@ router.route("/").post(async (request: Request, response: Response) => {
       description: description,
       timestamp: timestamp,
       owner: owner,
-      category: category,
+      categoryid: category,
       imageUrl: imageUrl,
     };
     if (Object.values(post).filter((p) => p == undefined).length > 0)
