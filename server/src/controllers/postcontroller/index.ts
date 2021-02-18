@@ -11,18 +11,18 @@ const category = new Category();
 // Create posts `/api/post/`
 //'{"title":"test3","description":"test3","timestamp":123123,"owner":"test3","category":"test3","imageUrl":"test3"}'
 router.route('/').post(async (request: Request, response: Response) => {
-	const {title, description, timestamp, owner, category, imageUrl} = request.body;
+	const {title, description, timestamp, owner, categoryid, imageUrl} = request.body;
 	try {
 		const post: IPost = {
 			"title": title,
 			"description": description,
 			"timestamp": timestamp,
 			"owner": owner,
-			"category": category,
+			"categoryid": categoryid,
 			"imageUrl": imageUrl
 		};
 		if (Object.values(post).filter(p => p == undefined).length > 0) return response.status(500).send("Error");
-		const input = (`INSERT INTO post(title, description, timestamp, owner, category, imageUrl) VALUES (?,?,?,?,?,?)`)
+		const input = (`INSERT INTO post(title, description, timestamp, owner, categoryid, imageUrl) VALUES (?,?,?,?,?,?)`)
 		return response.status(200).json(
 			await query(input,Object.values(post))
 		);

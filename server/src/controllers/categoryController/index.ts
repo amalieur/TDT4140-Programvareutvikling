@@ -11,7 +11,7 @@ const category = new Category();
 // - hente et bestemt kategori (get)
 // SELECT * FROM category WHERE categoryid = #num;
 // - remove specific cateogry (post)
-// INSERT INTO `jonnynl_tdt4140`.`category` (`categoryid`, `navn`) VALUES ('4', 'ad');
+// INSERT INTO `jonnynl_tdt4140`.`category` (`categoryid`, `name`) VALUES ('4', 'ad');
 // - add category (post)
 // DELETE FROM `jonnynl_tdt4140`.`category` WHERE (`categoryid` = '3');
 

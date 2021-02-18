@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Category } from 'src/app/models/category.model';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from '../post.service';
 
@@ -14,12 +15,22 @@ export class PostFormComponent implements OnInit {
   description: string = "";
   price: number = 0;
   categoryid: number = 0;
+  imageUrl: string;
+  displayImageUrl: string;
 
   statusMessage: string = "";
+
+  categories: Array<Category>;
 
   constructor(private postService: PostService, private router: Router) { }
 
   ngOnInit() {
+    // Gets all categories and displays them in dropdown
+    this.postService.getAllCategories().then(categories => {
+      this.categories = categories;
+    }).catch (error => {
+      console.log("Error adding catrgories:" + error);
+    });
   }
 
   /**
@@ -61,11 +72,12 @@ export class PostFormComponent implements OnInit {
         description: this.description,
         timestamp: new Date(),
         owner: "admin",
-        imageUrl: "",
+        imageUrl: this.imageUrl,
         price: this.price,
         categoryid: this.categoryid
       });
 
+      // Adds post to database and changes page afterwards
       this.postService.addPost(newPost).then(status => {
         console.log("Post was added: " + status);
         this.router.navigateByUrl("/");
@@ -76,9 +88,16 @@ export class PostFormComponent implements OnInit {
   }
 
   /**
+   * Sets the image source to be the url.
+   */
+  showImage(url) {
+    this.displayImageUrl = url;
+  }
+
+  /**
    * Sets a status message.
    */
-  setStatusMessage(message: string){
+  setStatusMessage(message: string) {
     this.statusMessage = message;
   }
 }

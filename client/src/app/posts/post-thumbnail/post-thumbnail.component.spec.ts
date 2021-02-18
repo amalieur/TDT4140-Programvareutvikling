@@ -1,22 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 
-import { SelectComponent } from './select.component';
+import { PostThumbnailComponent } from './post-thumbnail.component';
 
-describe('SelectComponent', () => {
-  let component: SelectComponent;
-  let fixture: ComponentFixture<SelectComponent>;
+describe('PostThumbnailComponent', () => {
+  let component: PostThumbnailComponent;
+  let fixture: ComponentFixture<PostThumbnailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SelectComponent ],
-      imports: [ FormsModule ]
+      declarations: [ PostThumbnailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectComponent);
+    fixture = TestBed.createComponent(PostThumbnailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
