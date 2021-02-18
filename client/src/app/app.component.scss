@@ -1,0 +1,25 @@
+div.navbar {
+	background-color: #666;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 70px;
+
+	a.logo {
+		padding: 10px;
+		background-color: white;
+		width: 200px;
+		margin-left: 10px;
+	}
+	nav {
+		a{
+			padding: 10px;
+			margin: 10px;
+			background-color: white;
+		}
+	}
+}
+
+div.wrapper {
+	padding: 10px;
+}

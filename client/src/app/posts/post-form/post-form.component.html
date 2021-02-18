@@ -1,19 +1,21 @@
-<h3>Lag annonse</h3>
+<div class="postform">
+	<h3>Lag annonse</h3>
 
-<app-text-input [(inputModel)]="title" label="Tittel" (blur)="checkForm()"></app-text-input>
+	<app-text-input [(inputModel)]="title" label="Tittel" (blur)="checkForm()"></app-text-input>
 
-<app-text-input [(inputModel)]="description" label="Beskrivelse" (blur)="checkForm()"></app-text-input>
+	<app-text-input [(inputModel)]="description" label="Beskrivelse" (blur)="checkForm()"></app-text-input>
 
-<app-number-input [(inputModel)]="price" label="Pris" (blur)="checkForm()"></app-number-input>
+	<app-number-input [(inputModel)]="price" label="Pris" (blur)="checkForm()"></app-number-input>
 
-<app-select [(inputModel)]="categoryid" (change)="checkForm()" label="Kategori">
-    <option value="0" selected hidden>Velg kategori</option>
-    <option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
-</app-select>
+	<app-select [(inputModel)]="categoryid" (change)="checkForm()" label="Kategori">
+			<option value="0" selected hidden>Velg kategori</option>
+			<option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
+	</app-select>
 
-<app-text-input [(inputModel)]="imageUrl" label="Bilde URL" (blur)="showImage(imageUrl)"></app-text-input>
-<img [src]="displayImageUrl" (error)="showImage('https://i.stack.imgur.com/y9DpT.jpg')">
+	<app-text-input [(inputModel)]="imageUrl" label="Bilde URL" (blur)="showImage(imageUrl)"></app-text-input>
+	<img [src]="displayImageUrl" (error)="showImage('https://i.stack.imgur.com/y9DpT.jpg')">
 
-<p>{{statusMessage}}</p>
+	<p>{{statusMessage}}</p>
 
-<app-button (click)="publishPost()" text="Publiser"></app-button>
+	<app-button (click)="publishPost()" text="Publiser"></app-button>
+</div>
