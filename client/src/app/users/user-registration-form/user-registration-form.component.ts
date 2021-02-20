@@ -54,7 +54,7 @@ export class UserRegistrationFormComponent implements OnInit {
 
       // Adds user to database and changes page afterwards
       this.userService.addUser(newUser).then(status => {
-        console.log("User was added: " + status);
+        console.log("User was added: " + JSON.stringify(status));
         this.router.navigateByUrl("/");
       }).catch(error => {
         console.log("Error adding user: " + error);

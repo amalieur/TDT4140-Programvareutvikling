@@ -1,1 +1,11 @@
-<p>user-login-form works!</p>
+<div class="loginForm">
+	<h3>Login</h3>
+
+	<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
+
+	<app-text-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-text-input>
+
+	<p>{{statusMessage}}</p>
+
+	<app-button (click)="loginUser()" text="Login"></app-button>
+</div>

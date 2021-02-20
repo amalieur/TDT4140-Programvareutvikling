@@ -2,15 +2,44 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 
+interface IUserLogin {
+  username: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   userUrl = "api/user/"
+  loginUrl = "api/user/login"
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Get request of user from database on login request.
+   */
+  login(body: IUserLogin): Promise<string> {
+    return new Promise<string>(
+      (resolve, reject) => {
+        this.login_user(body).subscribe((data: any) => {
+          try {
+            resolve(data.data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private login_user(body: IUserLogin) {
+    return this.http.post(this.loginUrl, body);
+  }
   /**
    * Adds user to database.
    */
@@ -19,7 +48,7 @@ export class UserService {
       (resolve, reject) => {
         this.add_user(user).subscribe((data: any) => {
           try {
-            resolve(data.status);
+            resolve(data.data);
           } catch (err: any) {
             reject(err);
           }
