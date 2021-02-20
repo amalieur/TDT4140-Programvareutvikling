@@ -2,7 +2,7 @@ import { Deserializable } from "./deserializable.model";
 import { Serializable } from "./serializable.model";
 
 export class User implements Deserializable, Serializable {
-    private userid: number;
+    private userId: number;
     private username: string;
     private email: string;
     private password: string;
@@ -12,7 +12,7 @@ export class User implements Deserializable, Serializable {
         if (input) {
             this.deserialize(input);
         } else {
-            this.userid = 0;
+            this.userId = 0;
             this.username = null;
             this.email = null;
             this.password = null;
@@ -22,12 +22,13 @@ export class User implements Deserializable, Serializable {
 
     deserialize(input: Object): this {
         Object.assign(this, input);
+        console.log(this);
         return this;
     }
 
     serialize(): Object {
         return {
-            userid: this.userid,
+            userId: this.userId,
             username: this.username,
             email: this.email,
             password: this.password,
@@ -36,11 +37,11 @@ export class User implements Deserializable, Serializable {
     }
 
     get getUserId() {
-        return this.userid;
+        return this.userId;
     }
 
-    set setUserId(userid: number) {
-        this.userid = userid;
+    set setUserId(userId: number) {
+        this.userId = userId;
     }
 
     get getUsername() {
