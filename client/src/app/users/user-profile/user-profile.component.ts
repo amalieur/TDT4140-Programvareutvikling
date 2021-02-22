@@ -16,17 +16,18 @@ export class UserProfileComponent implements OnInit {
   constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    if (!token) this.router.navigateByUrl("/");
-    // Get user data from JWT token
-    const user_data = JSON.parse(atob(token.split(".")[1])).data[0];
-    console.log(user_data)
-    // Gets all categories and displays them in dropdown
-    this.userService.getUser(user_data.userId).then(user => {
-      this.user = user;
-    }).catch (error => {
-      console.log("Error getting user: " + error);
-    });
+    // Check for token expiration
+    if (this.authService.checkTokenExpiration()) { // redirects to "/" if token is expired
+      const token = localStorage.getItem('token');
+      // Get user data from JWT token
+      const user_data = JSON.parse(atob(token.split(".")[1])).data[0];
+      // Gets all user information and displays them in the component
+      this.userService.getUser(user_data.userId).then(user => {
+        this.user = user;
+      }).catch (error => {
+        console.log("Error getting user: " + error);
+      });
+    }
+    
   }
-
 }
