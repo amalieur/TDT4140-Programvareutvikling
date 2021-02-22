@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/authentication/auth.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from '../user.service';
 
@@ -15,7 +16,7 @@ export class UserRegistrationFormComponent implements OnInit {
 
   statusMessage: string = "";
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -53,7 +54,7 @@ export class UserRegistrationFormComponent implements OnInit {
       });
 
       // Adds user to database and changes page afterwards
-      this.userService.addUser(newUser).then(status => {
+      this.authService.registerUser(newUser).then(status => {
         console.log("User was added: " + JSON.stringify(status));
         this.router.navigateByUrl("/");
       }).catch(error => {

@@ -17,6 +17,4 @@ export default {
 	JWT_KEY : env.JWT_KEY || "",
 	HOST: env.HOST || "localhost",
     PORT: env.HTTPPORT || 3000,
-    ACCESS_TOKEN_SECRET: env.ACCESS_TOKEN_SECRET,
-    REFRESH_TOKEN_SECRET: env.REFRESH_TOKEN_SECRET,
 };
