@@ -1,8 +1,10 @@
 import app from './app';
+import config from './config';
 
 // REST API config
-const port = 3000;
+const port = config.PORT;
 
 app.listen(port, () => {
-	console.log(`Listening on port ${port}!`)
+	const host = config.HOST;
+	console.log('[*] Server listening at http://%s:%s \n', host, port);
 });
