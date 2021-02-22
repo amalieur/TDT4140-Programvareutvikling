@@ -27,19 +27,30 @@ router.route('/').post(async (request: Request, response: Response) => {
 // Get all users `/api/user/`
 router.route('/').get(async (_: Request, response: Response) => {
 	try {
-		const input = "SELECT * FROM user;"
+		const input = "SELECT userId, username, email, create_time FROM user;"
 		response.status(200).json(await query(input,""));
 	} catch (error) {
 		response.status(400).send("Bad Request");
 	}
 });
 
-// Get post with id `/api/user/:id`
+// Get user with id `/api/user/:id`
 router.route('/:userId').get(async (request: Request, response: Response) => {
 	const userId = request.params.userId;
 	try {
-		const input = `SELECT * FROM user WHERE userId=?;`
+		const input = `SELECT userId, username, email, create_time FROM user WHERE userId=?;`
 		response.status(200).json(await query(input,[userId]));
+	} catch (error) {
+		response.status(400).send("Bad Request");
+	}
+});
+
+// Get user with username and password `/api/user/`
+router.route('/login').post(async (request: Request, response: Response) => {
+	const {username, password} = request.body;
+	try {
+		const input = "SELECT userId, username, email, create_time FROM user WHERE username=? AND password=?;"
+		response.status(200).json(await query(input,[username, password]));
 	} catch (error) {
 		response.status(400).send("Bad Request");
 	}

@@ -1,0 +1,13 @@
+<div class="registrationForm">
+	<h3>Register en bruker</h3>
+
+	<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
+
+	<app-text-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-text-input>
+
+	<app-text-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-text-input>
+
+	<p>{{statusMessage}}</p>
+
+	<app-button (click)="registerUser()" text="Register"></app-button>
+</div>
