@@ -12,61 +12,11 @@ interface IUserLogin {
 })
 export class UserService {
   userUrl = "api/user/"
-  loginUrl = "api/user/login"
 
   constructor(private http: HttpClient) { }
 
   /**
-   * Get request of user from database on login request.
-   */
-  login(body: IUserLogin): Promise<string> {
-    return new Promise<string>(
-      (resolve, reject) => {
-        this.login_user(body).subscribe((data: any) => {
-          try {
-            resolve(data.data);
-          } catch (err: any) {
-            reject(err);
-          }
-        },
-        (err: any) => {
-          console.log(err.message);
-          reject(err);
-        });
-      }
-    );
-  }
-
-  private login_user(body: IUserLogin) {
-    return this.http.post(this.loginUrl, body);
-  }
-  /**
-   * Adds user to database.
-   */
-  addUser(user: User): Promise<string> {
-    return new Promise<string>(
-      (resolve, reject) => {
-        this.add_user(user).subscribe((data: any) => {
-          try {
-            resolve(data.data);
-          } catch (err: any) {
-            reject(err);
-          }
-        },
-        (err: any) => {
-          console.log(err.message);
-          reject(err);
-        });
-      }
-    );
-  }
-
-  private add_user(user: User) {
-    return this.http.post(this.userUrl, user.serialize());
-  }
-
-  /**
-   * Get post from database by id.
+   * Get user from database by id.
    */
   getUser(id: number): Promise<User> {
     return new Promise<User>(

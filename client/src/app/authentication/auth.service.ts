@@ -13,7 +13,8 @@ interface IUserLogin {
   providedIn: 'root'
 })
 export class AuthService {
-  loginUrl = "api/user/login"
+  loginUrl = "api/auth/login";
+  registrationUrl = "api/auth/register";
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -65,6 +66,31 @@ export class AuthService {
   }
   logout() {
     localStorage.removeItem("token");
+  }
+
+    /**
+   * Register an user, if not duplicate, add to database.
+   */
+  registerUser(user: User): Promise<string> {
+    return new Promise<string>(
+      (resolve, reject) => {
+        this.register_user(user).subscribe((data: any) => {
+          try {
+            resolve(data.data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private register_user(user: User) {
+    return this.http.post(this.registrationUrl, user.serialize());
   }
 
 }
