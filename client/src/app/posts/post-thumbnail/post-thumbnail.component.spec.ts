@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { PostThumbnailComponent } from './post-thumbnail.component';
 
@@ -8,7 +9,8 @@ describe('PostThumbnailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostThumbnailComponent ]
+      declarations: [ PostThumbnailComponent ],
+      imports: [ RouterTestingModule ]
     })
     .compileComponents();
   });

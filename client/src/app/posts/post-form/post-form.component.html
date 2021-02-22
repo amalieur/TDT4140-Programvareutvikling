@@ -1,5 +1,5 @@
 <div class="postform">
-	<h3>Lag annonse</h3>
+	<h3>{{id ? 'Rediger annonse' : 'Lag annonse'}}</h3>
 
 	<app-text-input [(inputModel)]="title" label="Tittel" (blur)="checkForm()"></app-text-input>
 
@@ -8,8 +8,8 @@
 	<app-number-input [(inputModel)]="price" label="Pris" (blur)="checkForm()"></app-number-input>
 
 	<app-select [(inputModel)]="categoryid" (change)="checkForm()" label="Kategori">
-			<option value="0" selected hidden>Velg kategori</option>
-			<option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
+		<option value="0" [selected]="categoryid == 0" hidden>Velg kategori</option>
+		<option *ngFor="let category of categories" [value]="category.getCategoryId" [selected]="categoryid == category.getCategoryId">{{category.getName}}</option>
 	</app-select>
 
 	<app-text-input [(inputModel)]="imageUrl" label="Bilde URL" (blur)="showImage(imageUrl)"></app-text-input>
@@ -18,4 +18,5 @@
 	<p>{{statusMessage}}</p>
 
 	<app-button (click)="publishPost()" text="Publiser"></app-button>
+	<app-button *ngIf="id" (click)="deletePost()" text="Slett annonse"></app-button>
 </div>
