@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PostModule } from './posts/post.module';
 import { UserModule } from './users/user.module';
+import { AuthModule } from './authentication/auth.module';
 import { SharedModule } from './shared/shared.module';
 
 
@@ -16,7 +17,7 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     BrowserModule,
     UserModule,
-
+    AuthModule,
     AppRoutingModule,
     PostModule,
     SharedModule,

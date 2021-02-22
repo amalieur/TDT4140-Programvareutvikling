@@ -2,6 +2,8 @@ import { Response, Request } from "express";
 import query from '../../services/db_query';
 import express from 'express';
 import IUser from '../../models/user';
+import * as jwt from 'jsonwebtoken';
+import config from '../../config';
 
 const router = express.Router();
 /* ============================= CREATE ============================= */
@@ -50,9 +52,23 @@ router.route('/login').post(async (request: Request, response: Response) => {
 	const {username, password} = request.body;
 	try {
 		const input = "SELECT userId, username, email, create_time FROM user WHERE username=? AND password=?;"
-		response.status(200).json(await query(input,[username, password]));
+		const user = await query(input,[username, password]);
+		// Check if an user object is retrieved
+		const userObj = Object.values(JSON.parse(JSON.stringify(user.data)))[0];
+		if (userObj) {
+			const jwt_token = jwt.sign({data: user.data}, config.JWT_KEY.replace(/\\n/gm, '\n'), {
+				algorithm: 'RS256',
+				expiresIn: 3600*24, // 24 hours
+			});
+			response.status(200).json({
+				token: jwt_token,
+			});
+		} else {
+			response.status(403).send("Invalid combination of username and password given!");
+		}
 	} catch (error) {
 		response.status(400).send("Bad Request");
+		console.log(error);
 	}
 });
 

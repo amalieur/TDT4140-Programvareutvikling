@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from '../user.service';
+import { AuthService } from '../../authentication/auth.service';
 
 @Component({
   selector: 'app-user-login-form',
@@ -14,7 +15,7 @@ export class UserLoginFormComponent implements OnInit {
 
   statusMessage: string = "";
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -46,13 +47,21 @@ export class UserLoginFormComponent implements OnInit {
         password: this.password,
       };
 
-      // Adds user to database and changes page afterwards
+      // Login the user
+      this.authService.login(request).then(status => {
+        console.log("User login1: " + JSON.stringify(status));
+        this.router.navigateByUrl("/");
+      }).catch(error => {
+        console.log("Error user login: " + error);
+      });
+      /* Old
       this.userService.login(request).then(status => {
-        console.log("User login: " + JSON.stringify(status));
+        console.log("User login2: " + JSON.stringify(status));
         this.router.navigateByUrl("/");
       }).catch(error => {
         console.log("Error adding user: " + error);
       });
+      */
     }
   }
 
