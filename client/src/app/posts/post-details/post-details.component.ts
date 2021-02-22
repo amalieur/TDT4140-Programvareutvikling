@@ -25,9 +25,17 @@ export class PostDetailsComponent implements OnInit {
       console.log(error);
     });
   }
+  /**
+   * Moves to edit page
+   */
+  editPost() {
+    this.router.navigateByUrl("/annonse/rediger/" + this.post.getId);
+  }
 
+  /**
+   * Deletes post in database and navigates to post list
+   */
   deletePost() {
-    // Deletes post in database and navigates to post list
     this.postService.deletePost(this.post.getId).then(data => {
       console.log("Successfully deleted post: " + this.post.getId);
       this.router.navigateByUrl("/annonse");

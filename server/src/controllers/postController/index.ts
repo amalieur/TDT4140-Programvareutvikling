@@ -14,6 +14,7 @@ router.route("/").post(async (request: Request, response: Response) => {
   const {
     title,
     description,
+    price,
     timestamp,
     owner,
     categoryid,
@@ -23,14 +24,16 @@ router.route("/").post(async (request: Request, response: Response) => {
     const post: IPost = {
       title: title,
       description: description,
+      price: price,
       timestamp: timestamp,
       owner: owner,
       categoryid: categoryid,
       imageUrl: imageUrl,
     };
+
     if (Object.values(post).filter((p) => p == undefined).length > 0)
       return response.status(500).send("Error");
-    const input = `INSERT INTO post(title, description, timestamp, owner, categoryid, imageUrl) VALUES (?,?,?,?,?,?)`;
+    const input = `INSERT INTO post(title, description, price, timestamp, owner, categoryid, imageUrl) VALUES (?,?,?,?,?,?,?)`;
     return response.status(200).json(await query(input, Object.values(post)));
   } catch (error) {
     return response.status(400).send("Bad Request");
@@ -42,9 +45,8 @@ router.route("/").post(async (request: Request, response: Response) => {
 router.route("/").get(async (request: Request, response: Response) => {
   const { categoryid } = request.query as { [key: string]: string };
   try {
-    let input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.name, p.imageUrl 
-		FROM post as p
-		INNER JOIN category ON category.categoryid = p.categoryid`;
+    let input = `SELECT p.id, p.title, p.description, p.price, p.timestamp, p.owner, p.categoryid, p.imageUrl 
+    FROM post as p`;
     if (categoryid) input += ` WHERE p.categoryid=${categoryid}`;
     response.status(200).json(await query(input, ""));
   } catch (error) {
@@ -56,9 +58,9 @@ router.route("/").get(async (request: Request, response: Response) => {
 router.route("/:id").get(async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
   try {
-    const input = `SELECT p.id, p.title, p.description, p.timestamp, p.owner, category.name, p.imageUrl 
+    const input = `SELECT p.id, p.title, p.description, p.price, p.timestamp, p.owner, p.categoryid, p.imageUrl 
 		FROM post as p
-		INNER JOIN category ON category.categoryid = p.categoryid WHERE p.id=?;`;
+    WHERE p.id=?;`;
     response.status(200).json(await query(input, [postId]));
   } catch (error) {
     response.status(400).send("Bad Request");
@@ -69,10 +71,29 @@ router.route("/:id").get(async (request: Request, response: Response) => {
 // Edit post with id `/api/post/:id`
 router.route("/:id").put(async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
+  const {
+    title,
+    description,
+    price,
+    timestamp,
+    owner,
+    categoryid,
+    imageUrl,
+  } = request.body;
   try {
+    const post: IPost = {
+      title: title,
+      description: description,
+      price: price,
+      timestamp: timestamp,
+      owner: owner,
+      categoryid: categoryid,
+      imageUrl: imageUrl,
+    };
+
     response
       .status(200)
-      .json(await query("SELECT * FROM post WHERE id=?;", [postId]));
+      .json(await query("UPDATE post SET title=?, description=?, price=?, timestamp=?, categoryid=?, imageUrl=? WHERE id=?;", [title, description, price, timestamp, categoryid, imageUrl, postId]));
   } catch (error) {
     response.status(400).send("Bad Request");
   }

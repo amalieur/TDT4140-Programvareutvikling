@@ -11,6 +11,8 @@ export class PostService {
   postUrl = "api/post/";
   categoryUrl = "api/category/";
 
+  categories: Array<Category>;
+
   constructor(private http: HttpClient) { }
 
   /**
@@ -110,6 +112,11 @@ export class PostService {
   getAllCategories(): Promise<Array<Category>>{
     return new Promise<Array<Category>>(
       (resolve, reject) => {
+        if (this.categories) {
+          resolve(this.categories);
+          return;
+        }
+
         this.get_all_categories().subscribe((data: any) => {
           try {
             let outputCategories = [];
@@ -122,6 +129,8 @@ export class PostService {
                 return;
               }
             }
+            
+            this.categories = outputCategories;
             resolve(outputCategories);
           } catch (err: any){
             reject(err);
@@ -162,5 +171,30 @@ export class PostService {
 
   private delete_post(id: number) {
     return this.http.delete(this.postUrl + id);
+  }
+
+  /**
+   * Update post in database by id.
+   */
+  updatePost(id: number, post: Post): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.update_post(id, post).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private update_post(id: number, post: Post) {
+    return this.http.put(this.postUrl + id, post.serialize());
   }
 }
