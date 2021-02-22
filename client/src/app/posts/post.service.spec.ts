@@ -176,5 +176,89 @@ describe('PostService', () => {
       req.error(new ErrorEvent("400"));
     });
   });
+
+  describe('deletePost', () => {
+    it('should delete post', () => {
+
+      // Deletes post with id = 2
+      service.deletePost(2)
+      .then(data => {})
+      .catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/2");
+      expect(req.request.method).toBe("DELETE");
+      req.flush({
+        data: []
+      });
+    });
+
+    it('should reject on http error', () => {
+
+      // Deletes post with id = 5, but should catch HTTP error
+      service.deletePost(5).then(data => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/5");
+      expect(req.request.method).toBe("DELETE");
+      req.error(new ErrorEvent("400"));
+    });
+  });
+
+  describe('updatePost', () => {
+    it('should update post', () => {
+      let post = new Post({
+        id: 2,
+        title: "Test",
+        description: "TestDescription",
+        timestamp: 23947298,
+        owner: "user",
+        imageUrl: null,
+        price: 49,
+        categoryid: 2
+      });
+      
+      // Updates post with id = 2
+      service.updatePost(2, post)
+      .then(data => {})
+      .catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/2");
+      expect(req.request.method).toBe("PUT");
+      req.flush({
+        data: []
+      });
+    });
+
+    it('should reject on http error', () => {
+      let post = new Post({
+        id: 2,
+        title: "Test",
+        description: "TestDescription",
+        timestamp: 23947298,
+        owner: "user",
+        imageUrl: null,
+        price: 49,
+        categoryid: 2
+      });
+
+      // Updates post with id = 2, but should catch HTTP error
+      service.updatePost(2, post).then(data => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/2");
+      expect(req.request.method).toBe("PUT");
+      req.error(new ErrorEvent("400"));
+    });
+  });
 });
 

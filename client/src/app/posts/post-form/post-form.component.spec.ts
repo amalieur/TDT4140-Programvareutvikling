@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -17,7 +17,7 @@ describe('PostFormComponent', () => {
 
   beforeEach(async () => {
     // PostService mock setup
-    mockPostService = jasmine.createSpyObj(['getAllCategories', 'addPost']);
+    mockPostService = jasmine.createSpyObj(['getAllCategories', 'addPost', 'deletePost']);
     mockPostService.getAllCategories.and.returnValue(
       new Promise<Array<Category>>(
         (resolve) => {
@@ -28,6 +28,12 @@ describe('PostFormComponent', () => {
       new Promise<string>(
         (resolve) => {
           resolve("success")
+        })
+    );
+    mockPostService.deletePost.and.returnValue(
+      new Promise<any>(
+        (resolve) => {
+          resolve({data: []})
         })
     );
 
@@ -108,5 +114,23 @@ describe('PostFormComponent', () => {
     // Tests that image is updated with new URL
     component.showImage("test");
     expect(component.displayImageUrl).toBe("test");
+  });
+
+  it('should delete post with id', async () => {
+    component.id = 5;
+
+    // Waits for ngOnInit and checks that we can delete post
+    fixture.whenStable().then(() => {
+      component.deletePost();
+      expect(mockPostService.deletePost).toHaveBeenCalledWith(5);
+    });
+  });
+
+  it('should not delete new post', async () => {
+    // Waits for ngOnInit and checks that we can delete post
+    fixture.whenStable().then(() => {
+      component.deletePost();
+      expect(mockPostService.deletePost).not.toHaveBeenCalledWith(5);
+    });
   });
 });

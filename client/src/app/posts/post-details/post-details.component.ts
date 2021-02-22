@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from '../post.service';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'app-post-details',
@@ -12,19 +12,35 @@ export class PostDetailsComponent implements OnInit {
 
   post: Post = new Post();
 
-  constructor(private postService: PostService, private activatedRoute: ActivatedRoute) { }
+  constructor(private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     // Gets id parameter from URL
-    this.activatedRoute.params.subscribe(params => {
-      const id = params["id"];
+    const id = this.activatedRoute.snapshot.params["id"];
 
-      // Gets Post with id from database
-      this.postService.getPost(id).then(post => {
-        this.post = post;
-      }).catch(error => {
-        console.log(error);
-      });
+    // Gets Post with id from database
+    this.postService.getPost(id).then(post => {
+      this.post = post;
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+  /**
+   * Moves to edit page
+   */
+  editPost() {
+    this.router.navigateByUrl("/annonse/rediger/" + this.post.getId);
+  }
+
+  /**
+   * Deletes post in database and navigates to post list
+   */
+  deletePost() {
+    this.postService.deletePost(this.post.getId).then(data => {
+      console.log("Successfully deleted post: " + this.post.getId);
+      this.router.navigateByUrl("/annonse");
+    }).catch(error => {
+      console.log(error);
     });
   }
 }
