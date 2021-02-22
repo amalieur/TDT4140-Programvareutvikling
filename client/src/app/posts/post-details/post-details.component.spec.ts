@@ -1,14 +1,49 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Post } from 'src/app/models/post.model';
+import { PostService } from '../post.service';
 
 import { PostDetailsComponent } from './post-details.component';
 
 describe('PostDetailsComponent', () => {
   let component: PostDetailsComponent;
   let fixture: ComponentFixture<PostDetailsComponent>;
+  let mockPostService;
 
   beforeEach(async () => {
+    // PostService mock setup
+    mockPostService = jasmine.createSpyObj(['getPost', 'deletePost']);
+    mockPostService.getPost.and.returnValue(
+      new Promise<Post>(
+        (resolve) => {
+          resolve(new Post({
+            id: 5,
+            title: "Test",
+            description: "TestDescription",
+            timestamp: 23947298,
+            owner: "user",
+            imageUrl: null,
+            price: 49,
+            categoryid: 2
+          }));
+        })
+    );
+    mockPostService.deletePost.and.returnValue(
+      new Promise<any>(
+        (resolve) => {
+          resolve({data: []})
+        })
+    );
+
     await TestBed.configureTestingModule({
-      declarations: [ PostDetailsComponent ]
+      declarations: [ PostDetailsComponent ],
+      imports: [ HttpClientTestingModule, RouterTestingModule ],
+      providers: [
+        { provide: ActivatedRoute, useValue: { snapshot: {params: {id: 5}}}},
+        { provide: PostService, useValue: mockPostService }
+      ]
     })
     .compileComponents();
   });
@@ -21,5 +56,30 @@ describe('PostDetailsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get post with id from url parameter', async () => {
+    // Waits for ngOnInit and checks that we get post
+    fixture.whenStable().then(() => {
+      expect(mockPostService.getPost).toHaveBeenCalledWith(5);
+      expect(component.post).toEqual(new Post({
+        id: 5,
+        title: "Test",
+        description: "TestDescription",
+        timestamp: 23947298,
+        owner: "user",
+        imageUrl: null,
+        price: 49,
+        categoryid: 2
+      }));
+    });
+  });
+
+  it('should delete post with id', async () => {
+    // Waits for ngOnInit and checks that we can delete post
+    fixture.whenStable().then(() => {
+      component.deletePost();
+      expect(mockPostService.deletePost).toHaveBeenCalledWith(5);
+    });
   });
 });

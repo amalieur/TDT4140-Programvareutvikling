@@ -9,6 +9,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 
 const routes: Routes = [
   { path: 'annonse/ny', component: PostFormComponent },
+  { path: 'annonse/rediger/:id', component: PostFormComponent },
   { path: 'annonse', component: PostListComponent },
   { path: 'annonse/:id', component: PostDetailsComponent },
 

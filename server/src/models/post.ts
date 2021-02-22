@@ -2,6 +2,7 @@
 interface IPost {
 	title: string;
 	description: string;
+	price: string;
 	timestamp: number;
 	owner: string;
 	categoryid: number;
