@@ -4,6 +4,7 @@ import express from 'express';
 import IUser from '../../models/user';
 import * as jwt from 'jsonwebtoken';
 import config from '../../config';
+import authenticateToken from '../../middlewares/auth';
 
 const router = express.Router();
 /* ============================= CREATE ============================= */
@@ -37,7 +38,7 @@ router.route('/').get(async (_: Request, response: Response) => {
 });
 
 // Get user with id `/api/user/:id`
-router.route('/:userId').get(async (request: Request, response: Response) => {
+router.route('/:userId').get(authenticateToken, async (request: Request, response: Response) => {
 	const userId = request.params.userId;
 	try {
 		const input = `SELECT userId, username, email, create_time FROM user WHERE userId=?;`

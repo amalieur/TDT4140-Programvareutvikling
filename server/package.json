@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.11",
+    "@types/express-jwt": "^6.0.1",
     "@types/jest": "^26.0.20",
     "@types/mysql": "^2.15.17",
     "@types/supertest": "^2.0.10",
@@ -19,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
     "jest": "^26.6.3",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
