@@ -5,7 +5,9 @@
 
 	<app-text-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-text-input>
 
-	<app-text-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-text-input>
+	<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
+
+	<app-password-input [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()"></app-password-input>
 
 	<p>{{statusMessage}}</p>
 

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TextInputComponent } from './text-input/text-input.component';
 import { FormsModule } from '@angular/forms';
+import { TextInputComponent } from './text-input/text-input.component';
+import { PasswordInputComponent } from './password-input/password-input.component';
 import { NumberInputComponent } from './number-input/number-input.component';
 import { ButtonComponent } from './button/button.component';
 import { SelectComponent } from './select/select.component';
@@ -12,11 +13,13 @@ import { SelectComponent } from './select/select.component';
     TextInputComponent,
     NumberInputComponent,
     ButtonComponent,
-    SelectComponent
+    SelectComponent,
+    PasswordInputComponent
   ],
   exports: [
     TextInputComponent,
     NumberInputComponent,
+    PasswordInputComponent,
     ButtonComponent,
     SelectComponent
   ],
