@@ -18,9 +18,10 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     // Check for token expiration
     if (this.authService.checkTokenExpiration()) { // redirects to "/" if token is expired
+    // Get user data from JWT token
       const token = localStorage.getItem('token');
-      // Get user data from JWT token
       const user_data = JSON.parse(atob(token.split(".")[1])).data[0];
+      
       // Gets all user information and displays them in the component
       this.userService.getUser(user_data.userId).then(user => {
         this.user = user;
