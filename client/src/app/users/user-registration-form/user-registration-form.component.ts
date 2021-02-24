@@ -23,7 +23,7 @@ export class UserRegistrationFormComponent implements OnInit {
   }
 
   /**
-   * Validates form.
+   * Validates the form
    */
   checkForm(): boolean {
     if (this.username == "") {
@@ -52,7 +52,7 @@ export class UserRegistrationFormComponent implements OnInit {
   }
 
   /**
-   * Publishes user if it is valid.
+   * Publishes and registers the user if given arguments are valid
    */
   registerUser() {
     if (this.checkForm()) {
@@ -62,7 +62,7 @@ export class UserRegistrationFormComponent implements OnInit {
         password: this.password,
       });
 
-      // Adds user to database and changes page afterwards
+      // Adds user to database and redirects to the homepage afterwards
       this.authService.registerUser(newUser).then(status => {
         console.log("User was added: " + JSON.stringify(status));
         this.router.navigateByUrl("/login");
@@ -73,7 +73,7 @@ export class UserRegistrationFormComponent implements OnInit {
   }
 
   /**
-   * Sets a status message.
+   * Sets the status message for user feedback on form submit
    */
   setStatusMessage(message: string) {
     this.statusMessage = message;

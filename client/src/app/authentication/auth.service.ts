@@ -18,6 +18,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  /**
+   * Logins an user, if given correct combination of username and password.
+   */
   login(body: IUserLogin): Promise<string> {
     return new Promise<string>(
       (resolve, reject) => {
@@ -36,14 +39,20 @@ export class AuthService {
     );
   }
   private login_user(body: IUserLogin) {
+    // Pipes output to setSession function if a valid user is returned
     return this.http.post(this.loginUrl, body).pipe(
         tap(res =>this.setSession(res)),
-        shareReplay());;
+        shareReplay());
   }
+  // Set authentication token on localStorage if a valid user is received
   private setSession(authResult) {
     console.log(authResult);
     localStorage.setItem('token', authResult.token);
   }
+
+  /**
+   * Checks validity of token, redirects to homepage and removes it if it is expired
+   */
   checkTokenExpiration() {
     const token = localStorage.getItem("token");
     if (token) {
@@ -64,12 +73,16 @@ export class AuthService {
     this.router.navigateByUrl("/")
     return false
   }
+
+  /**
+   * Logout an user and redirects to the homepage
+   */
   logout() {
     localStorage.removeItem("token");
     this.router.navigateByUrl("/")
   }
 
-    /**
+  /**
    * Register an user, if not duplicate, add to database.
    */
   registerUser(user: User): Promise<string> {
@@ -89,7 +102,6 @@ export class AuthService {
       }
     );
   }
-
   private register_user(user: User) {
     return this.http.post(this.registrationUrl, user.serialize());
   }

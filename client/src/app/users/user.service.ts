@@ -16,7 +16,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Get user from database by id.
+   * Get an user from the database by id.
    */
   getUser(id: number): Promise<User> {
     return new Promise<User>(
@@ -40,7 +40,6 @@ export class UserService {
       }
     );
   }
-
   private get_user(id: number) {
     return this.http.get(this.userUrl + id);
   }
@@ -74,7 +73,6 @@ export class UserService {
       }
     );
   }
-
   private get_all_users() {
     return this.http.get(this.userUrl);
   }
