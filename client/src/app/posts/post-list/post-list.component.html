@@ -1,3 +1,8 @@
 <div>
+	<app-select [(inputModel)]="selectedCategory" (change)="filterCategory()">
+		<option value="0" selected>Ingen kategori</option>
+		<option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
+	</app-select>
+
     <app-post-thumbnail *ngFor="let post of allPosts" [post]="post"></app-post-thumbnail>
 </div>

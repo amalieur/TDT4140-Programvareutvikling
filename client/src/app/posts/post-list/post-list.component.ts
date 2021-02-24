@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from 'src/app/models/category.model';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from '../post.service';
 
@@ -9,17 +10,44 @@ import { PostService } from '../post.service';
 })
 export class PostListComponent implements OnInit {
 
-  allPosts: Array<Post> = []
+  allPosts: Array<Post> = [];
+  categories: Array<Category> = [];
+
+  selectedCategory: number;
 
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
+    // Gets all categories from database and displays them in dropdown
+    this.postService.getAllCategories().then(categories => {
+      this.categories = categories;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    this.getPosts();
+  }
+
+  getPosts() {
     // Gets all posts from database, and displays them
     this.postService.getAllPosts().then(posts => {
       this.allPosts = posts;
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  filterCategory() {
+    if (this.selectedCategory > 0) {
+      // Gets all posts by selected category
+      this.postService.getPostsByCategory(this.selectedCategory).then(posts => {
+        this.allPosts = posts;
+      }).catch(error => {
+        console.log(error);
+      });
+    } else {
+      this.getPosts();
+    }
   }
 
 }

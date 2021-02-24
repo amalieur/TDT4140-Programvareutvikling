@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Category } from 'src/app/models/category.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PostListComponent } from '../post-list/post-list.component';
 import { PostService } from '../post.service';
 
 import { PostFormComponent } from './post-form.component';
@@ -39,7 +40,14 @@ describe('PostFormComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ PostFormComponent ],
-      imports: [ HttpClientTestingModule, RouterTestingModule, FormsModule, SharedModule ],
+      imports: [ 
+        HttpClientTestingModule, 
+        FormsModule, 
+        SharedModule,
+        RouterTestingModule.withRoutes([
+          { path: 'annonse', component: PostListComponent}
+        ])
+      ],
       providers: [ { provide: PostService, useValue: mockPostService } ]
     })
     .compileComponents();
@@ -118,6 +126,7 @@ describe('PostFormComponent', () => {
 
   it('should delete post with id', async () => {
     component.id = 5;
+    expect(component.id).toBe(5);
 
     // Waits for ngOnInit and checks that we can delete post
     fixture.whenStable().then(() => {
@@ -128,6 +137,7 @@ describe('PostFormComponent', () => {
 
   it('should not delete new post', async () => {
     // Waits for ngOnInit and checks that we can delete post
+    expect(component.id).toBe(0);
     fixture.whenStable().then(() => {
       component.deletePost();
       expect(mockPostService.deletePost).not.toHaveBeenCalledWith(5);
