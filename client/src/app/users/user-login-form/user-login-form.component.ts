@@ -21,7 +21,7 @@ export class UserLoginFormComponent implements OnInit {
   }
 
   /**
-   * Validates form.
+   * Validates the form
    */
   checkForm(): boolean {
     if (this.username == "") {
@@ -38,7 +38,7 @@ export class UserLoginFormComponent implements OnInit {
   }
 
   /**
-   * Login the user if it is valid.
+   * Login the user if it is valid
    */
   loginUser() {
     if (this.checkForm()) {
@@ -47,26 +47,18 @@ export class UserLoginFormComponent implements OnInit {
         password: this.password,
       };
 
-      // Login the user
+      // Logins the user
       this.authService.login(request).then(status => {
         console.log("User login1: " + JSON.stringify(status));
         this.router.navigateByUrl("/");
       }).catch(error => {
         console.log("Error user login: " + error);
       });
-      /* Old
-      this.userService.login(request).then(status => {
-        console.log("User login2: " + JSON.stringify(status));
-        this.router.navigateByUrl("/");
-      }).catch(error => {
-        console.log("Error adding user: " + error);
-      });
-      */
     }
   }
 
   /**
-   * Sets a status message.
+   * Sets the status message
    */
   setStatusMessage(message: string) {
     this.statusMessage = message;

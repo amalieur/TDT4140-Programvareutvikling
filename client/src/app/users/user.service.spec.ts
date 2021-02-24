@@ -76,55 +76,5 @@ describe('UserService', () => {
       });
     });
   
-    describe('addUser', () => {
-      it('should add an user', () => {
-        const user = new User({
-            userId: 1,
-            username: "zorg",
-            email: "blob@planet.us",
-            password: "Hyttepine",
-            create_time: 1613552549000,
-        });
-  
-        // Adds user
-        service.addUser(user)
-        .then(post => {})
-        .catch(error => {
-          fail();
-        });
-  
-        // Mocks and checks HTTP request
-        const req = httpMock.expectOne("api/user/");
-        expect(req.request.method).toBe("POST");
-        expect(req.request.body).toEqual(user.serialize());
-        req.flush({
-          data: [{
-            status: "success"
-          }]
-        });
-      });
-  
-      it('should reject on http error', () => {
-        const user = new User({
-            userId: 1,
-            username: "zorg",
-            email: "blob@planet.us",
-            password: "Hyttepine",
-            create_time: 1613552549000,
-        });
-  
-        // Adds user, gets HTTP error, should catch
-        service.addUser(user).then(user => {
-          fail();
-        }).catch(error => {});
-  
-        // Mocks and checks HTTP request
-        const req = httpMock.expectOne("api/user/");
-        expect(req.request.method).toBe("POST");
-        expect(req.request.body).toEqual(user.serialize());
-        req.error(new ErrorEvent("400"));
-      });
-    });
-  
 });
 
