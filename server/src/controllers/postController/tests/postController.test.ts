@@ -22,14 +22,14 @@ describe("Test postController", () => {
     const result = await request(app).get("/api/post/1").send();
 
     expect(result.status).toBe(200);
-    expect(result.body.data[0]?.title).toBe("test");
+    expect(result.body.data[0]?.title).toBe("Skrik");
   });
 
-  it('Request /api/post/?categoryid=1 should return datas with categoryname = "Antikviteter og Kunst"', async () => {
+  it('Request /api/post/?categoryid=1 should return datas with categoryid = 1', async () => {
     const result = await request(app).get("/api/post/1").send();
 
     expect(result.status).toBe(200);
-    expect(result.body.data[0]?.name).toBe("Antikviteter og Kunst");
+    expect(result.body.data[0]?.categoryid).toBe(1);
   });
 });
 

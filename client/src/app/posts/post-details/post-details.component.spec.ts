@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Post } from 'src/app/models/post.model';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { PostListComponent } from '../post-list/post-list.component';
 import { PostService } from '../post.service';
 
 import { PostDetailsComponent } from './post-details.component';
@@ -39,7 +41,13 @@ describe('PostDetailsComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ PostDetailsComponent ],
-      imports: [ HttpClientTestingModule, RouterTestingModule ],
+      imports: [ 
+        HttpClientTestingModule, 
+        SharedModule, 
+        RouterTestingModule.withRoutes([
+          { path: 'annonse', component: PostListComponent}
+        ])
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: {params: {id: 5}}}},
         { provide: PostService, useValue: mockPostService }
@@ -60,6 +68,8 @@ describe('PostDetailsComponent', () => {
 
   it('should get post with id from url parameter', async () => {
     // Waits for ngOnInit and checks that we get post
+    expect(component.post).not.toBeNull();
+
     fixture.whenStable().then(() => {
       expect(mockPostService.getPost).toHaveBeenCalledWith(5);
       expect(component.post).toEqual(new Post({
@@ -77,6 +87,8 @@ describe('PostDetailsComponent', () => {
 
   it('should delete post with id', async () => {
     // Waits for ngOnInit and checks that we can delete post
+    expect(component.post).not.toBeNull();
+
     fixture.whenStable().then(() => {
       component.deletePost();
       expect(mockPostService.deletePost).toHaveBeenCalledWith(5);

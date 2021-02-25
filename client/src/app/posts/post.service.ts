@@ -27,7 +27,7 @@ export class PostService {
             for (let post of data.data) {
               outputPosts.push(new Post(post));
 
-              if (post.getId == 0) {
+              if (!post.id || post.id == 0) {
                 reject("Could not deserialize Post");
                 return;
               }
@@ -196,5 +196,40 @@ export class PostService {
 
   private update_post(id: number, post: Post) {
     return this.http.put(this.postUrl + id, post.serialize());
+  }  
+
+  /**
+   * Get all posts in database by specified category.
+   */
+  getPostsByCategory(categoryId: number): Promise<Array<Post>> {
+    return new Promise<Array<Post>>(
+      (resolve, reject) => {
+        this.get_posts_by_category(categoryId).subscribe((data: any) => {
+          try {
+            let outputPosts = [];
+            for (let post of data.data) {
+              outputPosts.push(new Post(post));
+              
+              if (!post.id || post.id == 0) {
+                reject("Could not deserialize Post");
+                return;
+              }
+            }
+
+            resolve(outputPosts);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_posts_by_category(categoryId: number) {
+    return this.http.get(this.postUrl, {params: {categoryid: String(categoryId)}});
   }
 }

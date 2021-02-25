@@ -10,7 +10,7 @@ describe('Test userController', () => {
         console.log("...Test ending");
     });
 
-    it('Request /api/category should return request of 200!', async () => {
+    it('Request /api/user should return request of 200!', async () => {
         const result = await request(app)
         .get('/api/user')
         .send()
@@ -18,8 +18,8 @@ describe('Test userController', () => {
         expect(result.status).toBe(200);
     });
 
-    it('Request /api/category/1 should return data with name "zorg"!', async () => {
-        const result = await request(app).get('/api/user/1').send();
+    it('Request /api/user/1 should return data with name "zorg"!', async () => {
+        const result = await request(app).get('/api/user').send();
 
         expect(result.status).toBe(200);
         expect(result.body.data[0]?.username).toBe('zorg');

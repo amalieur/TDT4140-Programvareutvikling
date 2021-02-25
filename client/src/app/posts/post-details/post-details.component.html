@@ -1,9 +1,10 @@
-<h3>Tittel: {{post.getTitle}}</h3>
+<h2>{{post.getTitle}}</h2>
 
 <img [src]="post.getImageUrl">
-<p>Beskrivelse: {{post.getDescription}}</p>
+<h4>{{post.getPrice}} kr</h4>
+<p>{{post.getDescription}}</p>
 <br>
-<p>Publiseringstidspunkt: {{post.getTimestamp}}</p>
+<p>Publisert: {{post.getTimestamp}}</p>
 <p>Eier: {{post.getOwner}}</p>
 
 <app-button text="Rediger annonse" (click)="editPost()"></app-button>
