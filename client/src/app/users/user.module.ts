@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
+import { UserLogoutComponent } from './user-logout/user-logout.component';
 
 
 
@@ -12,7 +13,8 @@ import { UserLoginFormComponent } from './user-login-form/user-login-form.compon
   declarations: [
     UserRegistrationFormComponent,
     UserProfileComponent,
-    UserLoginFormComponent
+    UserLoginFormComponent,
+    UserLogoutComponent
   ],
   imports: [
     CommonModule,

@@ -13,6 +13,7 @@ export class UserRegistrationFormComponent implements OnInit {
   username: string = "";
   email: string = "";
   password: string = "";
+  confirm_password: string = "";
 
   statusMessage: string = "";
 
@@ -37,6 +38,14 @@ export class UserRegistrationFormComponent implements OnInit {
       this.setStatusMessage("Passordet kan ikke være tom");
       return false;
     }
+    else if (this.confirm_password == "") {
+      this.setStatusMessage("Passordet kan ikke være tom");
+      return false;
+    }
+    else if (this.confirm_password !== this.password) {
+      this.setStatusMessage("Passordene gitt samsvarer ikke");
+      return false;
+    }
 
     this.setStatusMessage("");
     return true;
@@ -56,7 +65,7 @@ export class UserRegistrationFormComponent implements OnInit {
       // Adds user to database and redirects to the homepage afterwards
       this.authService.registerUser(newUser).then(status => {
         console.log("User was added: " + JSON.stringify(status));
-        this.router.navigateByUrl("/");
+        this.router.navigateByUrl("/login");
       }).catch(error => {
         console.log("Error adding user: " + error);
       });
