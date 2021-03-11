@@ -47,14 +47,15 @@ router.route('/:userId').get(authenticateToken, async (request: Request, respons
 });
 
 /* ============================= UPDATE ============================= */
-// Update user from id `/api/user/:id`
+// Update user from id `/api/user/:userId`
 router.route('/:userId').put(async (request: Request, response: Response) => {
-	const userId = request.params.userId;
+	const userId = parseInt(request.params.userId);
 	const {username, email, password} = request.body;
 	try {
-		const input = `UPDATE user SET username=?, email=?, password=? WHERE userId=?);`;
+		const input = `UPDATE user SET username=?, email=?, password=? WHERE userId=?;`;
 		response.status(200).json(await query(input,[username, email, password, userId]));
 	} catch (error) {
+		console.error(error);
 		response.status(400).send("Bad Request");
 	}
 });

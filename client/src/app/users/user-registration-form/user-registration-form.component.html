@@ -7,9 +7,10 @@
 
 	<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
 
-	<app-password-input [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()"></app-password-input>
+	<app-password-input [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()">
+	</app-password-input>
 
 	<p>{{statusMessage}}</p>
 
-	<app-button (click)="registerUser()" text="Register"></app-button>
+	<app-button (click)="registerUser()" text="Rediger"></app-button>
 </div>

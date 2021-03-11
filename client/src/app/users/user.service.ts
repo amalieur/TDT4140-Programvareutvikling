@@ -76,4 +76,25 @@ export class UserService {
   private get_all_users() {
     return this.http.get(this.userUrl);
   }
+  // /api/user/:userId
+  updateUser(user: User, userId: number): Promise<string> {
+    return new Promise<string>(
+      (resolve, reject) => {
+        this.update_user(user, userId).subscribe((data: any) => {
+          try {
+            resolve(data.data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private update_user(user: User, userId: number) {
+    return this.http.put(this.userUrl + userId, user.serialize());
+  }
 }
