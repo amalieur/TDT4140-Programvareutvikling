@@ -32,8 +32,8 @@ create_npmrc:
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
 
-javascript:
-  stage: test1
+javascript_test1:
+  stage: test
   script:
     - 'jest --ci --reporters=default --reporters=jest-junit'
   artifacts:
@@ -42,8 +42,8 @@ javascript:
       junit:
         - junit.xml
 
-javascript:
-  stage: test2
+javascript_test2:
+  stage: test
   script:
     - karma start --reporters junit
   artifacts:
