@@ -5,13 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
+import { UserProfileEditFormComponent } from './user-profile-edit-form/user-profile-edit-form.component';
+
 
 
 @NgModule({
   declarations: [
     UserRegistrationFormComponent,
     UserProfileComponent,
-    UserLoginFormComponent
+    UserLoginFormComponent,
+    UserProfileEditFormComponent
   ],
   imports: [
     CommonModule,

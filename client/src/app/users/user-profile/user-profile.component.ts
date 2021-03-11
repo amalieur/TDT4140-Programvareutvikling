@@ -19,3 +19,4 @@ export class UserProfileComponent implements OnInit {
     this.user = this.authService.getCurrentUser();
   }
 }
+
