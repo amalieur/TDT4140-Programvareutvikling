@@ -7,6 +7,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserGuestProfileComponent } from './user-guest-profile/user-guest-profile.component';
+import { PostModule } from '../posts/post.module';
 
 
 
@@ -21,6 +22,7 @@ import { UserGuestProfileComponent } from './user-guest-profile/user-guest-profi
   imports: [
     CommonModule,
     SharedModule,
+    PostModule,
     FormsModule
   ]
 })

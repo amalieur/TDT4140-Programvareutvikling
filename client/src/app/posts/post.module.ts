@@ -20,7 +20,8 @@ import { PostThumbnailComponent } from './post-thumbnail/post-thumbnail.componen
     CommonModule,
     SharedModule,
     FormsModule
-  ]
+  ],
+  exports: [ PostThumbnailComponent ]
 })
 
 export class PostModule { }
