@@ -6,6 +6,7 @@ import { UserRegistrationFormComponent } from './user-registration-form/user-reg
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 import { UserLogoutComponent } from './user-logout/user-logout.component';
+import { UserGuestProfileComponent } from './user-guest-profile/user-guest-profile.component';
 
 
 
@@ -14,7 +15,8 @@ import { UserLogoutComponent } from './user-logout/user-logout.component';
     UserRegistrationFormComponent,
     UserProfileComponent,
     UserLoginFormComponent,
-    UserLogoutComponent
+    UserLogoutComponent,
+    UserGuestProfileComponent
   ],
   imports: [
     CommonModule,

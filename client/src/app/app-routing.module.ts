@@ -6,6 +6,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { UserRegistrationFormComponent } from './users/user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './users/user-login-form/user-login-form.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { UserGuestProfileComponent } from './users/user-guest-profile/user-guest-profile.component';
 
 const routes: Routes = [
   { path: 'annonse/ny', component: PostFormComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'annonse', component: PostListComponent },
   { path: 'annonse/:id', component: PostDetailsComponent },
 
+  { path: 'user/:id', component: UserGuestProfileComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'register', component: UserRegistrationFormComponent },
   { path: 'login', component: UserLoginFormComponent }
