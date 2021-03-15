@@ -1,8 +1,10 @@
-import { HttpClient, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { tap, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService } from '../users/user.service';
+import { Subject } from 'rxjs';
 
 interface IUserLogin {
   username: string;
@@ -16,7 +18,21 @@ export class AuthService {
   loginUrl = "api/auth/login";
   registrationUrl = "api/auth/register";
 
-  constructor(private http: HttpClient, private router: Router) { }
+  userObservable: Subject<User> = new Subject<User>();
+
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
+
+  getCurrentUser(): User{
+    // Check for token expiration
+    if (this.checkTokenExpiration()) { // redirects to "/" if token is expired
+      // Get user data from JWT token
+      const token = localStorage.getItem('token');
+      const user_data = JSON.parse(atob(token.split(".")[1])).data[0];
+
+      return new User(user_data);
+    }
+    return null;
+  }
 
   /**
    * Logins an user, if given correct combination of username and password.
@@ -41,13 +57,15 @@ export class AuthService {
   private login_user(body: IUserLogin) {
     // Pipes output to setSession function if a valid user is returned
     return this.http.post(this.loginUrl, body).pipe(
-        tap(res =>this.setSession(res)),
-        shareReplay());
+      tap(res =>this.setSession(res)),
+      shareReplay()
+    );
   }
+
   // Set authentication token on localStorage if a valid user is received
   private setSession(authResult) {
-    console.log(authResult);
     localStorage.setItem('token', authResult.token);
+    this.userObservable.next(this.getCurrentUser());
   }
 
   /**
@@ -64,13 +82,13 @@ export class AuthService {
         // Expired token
         if (now < issued || now >= expires) {
           this.logout();
-          this.router.navigateByUrl("/");
+          this.router.navigateByUrl("/login");
           return false
         }
         return true;
       }
     }
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl("/login")
     return false
   }
 
@@ -79,7 +97,8 @@ export class AuthService {
    */
   logout() {
     localStorage.removeItem("token");
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl("/");
+    this.userObservable.next(null);
   }
 
   /**

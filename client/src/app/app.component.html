@@ -1,13 +1,12 @@
 <div class="navbar">
-	<a class="logo" href="/">SELLPOINT</a>
+	<span class="logo" (click)="navigate('/')">SellPoint</span>
 	<nav>
-		<a href="/">/</a>
-		<a href="/annonse">/annonse</a>
-		<a href="/annonse/ny">/annonse/ny</a>
-		<a href="/register">/register</a>
-		<a href="/login">/login</a>
-		<a href="/profile">/profile</a>
-		<a href="/logout">/logout</a>
+		<span (click)="navigate('/annonse')">Annonser</span>
+		<span (click)="navigate('/annonse/ny')">Lag annonse</span>
+		<span *ngIf="!user" (click)="navigate('/register')">Registrer</span>
+		<span *ngIf="!user" (click)="navigate('/login')">Logg inn</span>
+		<span *ngIf="user" (click)="navigate('/profile')">Profil</span>
+		<span *ngIf="user" (click)="navigate('/logout')">Logg ut</span>
 	</nav>
 </div>
 <div class="splash">
@@ -23,11 +22,10 @@
 			<h2>Lorem Ipsum</h2>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 			<div class="buttons">
-				<a href="/register" class="btn">Register deg!</a>
-				<a href="javascript:void(0)" class="btn pink">Les mer</a>
+				<button (click)="navigate('/register')" class="btn">Registrer deg!</button>
+				<button (click)="navigate('/')" class="btn pink">Les mer</button>
 			</div>
 		</div>
-
 	</div>
 </div>
 

@@ -6,6 +6,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { UserRegistrationFormComponent } from './users/user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './users/user-login-form/user-login-form.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { UserLogoutComponent } from './users/user-logout/user-logout.component';
 
 const routes: Routes = [
   { path: 'annonse/ny', component: PostFormComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
 
   { path: 'profile', component: UserProfileComponent },
   { path: 'register', component: UserRegistrationFormComponent },
-  { path: 'login', component: UserLoginFormComponent }
+  { path: 'login', component: UserLoginFormComponent },
+  { path: 'logout', component: UserLogoutComponent }
 ];
 
 @NgModule({

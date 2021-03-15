@@ -49,7 +49,6 @@ export class UserLoginFormComponent implements OnInit {
 
       // Logins the user
       this.authService.login(request).then(status => {
-        console.log("User login1: " + JSON.stringify(status));
         this.router.navigateByUrl("/");
       }).catch(error => {
         console.log("Error user login: " + error);
