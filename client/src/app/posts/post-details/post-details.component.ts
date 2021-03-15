@@ -17,11 +17,11 @@ export class PostDetailsComponent implements OnInit {
   constructor(private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    // Gets id parameter from URL
-    const id = this.activatedRoute.snapshot.params["id"];
-
     // Gets ID from current user
     this.userId = this.authService.getCurrentUser(false).getUserId;
+
+    // Gets id parameter from URL
+    const id = this.activatedRoute.snapshot.params["id"];
 
     // Gets Post with id from database
     this.postService.getPost(id).then(post => {
