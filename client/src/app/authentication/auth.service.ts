@@ -22,16 +22,16 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
-  getCurrentUser(): User{
+  getCurrentUser(route=true): User{
     // Check for token expiration
-    if (this.checkTokenExpiration()) { // redirects to "/" if token is expired
+    if (this.checkTokenExpiration(route)) { // redirects to "/" if token is expired
       // Get user data from JWT token
       const token = localStorage.getItem('token');
       const user_data = JSON.parse(atob(token.split(".")[1])).data[0];
 
       return new User(user_data);
     }
-    return null;
+    return new User();
   }
 
   /**
@@ -71,7 +71,7 @@ export class AuthService {
   /**
    * Checks validity of token, redirects to homepage and removes it if it is expired
    */
-  checkTokenExpiration() {
+  checkTokenExpiration(route) {
     const token = localStorage.getItem("token");
     if (token) {
       const {iat, exp} = JSON.parse(atob(token?.split(".")[1]));
@@ -82,27 +82,31 @@ export class AuthService {
         // Expired token
         if (now < issued || now >= expires) {
           this.logout();
-          this.router.navigateByUrl("/login");
+          if (route) {
+            this.router.navigate(["/login"], {replaceUrl: true});
+          }
           return false
         }
         return true;
       }
     }
-    this.router.navigateByUrl("/login")
+    if (route) {
+      this.router.navigate(["/login"], {replaceUrl: true});
+    }
     return false
   }
 
   /**
-   * Logout an user and redirects to the homepage
+   * Logout a user and redirects to the homepage
    */
   logout() {
     localStorage.removeItem("token");
     this.router.navigateByUrl("/");
-    this.userObservable.next(null);
+    this.userObservable.next(new User());
   }
 
   /**
-   * Register an user, if not duplicate, add to database.
+   * Register a user, if not duplicate, add to database.
    */
   registerUser(user: User): Promise<string> {
     return new Promise<string>(

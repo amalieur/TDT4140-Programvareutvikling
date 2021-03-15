@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router){}
 
   ngOnInit() {
-    this.user = this.authService.getCurrentUser();
+    this.user = this.authService.getCurrentUser(false);
     this.userSubscription = this.authService.userObservable.subscribe(user => {
       this.user = user;
     });
@@ -25,5 +25,9 @@ export class AppComponent implements OnInit {
 
   navigate(url) {
     this.router.navigateByUrl(url);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

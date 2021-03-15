@@ -3,10 +3,10 @@
 	<nav>
 		<span (click)="navigate('/annonse')">Annonser</span>
 		<span (click)="navigate('/annonse/ny')">Lag annonse</span>
-		<span *ngIf="!user" (click)="navigate('/register')">Registrer</span>
-		<span *ngIf="!user" (click)="navigate('/login')">Logg inn</span>
-		<span *ngIf="user" (click)="navigate('/profile')">Profil</span>
-		<span *ngIf="user" (click)="navigate('/logout')">Logg ut</span>
+		<span *ngIf="!user.getUserId" (click)="navigate('/register')">Registrer</span>
+		<span *ngIf="!user.getUserId" (click)="navigate('/login')">Logg inn</span>
+		<span *ngIf="user.getUserId" (click)="navigate('/profile')">Profil</span>
+		<span *ngIf="user.getUserId" (click)="logout()">Logg ut</span>
 	</nav>
 </div>
 <div class="splash">

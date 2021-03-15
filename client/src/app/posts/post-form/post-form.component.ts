@@ -34,7 +34,7 @@ export class PostFormComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();
 
     if (!this.currentUser) {
-      this.router.navigateByUrl("/login");
+      this.router.navigate(["/login"], {replaceUrl: true});
     }
 
     const id = this.activatedRoute.snapshot.params["id"];
@@ -63,7 +63,7 @@ export class PostFormComponent implements OnInit {
     this.postService.getAllCategories().then(categories => {
       this.categories = categories;
     }).catch (error => {
-      console.log("Error adding catrgories:" + error);
+      console.log("Error adding categories:" + error);
     });
   }
 

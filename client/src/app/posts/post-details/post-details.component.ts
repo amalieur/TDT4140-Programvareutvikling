@@ -21,7 +21,7 @@ export class PostDetailsComponent implements OnInit {
     const id = this.activatedRoute.snapshot.params["id"];
 
     // Gets ID from current user
-    this.userId = this.authService.getCurrentUser().getUserId;
+    this.userId = this.authService.getCurrentUser(false).getUserId;
 
     // Gets Post with id from database
     this.postService.getPost(id).then(post => {
@@ -42,6 +42,7 @@ export class PostDetailsComponent implements OnInit {
    * Deletes post in database and navigates to post list
    */
   deletePost() {
+    // Check if we are the owner of the post
     if (this.userId == this.post.getOwner) {
       this.postService.deletePost(this.post.getId).then(data => {
         console.log("Successfully deleted post: " + this.post.getId);

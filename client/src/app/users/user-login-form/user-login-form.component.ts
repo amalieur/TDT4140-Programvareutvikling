@@ -18,6 +18,9 @@ export class UserLoginFormComponent implements OnInit {
   constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.authService.getCurrentUser(false).getUserId) {
+      this.router.navigate(["/"], {replaceUrl: true});
+    }
   }
 
   /**
