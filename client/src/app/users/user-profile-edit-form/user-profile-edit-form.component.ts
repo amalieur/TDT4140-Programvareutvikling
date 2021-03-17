@@ -53,11 +53,11 @@ export class UserProfileEditFormComponent implements OnInit {
       return false;
     }
     else if (this.password == "") {
-      this.setStatusMessage("Passordet kan ikke være tom");
+      this.setStatusMessage("Passordet kan ikke være tomt");
       return false;
     }
     else if (this.confirm_password == "") {
-      this.setStatusMessage("Passordet kan ikke være tom");
+      this.setStatusMessage("Passordet kan ikke være tomt");
       return false;
     }
     else if (this.confirm_password !== this.password) {
