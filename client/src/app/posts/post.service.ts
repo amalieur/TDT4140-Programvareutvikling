@@ -234,7 +234,7 @@ export class PostService {
   }
 
   /**
-   * Get all posts in database by specified category.
+   * Get all posts in database by specified user.
    */
    getPostsByUserId(userId: number): Promise<Array<Post>> {
     return new Promise<Array<Post>>(
