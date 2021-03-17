@@ -1,27 +1,28 @@
-<div class="navbar">
-	<span class="logo" (click)="navigate('/')">SellPoint</span>
-	<nav>
-		<span (click)="navigate('/annonse')">Annonser</span>
-		<span (click)="navigate('/annonse/ny')">Lag annonse</span>
-		<span *ngIf="!user.getUserId" (click)="navigate('/register')">Registrer</span>
-		<span *ngIf="!user.getUserId" (click)="navigate('/login')">Logg inn</span>
-		<span *ngIf="user.getUserId" (click)="navigate('/profile')">Profil</span>
-		<span *ngIf="user.getUserId" (click)="logout()">Logg ut</span>
-	</nav>
-</div>
+<div class="body">
+	<div class="navbar">
+		<span class="logo" (click)="navigate('/')">SellPoint</span>
+		<nav>
+			<span (click)="navigate('/annonse')">Annonser</span>
+			<span (click)="navigate('/annonse/ny')">Lag annonse</span>
+			<span *ngIf="!user.getUserId" (click)="navigate('/register')">Registrer</span>
+			<span *ngIf="!user.getUserId" (click)="navigate('/login')">Logg inn</span>
+			<span *ngIf="user.getUserId" (click)="navigate('/profile')">Profil</span>
+			<span *ngIf="user.getUserId" (click)="logout()">Logg ut</span>
+		</nav>
+	</div>
 
-<div class="splash">
-	<div class="title"><h1>SELLPOINT</h1></div>
+	<div class="splash">
+		<div class="title"><h1>SELLPOINT</h1></div>
 
-	<div class="wave">
-		<div class="waveImg"></div>
+		<div class="wave">
+			<div class="waveImg"></div>
+		</div>
+	</div>
+
+	<div class="wrapper">
+		<router-outlet></router-outlet>
 	</div>
 </div>
-
-<div class="wrapper">
-	<router-outlet></router-outlet>
-</div>
-
 <div class="footer">
 	<div class="logo"><h1>SELLPOINT LOGO</h1></div>
 	<div class="info">

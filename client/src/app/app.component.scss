@@ -1,3 +1,7 @@
+div.body{
+	min-height: calc(100vh - 200px);
+}
+
 div.navbar {
 	background-color: #fff;
 	display: flex;
@@ -19,7 +23,7 @@ div.navbar {
 		span{
 			padding: 10px;
 			cursor: pointer;
-			height: 100%;
+			margin: 20px;
 			font-size: 25px;
 			background-color: #fff;
 		}
@@ -102,11 +106,10 @@ div.footer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 200px;
 	font-family: 'Josefin Sans', sans-serif;
-	position: absolute;
+	clear: both;
+	height: 200px;
 	width: 100%;
-	bottom: 0;
 	div.info {
 		display: flex;
 		flex-direction: row;
