@@ -3,8 +3,11 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from 'src/app/authentication/auth.service';
 import { Category } from 'src/app/models/category.model';
+import { User } from 'src/app/models/user.model';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UserLoginFormComponent } from 'src/app/users/user-login-form/user-login-form.component';
 import { PostListComponent } from '../post-list/post-list.component';
 import { PostService } from '../post.service';
 
@@ -14,9 +17,19 @@ describe('PostFormComponent', () => {
   let component: PostFormComponent;
   let fixture: ComponentFixture<PostFormComponent>;
   let router: Router;
-  let mockPostService;
+  let mockPostService, mockAuthService;
 
   beforeEach(async () => {
+    // AuthService mock setup
+    mockAuthService = jasmine.createSpyObj(['getCurrentUser']);
+    mockAuthService.getCurrentUser.and.returnValue(new User({
+      userId: 4,
+      username: "tester",
+      email: "test@test.com",
+      password: "1234",
+      create_time: 513498
+    }));
+
     // PostService mock setup
     mockPostService = jasmine.createSpyObj(['getAllCategories', 'addPost', 'deletePost']);
     mockPostService.getAllCategories.and.returnValue(
@@ -45,10 +58,14 @@ describe('PostFormComponent', () => {
         FormsModule, 
         SharedModule,
         RouterTestingModule.withRoutes([
-          { path: 'annonse', component: PostListComponent}
+          { path: 'annonse', component: PostListComponent},
+          { path: 'login', component: UserLoginFormComponent}
         ])
       ],
-      providers: [ { provide: PostService, useValue: mockPostService } ]
+      providers: [
+        { provide: PostService, useValue: mockPostService },
+        { provide: AuthService, useValue: mockAuthService }
+      ]
     })
     .compileComponents();
   });
@@ -61,16 +78,20 @@ describe('PostFormComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  it('should create and get all categories', async () => {
-    expect(component).toBeTruthy();
-
+  it('should get current user', async () => {
     // Waits for ngOnInit and checks that we get categories
-    fixture.whenStable().then(() => {
-      expect(mockPostService.getAllCategories).toHaveBeenCalled();
-      expect(component.categories.length).toBe(2);
-      expect(component.categories[0].getCategoryId).toBe(1);
-      expect(component.categories[1].getName).toBe("Bil");
-    });
+    await fixture.whenStable();
+    expect(mockAuthService.getCurrentUser).toHaveBeenCalled();
+    expect(component.currentUser.getUserId).toBe(4);
+  });
+
+  it('should get all categories', async () => {
+    // Waits for ngOnInit and checks that we get categories
+    await fixture.whenStable();
+    expect(mockPostService.getAllCategories).toHaveBeenCalled();
+    expect(component.categories.length).toBe(2);
+    expect(component.categories[0].getCategoryId).toBe(1);
+    expect(component.categories[1].getName).toBe("Bil");
   });
 
   it('should validate form', () => {
@@ -126,21 +147,17 @@ describe('PostFormComponent', () => {
 
   it('should delete post with id', async () => {
     component.id = 5;
-    expect(component.id).toBe(5);
 
     // Waits for ngOnInit and checks that we can delete post
-    fixture.whenStable().then(() => {
-      component.deletePost();
-      expect(mockPostService.deletePost).toHaveBeenCalledWith(5);
-    });
+    await fixture.whenStable();
+    component.deletePost();
+    expect(mockPostService.deletePost).toHaveBeenCalledWith(5);
   });
 
   it('should not delete new post', async () => {
     // Waits for ngOnInit and checks that we can delete post
-    expect(component.id).toBe(0);
-    fixture.whenStable().then(() => {
-      component.deletePost();
-      expect(mockPostService.deletePost).not.toHaveBeenCalledWith(5);
-    });
+    await fixture.whenStable();
+    component.deletePost();
+    expect(mockPostService.deletePost).not.toHaveBeenCalledWith(5);
   });
 });
