@@ -94,7 +94,7 @@ describe('UserService', () => {
       });
   
       it('should reject on http error', () => {
-        // Deletes post with id = 5, but should catch HTTP error
+        // Deletes user with id = 2, but should catch HTTP error
         service.deleteUser(2).then(data => {
           fail();
         }).catch(error => {});
