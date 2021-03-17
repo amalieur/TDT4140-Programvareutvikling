@@ -76,4 +76,28 @@ export class UserService {
   private get_all_users() {
     return this.http.get(this.userUrl);
   }
+
+  /**
+   * Deletes an user from the database by id.
+   */
+   deleteUser(id: number): Promise<User> {
+    return new Promise<User>(
+      (resolve, reject) => {
+        this.delete_user(id).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private delete_user(id: number) {
+    return this.http.delete(this.userUrl + id);
+  }
 }

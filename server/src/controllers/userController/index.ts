@@ -61,7 +61,7 @@ router.route('/:userId').put(async (request: Request, response: Response) => {
 
 /* ============================= DELETE ============================= */
 // Delete user from id `/api/user/:id`
-router.route('/:userId').delete(async (request: Request, response: Response) => {
+router.route('/:userId').delete(authenticateToken, async (request: Request, response: Response) => {
 	const userId = request.params.userId;
 	try {
 		const input = `DELETE FROM user WHERE (userId=?);`;
