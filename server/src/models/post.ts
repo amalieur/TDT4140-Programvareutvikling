@@ -4,7 +4,7 @@ interface IPost {
 	description: string;
 	price: string;
 	timestamp: number;
-	owner: string;
+	owner: number;
 	categoryid: number;
 	imageUrl: string;
 }
