@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/authentication/auth.service';
 import { Category } from 'src/app/models/category.model';
 import { Post } from 'src/app/models/post.model';
+import { User } from 'src/app/models/user.model';
 import { PostService } from '../post.service';
 
 @Component({
@@ -24,9 +26,17 @@ export class PostFormComponent implements OnInit {
 
   categories: Array<Category>;
 
-  constructor(private postService: PostService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  currentUser: User;
+
+  constructor(private postService: PostService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+
+    if (!this.currentUser) {
+      this.router.navigate(["/login"], {replaceUrl: true});
+    }
+
     const id = this.activatedRoute.snapshot.params["id"];
     if (id) {
       this.id = id;
@@ -39,6 +49,10 @@ export class PostFormComponent implements OnInit {
         this.categoryid = post.getCategory;
         this.imageUrl = post.getImageUrl;
 
+        if (post.getOwner != this.currentUser.getUserId) {
+          this.router.navigateByUrl("/");
+        }
+
         this.showImage(this.imageUrl);
       }).catch(error => {
         console.log(error);
@@ -49,7 +63,7 @@ export class PostFormComponent implements OnInit {
     this.postService.getAllCategories().then(categories => {
       this.categories = categories;
     }).catch (error => {
-      console.log("Error adding catrgories:" + error);
+      console.log("Error adding categories:" + error);
     });
   }
 
@@ -91,7 +105,7 @@ export class PostFormComponent implements OnInit {
         title: this.title,
         description: this.description,
         timestamp: new Date(),
-        owner: "admin",
+        owner: this.currentUser.getUserId,
         imageUrl: this.imageUrl,
         price: this.price,
         categoryid: this.categoryid

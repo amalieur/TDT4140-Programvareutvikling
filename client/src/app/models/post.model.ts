@@ -6,7 +6,7 @@ export class Post implements Deserializable, Serializable {
     private title: string;
     private description: string;
     private timestamp: Date;
-    private owner: string;
+    private owner: number;
     private imageUrl: string;
     private price: number;
     private categoryid: number;
@@ -83,7 +83,7 @@ export class Post implements Deserializable, Serializable {
         return this.owner;
     }
 
-    set setOwner(owner: string) {
+    set setOwner(owner: number) {
         this.owner = owner;
     }
 

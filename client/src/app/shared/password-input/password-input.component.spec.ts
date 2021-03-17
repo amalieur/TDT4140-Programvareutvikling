@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared.module';
 
 import { PasswordInputComponent } from './password-input.component';
 
@@ -10,7 +11,7 @@ describe('PasswordInputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ PasswordInputComponent ],
-      imports: [ FormsModule ]
+      imports: [ SharedModule, FormsModule ]
     })
     .compileComponents();
   });
