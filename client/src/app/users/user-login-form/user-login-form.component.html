@@ -1,9 +1,9 @@
 <div class="loginForm">
 	<h3>Login</h3>
 
-	<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
+	<app-input [(inputModel)]="username" type="text" label="Brukernavn" (blur)="checkForm()"></app-input>
 
-	<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
+	<app-input [(inputModel)]="password" type="password" label="Passord" (blur)="checkForm()"></app-input>
 
 	<p>{{statusMessage}}</p>
 

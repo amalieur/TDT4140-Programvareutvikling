@@ -1,0 +1,32 @@
+label{
+    font-size: 14pt;
+}
+
+label.light {
+    color: white;
+}
+
+label.dark {
+    color: black;
+}
+
+textarea{
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 100%;
+    outline: none;
+    height: 100px;
+    resize: vertical;
+    font-size: 12pt;
+}
+
+textarea.light{
+    border-bottom: white 1px solid;
+    color: white;
+}
+
+textarea.dark{
+    border-bottom: black 1px solid;
+    color: black;
+}

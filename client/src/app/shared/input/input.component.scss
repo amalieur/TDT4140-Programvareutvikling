@@ -1,0 +1,43 @@
+label{
+    font-size: 14pt;
+}
+
+label.light {
+    color: white;
+}
+
+label.dark {
+    color: black;
+}
+
+input{
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 100%;
+    outline: none;
+    font-size: 12pt;
+}
+
+input.light{
+    border-bottom: white 1px solid;
+    color: white;
+}
+
+input.dark{
+    border-bottom: black 1px solid;
+    color: black;
+}
+
+/* Remove arrows from number input */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

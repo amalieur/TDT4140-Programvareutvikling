@@ -1,12 +1,15 @@
-<label>
+<label [class]="dark?'dark':'light'">
     {{label}}
 
-    <input  
-    type="text"
+    <input
+    [class]="dark?'dark':'light'"
+    [type]="isVisible ? 'text' : type"
     [placeholder]="placeholder"
     [(ngModel)]="inputModel" 
     (ngModelChange)="inputModelChange.emit(inputModel)" 
     (change)="change.emit($event)"
     (focus)="focus.emit($event)"
     (blur)="blur.emit($event)">
+    
+    <app-button *ngIf="type=='password'" (click)="togglePasswordVisible()" [text]="toggleText"></app-button>
 </label>
