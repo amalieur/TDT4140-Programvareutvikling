@@ -28,7 +28,7 @@ export class AuthService {
       // Get user data from JWT token
       const token = localStorage.getItem('token');
       const user_data = JSON.parse(atob(token.split(".")[1])).data[0];
-
+      
       return new User(user_data);
     }
     return new User();

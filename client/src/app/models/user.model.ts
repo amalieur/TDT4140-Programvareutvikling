@@ -27,7 +27,7 @@ export class User implements Deserializable, Serializable {
         console.log(this);
         return this;
     }
-
+    
     serialize(): Object {
         return {
             userId: this.userId,
@@ -35,7 +35,7 @@ export class User implements Deserializable, Serializable {
             email: this.email,
             password: this.password,
             create_time: this.create_time,
-            isAdmin: 0
+            isAdmin: this.isAdmin,
         };
     }
 
