@@ -1,0 +1,7 @@
+<h1>User information</h1>
+<p>Userid: {{user.getUserId}}</p>
+<p>username: {{user.getUsername}}</p>
+<p>email: {{user.getEmail}}</p>
+
+<h1>Users posts:</h1>
+<app-post-thumbnail *ngFor="let post of userPosts" [post]="post"></app-post-thumbnail>

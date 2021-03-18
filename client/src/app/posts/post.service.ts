@@ -232,4 +232,38 @@ export class PostService {
   private get_posts_by_category(categoryId: number) {
     return this.http.get(this.postUrl, {params: {categoryid: String(categoryId)}});
   }
+
+  /**
+   * Get all posts in database by specified user.
+   */
+   getPostsByUserId(userId: number): Promise<Array<Post>> {
+    return new Promise<Array<Post>>(
+      (resolve, reject) => {
+        this.get_posts_by_user_id(userId).subscribe((data: any) => {
+          try {
+            let outputPosts = [];
+            for (let post of data.data) {
+              outputPosts.push(new Post(post));
+              
+              if (!post.id || post.id == 0) {
+                reject("Could not deserialize Post");
+                return;
+              }
+            }
+            resolve(outputPosts);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_posts_by_user_id(userId: number) {
+    return this.http.get(this.postUrl, {params: {userId: String(userId)}});
+  }
 }

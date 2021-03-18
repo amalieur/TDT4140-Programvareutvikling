@@ -41,14 +41,21 @@ router.route("/").post(async (request: Request, response: Response) => {
 });
 
 /* ============================= READ ============================= */
-// Get all posts `/api/post/?categoryid=`
+// Get all posts `/api/post/?categoryid=:categoryid&userId=:userId`
 router.route("/").get(async (request: Request, response: Response) => {
-  const { categoryid } = request.query as { [key: string]: string };
+  const { categoryid, userId } = request.query as { [key: string]: string };
   try {
     let input = `SELECT p.id, p.title, p.description, p.price, p.timestamp, p.owner, p.categoryid, p.imageUrl 
     FROM post as p`;
-    if (categoryid) input += ` WHERE p.categoryid=${categoryid}`;
-    response.status(200).json(await query(input, ""));
+    if (categoryid || userId) input += ` WHERE `;
+    const params = Object.entries({
+      categoryId: categoryid,
+      owner: userId
+    }).filter((param) => param[1])
+    // Add p.categoryId = ? AND p.userId = ? respectively if it is not undefined
+    input += params.map((param) => `p.${param[0]} = ?`).join(" AND ")
+    console.log(input, params.map((param) => param[1]));
+    response.status(200).json(await query(input, params.map((param) => param[1])));
   } catch (error) {
     response.status(400).send("Bad Request");
   }

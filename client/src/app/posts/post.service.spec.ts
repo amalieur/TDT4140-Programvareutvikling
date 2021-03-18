@@ -331,5 +331,76 @@ describe('PostService', () => {
       req.error(new ErrorEvent("400"));
     });
   });
+
+  describe('getPostsByUserId', () => {
+    it('should get posts by user', () => {
+      // Gets posts by category and checks values
+      service.getPostsByUserId(2).then(posts => {
+        for (let i = 0; i < posts.length; i++) {
+          expect(posts[i].getId).toBe(i + 1);
+          expect(posts[i].getTitle).toBe("Test" + (i + 1));
+          expect(posts[i].getOwner).toBe("2");
+        }
+      }).catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/?userId=2");
+      expect(req.request.method).toBe("GET");
+      req.flush({
+        data: [{
+          id: 1,
+          title: "Test1",
+          description: "TestDescription",
+          timestamp: 23947298234,
+          owner: "2",
+          imageUrl: null,
+          price: 49,
+          categoryid: 2
+        }, {
+          id: 2,
+          title: "Test2",
+          description: "TestDescription",
+          timestamp: 23453246527,
+          owner: "2",
+          imageUrl: null,
+          price: 159,
+          categoryid: 2
+        }]
+      });
+    });
+
+    it('should reject on invalid post', () => {
+      // Gets invalid post, should go to catch
+      service.getPostsByUserId(420).then(posts => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/?userId=420");
+      expect(req.request.method).toBe("GET");
+      req.flush({
+        data: [{
+          id: 0,
+          title: "Test",
+          description: "TestDescription",
+          timestamp: 23947298
+        }]
+      });
+    });
+
+    it('should reject on http error', () => {
+      // Gets HTTP error instead of post, should catch
+      service.getPostsByUserId(520).then(posts => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/?userId=520");
+      expect(req.request.method).toBe("GET");
+      req.error(new ErrorEvent("400"));
+    });
+  });
 });
 
