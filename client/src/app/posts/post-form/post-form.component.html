@@ -18,7 +18,7 @@
 				</app-select>
 			</div>
 
-			<app-input [(inputModel)]="imageUrl" type="password" label="Bilde URL" (blur)="showImage(imageUrl)"></app-input>
+			<app-input [(inputModel)]="imageUrl" type="text" label="Bilde URL" (blur)="showImage(imageUrl)"></app-input>
 			<img [src]="displayImageUrl" (error)="showImage('https://i.stack.imgur.com/y9DpT.jpg')">
 
 			<p>{{statusMessage}}</p>

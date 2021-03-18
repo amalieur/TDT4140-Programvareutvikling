@@ -1,13 +1,25 @@
-<h2>{{post.getTitle}}</h2>
+<div class="container">
+    <div class="greenBox">
+        <h2>{{post.getTitle}}</h2>
+        <div class="whiteBox">
+            <div class="pinkBox">
+                <img [src]="post.getImageUrl">
+            </div>
 
-<img [src]="post.getImageUrl">
-<h4>{{post.getPrice}} kr</h4>
-<p>{{post.getDescription}}</p>
-<br>
-<p>Publisert: {{post.getTimestamp}}</p>
-<p>Eier: {{post.getOwner}}</p>
+            <hr>
 
-<div *ngIf="userId == post.getOwner">
-    <app-button text="Rediger annonse" (click)="editPost()"></app-button>
-    <app-button text="Slett annonse" (click)="deletePost()"></app-button>
+            <p>Pris:</p>
+            <h3>{{post.getPrice}} kr</h3>
+
+            <p id="description">{{post.getDescription}}</p>
+            <br>
+
+            <p id="timestamp">Publisert: {{post.getTimestamp}}</p>
+
+            <div *ngIf="userId == post.getOwner" class="buttonContainer">
+                <app-button class="ownerButton" text="Rediger annonse" (click)="editPost()"></app-button>
+                <app-button class="ownerButton" text="Slett annonse" (click)="deletePost()"></app-button>
+            </div>
+        </div>
+    </div>
 </div>
