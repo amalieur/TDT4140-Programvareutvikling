@@ -339,7 +339,7 @@ describe('PostService', () => {
         for (let i = 0; i < posts.length; i++) {
           expect(posts[i].getId).toBe(i + 1);
           expect(posts[i].getTitle).toBe("Test" + (i + 1));
-          expect(posts[i].getOwner).toBe("2");
+          expect(posts[i].getOwner).toBe(2);
         }
       }).catch(error => {
         fail();
@@ -354,7 +354,7 @@ describe('PostService', () => {
           title: "Test1",
           description: "TestDescription",
           timestamp: 23947298234,
-          owner: "2",
+          owner: 2,
           imageUrl: null,
           price: 49,
           categoryid: 2
@@ -363,7 +363,7 @@ describe('PostService', () => {
           title: "Test2",
           description: "TestDescription",
           timestamp: 23453246527,
-          owner: "2",
+          owner: 2,
           imageUrl: null,
           price: 159,
           categoryid: 2

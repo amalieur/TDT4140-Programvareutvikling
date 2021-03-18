@@ -3,6 +3,7 @@ import query from "../../services/db_query";
 import express from "express";
 import IPost from "../../models/post";
 import Category from "../../models/category";
+import adminPermission from '../../middlewares/adminPermission';
 
 const router = express.Router();
 const category = new Category();
