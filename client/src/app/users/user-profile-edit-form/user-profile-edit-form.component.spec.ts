@@ -18,10 +18,6 @@ describe('UserProfileEditFormComponent', () => {
   beforeEach(async () => {
     // UserService mock setup
     mockUserService = jasmine.createSpyObj(['updateUser']);
-<<<<<<< HEAD
-=======
-   
->>>>>>> a9bf92d (Test: added tests for update user (#13))
     mockUserService.updateUser.and.returnValue(
       new Promise<string>(
         (resolve) => {
@@ -34,23 +30,15 @@ describe('UserProfileEditFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ UserProfileEditFormComponent ],
-<<<<<<< HEAD
       imports: [ 
         HttpClientTestingModule, 
         FormsModule, 
         SharedModule,
         RouterTestingModule.withRoutes([
-=======
-    imports: [ 
-      HttpClientTestingModule, 
-      FormsModule, 
-      SharedModule,
-      RouterTestingModule.withRoutes([
->>>>>>> a9bf92d (Test: added tests for update user (#13))
-        { path: 'profil', component: UserProfileComponent}
-      ])
-    ],
-    providers: [ { provide: UserService, useValue: mockUserService } ]
+         { path: 'profil', component: UserProfileComponent}
+        ])
+      ],
+      providers: [ { provide: UserService, useValue: mockUserService } ]
   })
   .compileComponents();
   });
