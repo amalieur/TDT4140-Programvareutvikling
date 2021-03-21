@@ -25,7 +25,13 @@ export class UserGuestProfileComponent implements OnInit {
     // Gets User with id from database
     this.userService.getUser(id).then(user => {
       this.user = user;
-      this.getPosts();
+      // Redirects to /profile if the user is accessing their own profile
+      const currentUser: User = this.authService.getCurrentUser();
+      if (currentUser.getUserId == this.user.getUserId) {
+        this.router.navigateByUrl("/profile");
+      } else {
+        this.getPosts();
+      }
     }).catch (error => {
       // Navigate to home on error or invalid userid
       console.log("Error getting user: " + error);

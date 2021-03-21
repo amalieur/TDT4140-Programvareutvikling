@@ -1,7 +1,51 @@
-<h1>User information</h1>
-<p>Userid: {{user.getUserId}}</p>
-<p>username: {{user.getUsername}}</p>
-<p>email: {{user.getEmail}}</p>
+<div class="headerSplash">
+	<img src="/assets/img/waveBig.svg" alt="splash background">
+	<div class="title">
+		<h1>SELLPOINT</h1>
+        <h2>{{user.getUsername}}</h2>
+	</div>
+</div>
+<div class="profile">
+    <div class="profile_info">
+        <div class="titleWrapper">
+            <div class="img"></div>
+            <div class="info">
+                <p class="name">{{user.getUsername}} Doe</p>
+                <p class="email">{{user.getEmail}}</p>
+                <p class="phone_number">+47 123 45 678</p>
+            </div>
+        </div>
+        <div class="cardWrapper">
+            <div class="rating">
+                Mine omtaler: 
+                <i class="material-icons">star</i>
+                <i class="material-icons">star</i>
+                <i class="material-icons">star</i>
+                <i class="material-icons">star_half</i>
+                <i class="material-icons">star_border</i>
+            </div>
+            <div class="location">
+                Geografi: Trondheim, Oslo
+            </div>
+            <div class="description">
+                <pre>
+Om profilen min:    
+Fiskeboller er digg
+Fotball er livet
 
-<h1>Users posts:</h1>
-<app-post-thumbnail *ngFor="let post of userPosts" [post]="post"></app-post-thumbnail>
+()_()          ()_()            ()_())_()
+(=’.’)    +    (=’.’)     =     (=’.’)=’,’)
+(,(‘’)(‘’)     (,(‘’)(‘’)       (,(“)(“)(“)(“)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                </pre>
+            </div>
+        </div>
+    </div>
+    <div class="post_list">
+        <h2>Brukerens annonser</h2>
+        <div class="posts">
+            <app-post-thumbnail *ngFor="let post of userPosts" [post]="post"></app-post-thumbnail>
+        </div>
+        <a href="#">Se flere annonser</a>
+    </div>
+</div>
