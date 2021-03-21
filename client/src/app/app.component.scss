@@ -82,21 +82,6 @@ div.splash {
 			text-align: center;
 			justify-content: flex-end;
 		}
-		button.btn {
-			background: #13D05E;
-			width: 200px;
-			margin: 10px 0 10px 10px;
-			padding: 20px;
-			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-			font-family: 'Josefin Sans', sans-serif;
-			font-size: 20px;
-			border: none;
-			cursor: pointer;
-		}
-		button.pink {
-			background: #FFA1A1;
-		}
-
 	}
 	img {
 		position: absolute;
@@ -127,9 +112,7 @@ div.splash {
 	}
 }
 div.wrapper {
-	padding: 5%;
-	min-height: calc(45vh - 200px);
-
+	min-height: calc(100vh - 62px - 200px); // pageheight - (header + footer)
 }
 div.footer {
 	color: #ffffff;

@@ -1,11 +1,21 @@
+<div class="headerSplash">
+	<img src="/assets/img/waveSmall.svg" alt="splash background">
+	<div class="title">
+		<h1>SELLPOINT</h1>
+	</div>
+</div>
 <div class="loginForm">
-	<h3>Login</h3>
-
-	<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
-
-	<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
-
-	<p>{{statusMessage}}</p>
-
-	<app-button (click)="loginUser()" text="Login"></app-button>
+	<div class="cardWrapper">
+		<h3>Logg inn på kontoen din</h3>
+		<div>
+			<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
+			<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
+			<p class="status">{{statusMessage}}</p>
+			<app-button (click)="loginUser()" text="Logg inn" class="btn pink"></app-button>
+			<div class="other">
+				<a href="#">Glemt passordet ditt?</a>
+				<a href="#">Lag ny bruker!</a>
+			</div>
+		</div>
+	</div>
 </div>

@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output  } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation  } from '@angular/core';
 
 @Component({
   selector: 'app-password-input',
   templateUrl: './password-input.component.html',
-  styleUrls: ['./password-input.component.scss']
+  styleUrls: ['./password-input.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PasswordInputComponent {
 
   isVisible: boolean = false;
-  toggleText: string = "show";
+  toggleText: string = "visibility";
 
   @Input()
   label: string = "";
@@ -35,7 +36,7 @@ export class PasswordInputComponent {
 
   togglePasswordVisible() {
     this.isVisible = !this.isVisible;
-    this.toggleText = this.isVisible ? "hide" : "show";
+    this.toggleText = this.isVisible ? "visibility" : "visibility_off";
   }
 
 }
