@@ -10,8 +10,11 @@ import { UserService } from '../user.service';
   styleUrls: ['./user-registration-form.component.scss']
 })
 export class UserRegistrationFormComponent implements OnInit {
+  firstname: string = "";
+  lastname: string = "";
   username: string = "";
   email: string = "";
+  phone_number: string = "";
   password: string = "";
   confirm_password: string = "";
 
@@ -26,12 +29,24 @@ export class UserRegistrationFormComponent implements OnInit {
    * Validates the form
    */
   checkForm(): boolean {
-    if (this.username == "") {
+    if (this.firstname == "") {
+      this.setStatusMessage("Fornavn kan ikke være tom");
+      return false;
+    }
+    else if (this.lastname == "") {
+      this.setStatusMessage("Etternavn kan ikke være tom");
+      return false;
+    }
+    else if (this.username == "") {
       this.setStatusMessage("Brukernavn kan ikke være tom");
       return false;
     }
     else if (this.email == "") {
       this.setStatusMessage("Eposten kan ikke være tom");
+      return false;
+    }
+    else if (this.phone_number == "") {
+      this.setStatusMessage("Mobilnummer kan ikke være tom");
       return false;
     }
     else if (this.password == "") {

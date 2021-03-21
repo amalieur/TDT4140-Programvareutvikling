@@ -1,15 +1,24 @@
+<div class="headerSplash">
+	<img src="/assets/img/waveSmall.svg" alt="splash background">
+	<div class="title">
+		<h1>SELLPOINT</h1>
+	</div>
+</div>
 <div class="registrationForm">
-	<h3>Register en bruker</h3>
-
-	<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
-
-	<app-text-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-text-input>
-
-	<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
-
-	<app-password-input [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()"></app-password-input>
-
-	<p>{{statusMessage}}</p>
-
-	<app-button (click)="registerUser()" text="Register"></app-button>
+	<div class="cardWrapper">
+		<h3>Registrer din profil</h3>
+		<div>
+			<div class="split">
+				<app-text-input class="splittedInput" [(inputModel)]="firstname" label="Fornavn" (blur)="checkForm()"></app-text-input>
+				<app-text-input class="splittedInput" [(inputModel)]="lastname" label="Etternavn" (blur)="checkForm()"></app-text-input>
+			</div>
+			<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
+			<app-text-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-text-input>
+			<app-text-input [(inputModel)]="phone_number" label="Mobilnummer" (blur)="checkForm()"></app-text-input>
+			<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
+			<app-password-input [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()"></app-password-input>
+			<p class="status">{{statusMessage}}</p>
+			<app-button (click)="registerUser()" text="Registrer profil" class="btn pink"></app-button>
+		</div>
+	</div>
 </div>

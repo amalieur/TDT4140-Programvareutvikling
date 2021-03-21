@@ -1,0 +1,68 @@
+.headerSplash {
+    position: relative;
+    width: 100%;
+    color: #fff;
+    img {
+        width: 100%;
+    }
+    div.title {
+		position: absolute;
+		top: 50px;
+		left: 50%;
+		transform: translateX(-50%);
+		font-family: 'Inter', sans-serif;
+		font-size: 2em;
+		text-shadow: -2px 2px 3px #000000;
+		h1 {
+			letter-spacing: 10px;
+		}
+	}
+    &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 10px;
+        left: 0;
+        bottom: 0;
+        background: #fff;
+    }
+}
+:host > .registrationForm {
+    padding: 5%;
+    display:flex;
+    justify-content: center;
+    h3 {
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding: 10px;
+    }
+    & > div.cardWrapper {
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(90deg, #14A35A 0%, #24e072 100%);
+        padding: 10px;
+        width: 50%;
+        min-width: 400px;
+        max-width: 500px;
+    }
+}
+div.cardWrapper > div {
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px 10px;
+    .split {
+        display: flex;
+        justify-content: space-between;
+        .splittedInput {
+            width: 46%;
+        }
+    }
+}
+p.status {
+    margin: 10px 0 5px 5px;
+    font-style: italic;
+}
