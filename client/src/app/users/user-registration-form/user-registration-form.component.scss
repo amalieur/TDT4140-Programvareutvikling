@@ -24,6 +24,7 @@ div.cardWrapper > div {
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    box-shadow: inset 0px 4px 4px rgb(0 0 0 / 50%);
     gap: 10px;
     padding: 20px 10px;
     .split {

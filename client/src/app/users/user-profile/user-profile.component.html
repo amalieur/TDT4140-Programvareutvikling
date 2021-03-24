@@ -1,27 +1,28 @@
 <div class="profile">
-    <div class="profile_info">
-        <div class="titleWrapper">
-            <div class="img"></div>
-            <div class="info">
-                <p class="name">{{user.getUsername}} Doe</p>
-                <p class="email">{{user.getEmail}}</p>
-                <p class="phone_number">+47 123 45 678</p>
+    <div class="infoWrapper">
+        <div class="profile_info">
+            <div class="titleWrapper">
+                <div class="img"></div>
+                <div class="info">
+                    <p class="name">{{user.getUsername}} Doe</p>
+                    <p class="email">{{user.getEmail}}</p>
+                    <p class="phone_number">+47 123 45 678</p>
+                </div>
             </div>
-        </div>
-        <div class="cardWrapper">
-            <div class="rating">
-                Mine omtaler: 
-                <i class="material-icons">star</i>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star_half</i>
-                <i class="material-icons">star_border</i>
-            </div>
-            <div class="location">
-                Geografi: Trondheim, Oslo
-            </div>
-            <div class="description">
-                <pre>
+            <div class="cardWrapper">
+                <div class="rating">
+                    Mine omtaler: 
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star_half</i>
+                    <i class="material-icons">star_border</i>
+                </div>
+                <div class="location">
+                    Geografi: Trondheim, Oslo
+                </div>
+                <div class="description">
+                    <pre>
 Om profilen min:    
 Fiskeboller er digg
 Fotball er livet
@@ -30,9 +31,10 @@ Fotball er livet
 (=’.’)    +    (=’.’)     =     (=’.’)=’,’)
 (,(‘’)(‘’)     (,(‘’)(‘’)       (,(“)(“)(“)(“)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                </pre>
+                    </pre>
+                </div>
+                <app-button (click)="placeholder()" text="Rediger profil" class="btn pink"></app-button>
             </div>
-            <app-button (click)="placeholder()" text="Rediger profil" class="btn pink"></app-button>
         </div>
     </div>
     <div class="post_list">
