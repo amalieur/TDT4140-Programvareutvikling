@@ -7,6 +7,8 @@ import { UserRegistrationFormComponent } from './user-registration-form/user-reg
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 import { UserGuestProfileComponent } from './user-guest-profile/user-guest-profile.component';
+import { UserProfileEditFormComponent } from './user-profile-edit-form/user-profile-edit-form.component';
+
 
 
 @NgModule({
@@ -14,7 +16,8 @@ import { UserGuestProfileComponent } from './user-guest-profile/user-guest-profi
     UserRegistrationFormComponent,
     UserProfileComponent,
     UserLoginFormComponent,
-    UserGuestProfileComponent
+    UserGuestProfileComponent,
+    UserProfileEditFormComponent
   ],
   imports: [
     CommonModule,
