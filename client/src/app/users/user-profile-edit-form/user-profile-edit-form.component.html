@@ -1,14 +1,13 @@
 <div class="registrationForm">
     <h3>Rediger bruker</h3>
 
-    <app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
+    <app-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-input>
 
-    <app-text-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-text-input>
+    <app-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-input>
 
-    <app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
+    <app-input type="password" [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-input>
 
-    <app-password-input [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()">
-    </app-password-input>
+    <app-input type="password" [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()"></app-input>
 
     <p>{{statusMessage}}</p>
 

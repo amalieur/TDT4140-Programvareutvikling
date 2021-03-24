@@ -1,3 +1,7 @@
+div.body{
+	min-height: calc(100vh - 200px);
+}
+
 div.navbar {
 	background-color: #fff;
 	display: flex;
@@ -18,14 +22,18 @@ div.navbar {
 	nav {
 		span{
 			padding: 10px;
-			margin: 10px;
 			cursor: pointer;
+			margin: 20px;
 			font-size: 25px;
+			background-color: #fff;
+		}
+		span:hover{
+			background-color: #eee;
 		}
 	}
 }
 div.splash {
-	position: relative;
+	position: absolute;
 	width: 100%;
 	height: 55vh;
 	background-color: springgreen;
@@ -55,49 +63,6 @@ div.splash {
 			letter-spacing: 10px;
 		}
 	}
-	div.categoryWrapper {
-		padding: 10px;
-		margin-left: 5%;
-		background: linear-gradient(90deg, #14A35A 0%, #24e072 100%);
-		width: 40%;
-		height: 300px;
-		p {
-			margin-bottom: 10px;
-		}
-		div.whiteBox {
-			width: 100%;
-			height: 56%;
-			background-color: #ffffff;
-		}
-	}
-	div.cta {
-		color: #030303;
-		text-align: right;
-		margin-right: 5%;
-		margin-top: 60px;
-		width: 400px;
-		z-index: 2;
-		div.buttons {
-			display: flex;
-			text-align: center;
-			justify-content: flex-end;
-		}
-		button.btn {
-			background: #13D05E;
-			width: 200px;
-			margin: 10px 0 10px 10px;
-			padding: 20px;
-			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-			font-family: 'Josefin Sans', sans-serif;
-			font-size: 20px;
-			border: none;
-			cursor: pointer;
-		}
-		button.pink {
-			background: #FFA1A1;
-		}
-
-	}
 	img {
 		position: absolute;
 		height: 100%;
@@ -108,8 +73,10 @@ div.splash {
 		position: absolute;
 		left: 0;
 		bottom: 0;
-		height: 50%;
+		position: absolute;
+		top: 250px;
 		width: 100%;
+		height: 100%;
 		display: flex;
 		justify-content: space-between;
 
@@ -127,9 +94,11 @@ div.splash {
 	}
 }
 div.wrapper {
+	position: relative;
+	top: 125px;
 	padding: 5%;
-	min-height: calc(45vh - 200px);
-
+	width: 100%;
+	height: 100%;
 }
 div.footer {
 	color: #ffffff;
@@ -137,7 +106,10 @@ div.footer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	font-family: 'Josefin Sans', sans-serif;
+	clear: both;
 	height: 200px;
+	width: 100%;
 	div.info {
 		display: flex;
 		flex-direction: row;

@@ -61,11 +61,11 @@ describe('UserProfileEditFormComponent', () => {
     
     component.email = "Email";
     expect(component.checkForm()).toBeFalse();
-    expect(component.statusMessage).toBe("Passordet kan ikke være tom");
+    expect(component.statusMessage).toBe("Passordet kan ikke være tomt");
 
     component.password = "password";
     expect(component.checkForm()).toBeFalse();
-    expect(component.statusMessage).toBe("Passordet kan ikke være tom");
+    expect(component.statusMessage).toBe("Passordet kan ikke være tomt");
 
     component.confirm_password = "hei";
     expect(component.checkForm()).toBeFalse();

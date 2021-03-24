@@ -7,7 +7,7 @@ import { AuthService } from '../../authentication/auth.service';
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
-  styleUrls: ['./user-login-form.component.scss']
+  styleUrls: ['./user-login-form.component.scss', '../../app.component.scss']
 })
 export class UserLoginFormComponent implements OnInit {
   username: string = "";

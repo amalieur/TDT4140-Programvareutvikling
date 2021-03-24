@@ -1,23 +1,26 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-number-input',
-  templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.scss']
+  selector: 'app-text-area-input',
+  templateUrl: './text-area-input.component.html',
+  styleUrls: ['./text-area-input.component.scss']
 })
-export class NumberInputComponent {
+export class TextAreaInputComponent {
+  
+  @Input()
+  dark: boolean = true;
 
   @Input()
   label: string = "";
 
   @Input()
-  inputModel: number;
+  inputModel: string;
 
   @Input()
   placeholder: string = "";
 
   @Output()
-  inputModelChange = new EventEmitter<number>();
+  inputModelChange = new EventEmitter<string>();
 
   @Output()
   change = new EventEmitter();

@@ -1,16 +1,18 @@
 <div class="registrationForm">
-	<h3>Register en bruker</h3>
-
-	<app-text-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-text-input>
-
-	<app-text-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-text-input>
-
-	<app-password-input [(inputModel)]="password" label="Passord" (blur)="checkForm()"></app-password-input>
-
-	<app-password-input [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()">
-	</app-password-input>
-
-	<p>{{statusMessage}}</p>
-
-	<app-button (click)="registerUser()" text="Rediger"></app-button>
+	<div class="cardWrapper">
+		<h3>Registrer din profil</h3>
+		<div>
+			<div class="split">
+				<app-input class="splittedInput" [(inputModel)]="firstname" label="Fornavn" (blur)="checkForm()"></app-input>
+				<app-input class="splittedInput" [(inputModel)]="lastname" label="Etternavn" (blur)="checkForm()"></app-input>
+			</div>
+			<app-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-input>
+			<app-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-input>
+			<app-input [(inputModel)]="phone_number" label="Mobilnummer" (blur)="checkForm()"></app-input>
+			<app-input [(inputModel)]="password" type="password" label="Passord" (blur)="checkForm()"></app-input>
+			<app-input [(inputModel)]="confirm_password" type="password" label="Bekreft passord" (blur)="checkForm()"></app-input>
+			<p class="status">{{statusMessage}}</p>
+			<app-button (click)="registerUser()" text="Registrer profil" class="btn pink"></app-button>
+		</div>
+	</div>
 </div>

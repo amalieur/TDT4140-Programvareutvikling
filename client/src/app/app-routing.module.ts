@@ -7,10 +7,13 @@ import { UserRegistrationFormComponent } from './users/user-registration-form/us
 import { UserLoginFormComponent } from './users/user-login-form/user-login-form.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { UserGuestProfileComponent } from './users/user-guest-profile/user-guest-profile.component';
+import { HomeComponent } from './home/home.component';
 import { UserProfileEditFormComponent } from './users/user-profile-edit-form/user-profile-edit-form.component';
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
+
   { path: 'annonse/ny', component: PostFormComponent },
   { path: 'annonse/rediger/:id', component: PostFormComponent },
   { path: 'annonse', component: PostListComponent },
