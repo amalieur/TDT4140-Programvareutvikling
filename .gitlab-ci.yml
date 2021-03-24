@@ -1,0 +1,51 @@
+image: node:14.16.0-alpine
+stages:
+  - install
+  - build
+  - test
+
+variables:
+  JWT_KEY: "-----BEGIN RSA PRIVATE KEY-----\n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\n-----END RSA PRIVATE KEY-----"
+  PROJECT_PATH: "$CI_PROJECT_DIR"
+  APP_OUTPUT_PATH: "$CI_PROJECT_DIR/artifacts/app"
+
+cache:
+  paths:
+  - node_modules/
+  - client/node_modules/
+  - server/node_modules/
+
+install:
+  stage: install
+  script:
+    - npm --silent install
+    - cd server && npm --silent install
+    - cd ../client && npm --silent install
+  only:
+    changes:
+      - package-lock.json
+    refs:
+      - master
+      - merge_requests
+
+build:
+  stage: build
+  artifacts:
+    name: "angular-app-pipeline"
+    paths:
+      - $APP_OUTPUT_PATH
+  script:
+    - npm build
+  only:
+    refs:
+      - master
+      - merge_requests
+
+server_test:
+  stage: test
+  script:
+    - cd server && npm test
+  only:
+    refs:
+      - master
+      - merge_requests
