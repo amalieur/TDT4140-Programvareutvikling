@@ -1,22 +1,30 @@
+<div class="title">
+	<h2>{{id ? 'REDIGER ANNONSE' : 'OPPRETT NY ANNONSE'}}</h2>
+</div>
+
 <div class="postform">
-	<h3>{{id ? 'Rediger annonse' : 'Lag annonse'}}</h3>
+	<div class="greenBox">
+		<app-input [(inputModel)]="title" type="text" label="Annonsens tittel" (blur)="checkForm()" [dark]="false"></app-input>
 
-	<app-text-input [(inputModel)]="title" label="Tittel" (blur)="checkForm()"></app-text-input>
+		<div class="whiteBox">
+			<app-text-area-input [(inputModel)]="description" label="Beskrivelse" (blur)="checkForm()"></app-text-area-input>
 
-	<app-text-input [(inputModel)]="description" label="Beskrivelse" (blur)="checkForm()"></app-text-input>
+			<div class="horizontalGrid">
+				<app-input [(inputModel)]="price" type="number" label="Pris" (blur)="checkForm()"></app-input>
 
-	<app-number-input [(inputModel)]="price" label="Pris" (blur)="checkForm()"></app-number-input>
+				<app-select [(inputModel)]="categoryid" (change)="checkForm()">
+					<option value="0" [selected]="categoryid == 0" hidden>Velg kategori . . .</option>
+					<option *ngFor="let category of categories" [value]="category.getCategoryId" [selected]="categoryid == category.getCategoryId">{{category.getName}}</option>
+				</app-select>
+			</div>
 
-	<app-select [(inputModel)]="categoryid" (change)="checkForm()" label="Kategori">
-		<option value="0" [selected]="categoryid == 0" hidden>Velg kategori</option>
-		<option *ngFor="let category of categories" [value]="category.getCategoryId" [selected]="categoryid == category.getCategoryId">{{category.getName}}</option>
-	</app-select>
+			<app-input [(inputModel)]="imageUrl" type="text" label="Bilde URL" (blur)="showImage(imageUrl)"></app-input>
+			<img [src]="displayImageUrl" (error)="showImage('https://i.stack.imgur.com/y9DpT.jpg')">
 
-	<app-text-input [(inputModel)]="imageUrl" label="Bilde URL" (blur)="showImage(imageUrl)"></app-text-input>
-	<img [src]="displayImageUrl" (error)="showImage('https://i.stack.imgur.com/y9DpT.jpg')">
+			<p>{{statusMessage}}</p>
 
-	<p>{{statusMessage}}</p>
-
-	<app-button (click)="publishPost()" text="Publiser"></app-button>
-	<app-button *ngIf="id" (click)="deletePost()" text="Slett annonse"></app-button>
+			<app-button (click)="publishPost()" text="Publiser"></app-button>
+			<app-button *ngIf="id" (click)="deletePost()" text="Slett annonse"></app-button>
+		</div>
+	</div>
 </div>

@@ -1,32 +1,3 @@
-.headerSplash {
-    position: relative;
-    width: 100%;
-    color: #fff;
-    img {
-        width: 100%;
-    }
-    div.title {
-		position: absolute;
-		top: 50px;
-		left: 50%;
-		transform: translateX(-50%);
-		font-family: 'Inter', sans-serif;
-		font-size: 2em;
-		text-shadow: -2px 2px 3px #000000;
-		h1 {
-			letter-spacing: 10px;
-		}
-	}
-    &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 10px;
-        left: 0;
-        bottom: 0;
-        background: #fff;
-    }
-}
 :host > .registrationForm {
     padding: 5%;
     display:flex;
@@ -53,6 +24,7 @@ div.cardWrapper > div {
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    gap: 10px;
     padding: 20px 10px;
     .split {
         display: flex;

@@ -1,0 +1,42 @@
+label.light {
+    color: white;
+}
+
+label.dark {
+    color: black;
+}
+
+label {
+    position: relative;
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 10px 0 5px 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+    textarea{
+        padding: 10px 0 5px 0;
+        font-family: 'Josefin Sans', sans-serif;
+        border: none;
+        font-size: 1rem;
+        padding-right: 50px;
+        outline: none;
+        background-color: rgba(0, 0, 0, 0);
+        height: 150px;
+    }
+
+    textarea.light{
+        border-bottom: 2px solid #fff;
+        color: white;
+        &:focus {
+            border-bottom: 2px solid #444;
+        }
+    }
+    
+    textarea.dark{
+        border-bottom: 2px solid #797979;
+        color: black;
+        &:focus {
+            border-bottom: 2px solid #14A35A;
+        }
+    }
+}

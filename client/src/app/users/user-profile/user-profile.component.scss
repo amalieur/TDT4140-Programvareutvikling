@@ -1,38 +1,5 @@
-.headerSplash {
-    position: relative;
-    width: 100%;
-    color: #fff;
-    img {
-        width: 100%;
-    }
-    div.title {
-        text-align: center;
-		position: absolute;
-		top: 50px;
-		left: 50%;
-		transform: translateX(-50%);
-		font-family: 'Inter', sans-serif;
-		font-size: 2em;
-		text-shadow: -2px 2px 3px #000000;
-		h1 {
-			letter-spacing: 10px;
-		}
-        h2 {
-            font-size: 1.5em;
-            letter-spacing: 15px;
-        }
-	}
-    &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 10px;
-        left: 0;
-        bottom: 0;
-        background: #fff;
-    }
-}
 :host > .profile {
+    margin-top: 200px;
     display:flex;
     justify-content: center;
     padding: 0 5% 5% 5%;

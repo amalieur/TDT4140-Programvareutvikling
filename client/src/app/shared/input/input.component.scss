@@ -1,0 +1,61 @@
+label.light {
+    color: white;
+}
+
+label.dark {
+    color: black;
+}
+
+label {
+    position: relative;
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 10px 0 5px 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+    input{
+        padding: 10px 0 5px 0;
+        font-family: 'Josefin Sans', sans-serif;
+        border: none;
+        font-size: 1rem;
+        padding-right: 50px;
+        outline: none;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    input.light{
+        border-bottom: 2px solid #fff;
+        color: white;
+        &:focus {
+            border-bottom: 2px solid #444;
+        }
+    }
+    
+    input.dark{
+        border-bottom: 2px solid #797979;
+        color: black;
+        &:focus {
+            border-bottom: 2px solid #14A35A;
+        }
+    }
+
+    .material-icons {
+        position: absolute;
+        right: 2.5px;
+        bottom: 7.5px;
+        cursor: pointer;
+    }
+}
+
+/* Remove arrows from number input */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

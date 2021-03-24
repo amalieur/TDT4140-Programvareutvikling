@@ -1,12 +1,13 @@
-<label>
+<label [class]="dark?'dark':'light'">
     {{label}}
 
-    <input  
-    type="text"
+    <textarea
+    [class]="dark?'dark':'light'"
     [placeholder]="placeholder"
     [(ngModel)]="inputModel" 
     (ngModelChange)="inputModelChange.emit(inputModel)" 
     (change)="change.emit($event)"
     (focus)="focus.emit($event)"
     (blur)="blur.emit($event)">
+    </textarea>
 </label>
