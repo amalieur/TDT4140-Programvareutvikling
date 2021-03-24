@@ -5,7 +5,7 @@
 		<span (click)="navigate('/annonse/ny')">Lag annonse</span>
 		<span *ngIf="!user.getUserId" (click)="navigate('/register')">Registrer</span>
 		<span *ngIf="!user.getUserId" (click)="navigate('/login')">Logg inn</span>
-		<span *ngIf="user.getUserId" (click)="navigate('/profile')">Profil</span>
+		<span *ngIf="user.getUserId" (click)="navigate('/profil')">Profil</span>
 		<span *ngIf="user.getUserId" (click)="logout()">Logg ut</span>
 	</nav>
 </div>
