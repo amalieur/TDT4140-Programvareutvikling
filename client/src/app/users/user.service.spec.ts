@@ -40,6 +40,7 @@ describe('UserService', () => {
             email: "blob@planet.us",
             password: "Hyttepine",
             create_time: 1613552549000,
+            isAdmin: 0
           }]
         });
       });
@@ -59,6 +60,7 @@ describe('UserService', () => {
             username: "zorg",
             email: "blob@planet.us",
             password: "Hyttepine",
+            isAdmin: 0
           }]
         });
       });
@@ -75,6 +77,35 @@ describe('UserService', () => {
         req.error(new ErrorEvent("400"));
       });
     });
+
+    describe('deleteUser', () => {
+      it('should delete user', () => {
+        // Deletes user with id = 2
+        service.deleteUser(2)
+        .then(data => {})
+        .catch(error => {
+          fail();
+        });
   
+        // Mocks and checks HTTP request
+        const req = httpMock.expectOne("api/user/2");
+        expect(req.request.method).toBe("DELETE");
+        req.flush({
+          data: []
+        });
+      });
+  
+      it('should reject on http error', () => {
+        // Deletes user with id = 2, but should catch HTTP error
+        service.deleteUser(2).then(data => {
+          fail();
+        }).catch(error => {});
+  
+        // Mocks and checks HTTP request
+        const req = httpMock.expectOne("api/user/2");
+        expect(req.request.method).toBe("DELETE");
+        req.error(new ErrorEvent("400"));
+      });
+    });
 });
 

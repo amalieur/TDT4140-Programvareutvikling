@@ -15,14 +15,20 @@ export class PostDetailsComponent implements OnInit {
 
   post: Post = new Post();
   owner: User = new User();
+  user: User = new User();
+  isAdmin: number = 0;
   userId: number = 0;
 
   constructor(private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router,
               private authService: AuthService, private userService: UserService) { }
 
   ngOnInit() {
-    // Gets ID from current user
-    this.userId = this.authService.getCurrentUser(false).getUserId;
+    // Gets current user information
+    this.user = this.authService.getCurrentUser(false);
+    
+    // If user is logged in, assign userId and isAdmin
+    this.userId = this.user.getUserId; // 0
+    this.isAdmin = this.user.getIsAdmin; // 0
 
     // Gets id parameter from URL
     const id = this.activatedRoute.snapshot.params["id"];

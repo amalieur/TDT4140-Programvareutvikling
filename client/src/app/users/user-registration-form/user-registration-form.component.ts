@@ -75,6 +75,7 @@ export class UserRegistrationFormComponent implements OnInit {
         username: this.username,
         email: this.email,
         password: this.password,
+        isAdmin: 0,
       });
 
       // Adds user to database and redirects to the homepage afterwards

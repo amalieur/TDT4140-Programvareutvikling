@@ -19,7 +19,7 @@ export class UserProfileComponent implements OnInit {
   
   allPosts: Array<Post> = [];
   user: User = new User();
-  constructor(private authService: AuthService, private postService: PostService, private router: Router) { }
+  constructor(private authService: AuthService, private userService: UserService, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
@@ -36,4 +36,18 @@ export class UserProfileComponent implements OnInit {
       console.log(error);
     });
   }
+
+  /**
+   * Deletes user in database and navigates to login
+   */
+  deleteUser() {
+    this.userService.deleteUser(this.user.getUserId).then(data => {
+      console.log("Successfully deleted user: " + this.user.getUserId);
+      this.authService.logout();
+      this.router.navigateByUrl("/login");
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 }
+
