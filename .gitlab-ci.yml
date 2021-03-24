@@ -22,6 +22,8 @@ install:
     - cd server && npm --silent install
     - cd ../client && npm --silent install
   only:
+    changes:
+      - package-lock.json
     refs:
       - master
       - merge_requests
