@@ -6,8 +6,13 @@
                 <img [src]="post.getImageUrl">
             </div>
 
-            <hr>
+            <div class="ownerInfo">
+                <p>Owner: {{owner.getUsername}}</p>
+                <p>E-mail: {{owner.getEmail}}</p>
+            </div>
 
+            <hr>
+            
             <p>Pris:</p>
             <h3>{{post.getPrice}} kr</h3>
 
