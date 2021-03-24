@@ -5,12 +5,14 @@
 		<span (click)="navigate('/annonse/ny')">Lag annonse</span>
 		<span *ngIf="!user.getUserId" (click)="navigate('/register')">Registrer</span>
 		<span *ngIf="!user.getUserId" (click)="navigate('/login')">Logg inn</span>
-		<span *ngIf="user.getUserId" (click)="navigate('/profile')">Profil</span>
+		<span *ngIf="user.getUserId" (click)="navigate('/profil')">Profil</span>
 		<span *ngIf="user.getUserId" (click)="logout()">Logg ut</span>
 	</nav>
 </div>
 <div class="splash">
-	<div class="title"><h1>SELLPOINT</h1></div>
+	<div class="title">
+		<h1>SELLPOINT</h1>
+	</div>
 	<div class="wave">
 		<div class="waveImg"></div>
 		<div class="categoryWrapper">
@@ -20,7 +22,8 @@
 		</div>
 		<div class="cta">
 			<h2>Lorem Ipsum</h2>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+			dolore magna aliqua.
 			<div class="buttons">
 				<button (click)="navigate('/register')" class="btn">Registrer deg!</button>
 				<button (click)="navigate('/')" class="btn pink">Les mer</button>
@@ -34,7 +37,9 @@
 </div>
 
 <div class="footer">
-	<div class="logo"><h1>SELLPOINT LOGO</h1></div>
+	<div class="logo">
+		<h1>SELLPOINT LOGO</h1>
+	</div>
 	<div class="info">
 		<div class="bedrift">
 			<h3>Lorem ipsum</h3>
