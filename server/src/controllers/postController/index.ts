@@ -3,6 +3,7 @@ import query from "../../services/db_query";
 import express from "express";
 import IPost from "../../models/post";
 import Category from "../../models/category";
+import authenticateToken from '../../middlewares/auth';
 
 const router = express.Router();
 const category = new Category();
@@ -76,7 +77,7 @@ router.route("/:id").get(async (request: Request, response: Response) => {
 
 /* ============================= UPDATE ============================= */
 // Edit post with id `/api/post/:id`
-router.route("/:id").put(async (request: Request, response: Response) => {
+router.route("/:id").put(authenticateToken, async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
   const {
     title,
@@ -108,7 +109,7 @@ router.route("/:id").put(async (request: Request, response: Response) => {
 
 /* ============================= DELETE ============================= */
 // Remove post with id `/api/post/:id`
-router.route("/:id").delete(async (request: Request, response: Response) => {
+router.route("/:id").delete(authenticateToken, async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
   try {
     response

@@ -3,6 +3,7 @@ import { Post } from 'src/app/models/post.model';
 import { PostService } from '../post.service';
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/authentication/auth.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-post-details',
@@ -12,13 +13,18 @@ import { AuthService } from 'src/app/authentication/auth.service';
 export class PostDetailsComponent implements OnInit {
 
   post: Post = new Post();
+  user: User = new User();
+  isAdmin: number = 0;
   userId: number = 0;
 
   constructor(private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    // Gets ID from current user
-    this.userId = this.authService.getCurrentUser(false).getUserId;
+    // Gets current user information
+    this.user = this.authService.getCurrentUser(false);
+    // If user is logged in, assign userId and isAdmin
+    this.userId = this.user.getUserId; // 0
+    this.isAdmin = this.user.getIsAdmin; // 0
 
     // Gets id parameter from URL
     const id = this.activatedRoute.snapshot.params["id"];

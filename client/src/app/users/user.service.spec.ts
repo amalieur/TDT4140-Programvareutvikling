@@ -40,6 +40,7 @@ describe('UserService', () => {
             email: "blob@planet.us",
             password: "Hyttepine",
             create_time: 1613552549000,
+            isAdmin: 0
           }]
         });
       });
@@ -59,6 +60,7 @@ describe('UserService', () => {
             username: "zorg",
             email: "blob@planet.us",
             password: "Hyttepine",
+            isAdmin: 0
           }]
         });
       });

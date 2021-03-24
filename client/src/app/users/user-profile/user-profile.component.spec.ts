@@ -22,7 +22,8 @@ describe('UserProfileComponent', () => {
       username: "tester",
       email: "test@test.com",
       password: "1234",
-      create_time: 513498
+      create_time: 513498,
+      isAdmin: 0
     }));
 
     // UserService mock setup
@@ -69,7 +70,8 @@ describe('UserProfileComponent', () => {
       username: "tester",
       email: "test@test.com",
       password: "1234",
-      create_time: 513498
+      create_time: 513498,
+      isAdmin: 0
     }));
   });
 

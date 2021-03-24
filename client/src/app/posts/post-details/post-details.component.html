@@ -7,7 +7,12 @@
 <p>Publisert: {{post.getTimestamp}}</p>
 <p>Eier: {{post.getOwner}}</p>
 
+<p>a: {{isAdmin}}</p>
+<p>b: {{userId}}</p>
+
 <div *ngIf="userId == post.getOwner">
     <app-button text="Rediger annonse" (click)="editPost()"></app-button>
+</div>
+<div *ngIf="userId == post.getOwner || isAdmin == 1">
     <app-button text="Slett annonse" (click)="deletePost()"></app-button>
 </div>

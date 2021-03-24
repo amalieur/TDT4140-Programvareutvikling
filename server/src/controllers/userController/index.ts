@@ -6,17 +6,18 @@ import authenticateToken from '../../middlewares/auth';
 
 const router = express.Router();
 /* ============================= CREATE ============================= */
-// Get all users `/api/user/`
+// Create an user `/api/user/`
 router.route('/').post(async (request: Request, response: Response) => {
-	const {username, email, password, create_time} = request.body;
+	const {username, email, password, isAdmin, create_time} = request.body; // destructuring
 	try {
 		const user: IUser = {
 			"username": username,
 			"email": email,
             "password": password,
+			"isAdmin": isAdmin || 0,
 		};
 		if (Object.values(user).filter(p => p == undefined).length > 0) return response.status(500).send("Error");
-		const input = (`INSERT INTO user(username, email, password) VALUES (?,?,?)`)
+		const input = (`INSERT INTO user(username, email, password, isAdmin) VALUES (?,?,?,?)`);
 		return response.status(200).json(
 			await query(input,Object.values(user))
 		);
@@ -72,4 +73,3 @@ router.route('/:userId').delete(authenticateToken, async (request: Request, resp
 });
 
 export default router;
-
