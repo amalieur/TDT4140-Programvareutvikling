@@ -13,6 +13,7 @@ import { UserService } from 'src/app/users/user.service';
 })
 export class PostDetailsComponent implements OnInit {
 
+  contactUsers: Array<User> = [];
   post: Post = new Post();
   owner: User = new User();
   user: User = new User();
@@ -27,8 +28,8 @@ export class PostDetailsComponent implements OnInit {
     this.user = this.authService.getCurrentUser(false);
     
     // If user is logged in, assign userId and isAdmin
-    this.userId = this.user.getUserId; // 0
-    this.isAdmin = this.user.getIsAdmin; // 0
+    this.userId = this.user.getUserId;
+    this.isAdmin = this.user.getIsAdmin;
 
     // Gets id parameter from URL
     const id = this.activatedRoute.snapshot.params["id"];
@@ -36,7 +37,7 @@ export class PostDetailsComponent implements OnInit {
     // Gets Post with id from database
     this.postService.getPost(id).then(post => {
       this.post = post;
-      
+
       // Gets Post owner from database
       this.userService.getUser(this.post.getOwner).then(user => {
         this.owner = user;
@@ -64,6 +65,46 @@ export class PostDetailsComponent implements OnInit {
       this.postService.deletePost(this.post.getId).then(data => {
         console.log("Successfully deleted post: " + this.post.getId);
         this.router.navigateByUrl("/annonse");
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+  }
+
+  /**
+   * Closes post in database and navigates to profile
+   */
+  markClosePost() {
+    if (this.contactUsers.length <= 0) {
+      this.userService.getContactPostUsers(this.post.getId).then(userList => {
+        this.contactUsers = userList;
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+    // Open popup
+  }
+  closePost() {
+    // Check if we are the owner of the post
+    if (this.userId == this.post.getOwner) {
+      this.post.setStatus = 1;
+      this.postService.updatePost(this.post.getId,this.post).then(data => {
+        console.log("Successfully closed post: " + this.post.getId);
+        this.router.navigateByUrl("/profil");
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+  }
+
+  /**
+   * Add user to postContact relation in database
+   */
+   contactPost() {
+    // Check if that we are NOT the owner of the post
+    if (this.userId != this.post.getOwner) {
+      this.postService.contactPost(this.post.getId,this.user.getUserId).then(data => {
+        console.log("Successfully contacted post: " + this.post.getId);
       }).catch(error => {
         console.log(error);
       });

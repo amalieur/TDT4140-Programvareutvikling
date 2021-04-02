@@ -11,7 +11,9 @@ interface IUserLogin {
   providedIn: 'root'
 })
 export class UserService {
-  userUrl = "api/user/"
+
+  userUrl = "api/user/";
+  contactUrl = "api/post/contact/";
 
   constructor(private http: HttpClient) { }
 
@@ -75,6 +77,39 @@ export class UserService {
   }
   private get_all_users() {
     return this.http.get(this.userUrl);
+  }
+
+  /**
+   * Get all users relating to contact post given postId from database.
+   */
+   getContactPostUsers(postId: number): Promise<Array<User>> {
+    return new Promise<Array<User>>(
+      (resolve, reject) => {
+        this.get_contact_post_users(postId).subscribe((data: any) => {
+          try {
+            let outputUsers = []; // array of users
+            for (let user of data.data) {
+              outputUsers.push(new User(user));
+
+              if (user.getId == 0) {
+                reject("Could not deserialize User");
+                return;
+              }
+            }
+            resolve(outputUsers);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private get_contact_post_users(postId: number) {
+    return this.http.get(this.contactUrl+postId);
   }
 
   /**

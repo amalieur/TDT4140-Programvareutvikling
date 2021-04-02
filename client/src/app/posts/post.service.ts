@@ -10,6 +10,7 @@ export class PostService {
 
   postUrl = "api/post/";
   categoryUrl = "api/category/";
+  contactUrl = "api/post/contact/";
 
   categories: Array<Category>;
 
@@ -196,6 +197,31 @@ export class PostService {
 
   private update_post(id: number, post: Post) {
     return this.http.put(this.postUrl + id, post.serialize());
+  }
+
+  /**
+   * Contact post in database by id.
+   */
+   contactPost(id: number, userId: number): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.contact_post(id, userId).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private contact_post(id: number, userId: number) {
+    return this.http.post(this.contactUrl, {id: id, userId: userId});
   }  
 
   /**

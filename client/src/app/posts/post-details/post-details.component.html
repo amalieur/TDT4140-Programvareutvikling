@@ -7,7 +7,9 @@
             </div>
 
             <div class="ownerInfo">
-                <p>Owner: {{owner.getUsername}}</p>
+                <a [href]="'/user/'+owner.getUserId">
+                    <p>Owner: {{owner.getUsername}}</p>
+                </a>
                 <p>E-mail: {{owner.getEmail}}</p>
             </div>
 
@@ -21,9 +23,15 @@
 
             <p id="timestamp">Publisert: {{post.getTimestamp}}</p>
 
-            <div *ngIf="userId == post.getOwner" class="buttonContainer">
+            <div *ngIf="userId != post.getOwner" class="buttonContainer">
+                <a [href]="'mailto:'+owner.getEmail"><app-button class="ownerButton" text="Kontakt selger" (click)="contactPost()"></app-button></a>
+            </div>
+            <div *ngIf="userId == post.getOwner || user.getIsAdmin" class="buttonContainer">
                 <app-button class="ownerButton" text="Rediger annonse" (click)="editPost()"></app-button>
                 <app-button class="ownerButton" text="Slett annonse" (click)="deletePost()"></app-button>
+                <div *ngIf="post.getStatus != 1">
+                    <app-button class="ownerButton" text="Marker solgt" (click)="closePost()"></app-button>
+                </div>
             </div>
         </div>
     </div>
