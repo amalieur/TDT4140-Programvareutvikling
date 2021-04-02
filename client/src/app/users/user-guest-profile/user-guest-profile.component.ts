@@ -28,7 +28,7 @@ export class UserGuestProfileComponent implements OnInit {
       // Redirects to /profile if the user is accessing their own profile
       const currentUser: User = this.authService.getCurrentUser();
       if (currentUser.getUserId == this.user.getUserId) {
-        this.router.navigateByUrl("/profile");
+        this.router.navigateByUrl("/profil");
       } else {
         this.getPosts();
       }

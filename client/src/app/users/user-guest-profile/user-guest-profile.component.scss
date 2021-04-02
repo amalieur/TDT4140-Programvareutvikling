@@ -1,12 +1,13 @@
 :host > .profile {
-    margin-top: 300px;
+    margin-top: 200px;
     display:flex;
     justify-content: center;
     padding: 0 5% 5% 5%;
     font-family: 'Josefin Sans', sans-serif;
     transform: translateY(-100px);
-    .profile_info {
+    .infoWrapper {
         order: 2;
+        margin-top: 40px;
     }
 }
 div.profile_info {
@@ -49,6 +50,7 @@ div.profile_info {
         padding: 20px 10px;
         pre {
             font-size: 0.75rem;
+            padding: 5px;
         }
     }
 }
@@ -69,5 +71,18 @@ div.post_list {
     }
     & > a {
         align-self: flex-end;
+        margin-top: 20px;
+    }
+}
+div.posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,300px);
+    grid-gap: 10px;
+}
+:host ::ng-deep app-post-thumbnail div.postthumb {
+    width: 300px;
+    & > img {
+        width: 280px !important;
+        height: 280px !important;
     }
 }
