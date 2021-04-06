@@ -14,10 +14,29 @@ export class PostListComponent implements OnInit {
   categories: Array<Category> = [];
 
   selectedCategory: number;
+  selectedSort: number = 0;
+
+  postMaxPrice: number;
+  priceMin: number = 0;
+  priceMax: number = 0;
+
+  checked: boolean = false;
+  areas: Array<any> = [
+    {name: "Agder", checked: false},
+    {name: "Innlandet", checked: false}, 
+    {name: "Møre og Romsdal", checked: false}, 
+    {name: "Nordland", checked: false}, 
+    {name: "Oslo", checked: false},
+    {name: "Rogaland", checked: false},
+    {name: "Troms og Finnmark", checked: false},
+    {name: "Trøndelag", checked: false},
+    {name: "Vestfold og Telemark", checked: false},
+    {name: "Viken", checked: false}
+  ];
 
   constructor(private postService: PostService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     // Gets all categories from database and displays them in dropdown
     this.postService.getAllCategories().then(categories => {
       this.categories = categories;
@@ -32,22 +51,49 @@ export class PostListComponent implements OnInit {
     // Gets all posts from database, and displays them
     this.postService.getAllPosts().then(posts => {
       this.allPosts = posts;
+
+      // Gets the maximum price for a post
+      this.postMaxPrice = this.allPosts.map(p => p.getPrice).reduce((a, b) => Math.max(a, b));
+
+      if (this.priceMax >= this.postMaxPrice || this.priceMax == 0) {
+        this.priceMax = this.postMaxPrice;
+      }
     }).catch(error => {
       console.log(error);
     });
   }
 
   filterCategory() {
-    if (this.selectedCategory > 0) {
-      // Gets all posts by selected category
-      this.postService.getPostsByCategory(this.selectedCategory).then(posts => {
-        this.allPosts = posts;
-      }).catch(error => {
-        console.log(error);
-      });
-    } else {
-      this.getPosts();
+    // Gets all posts by selected category
+    this.postService.getPostsByCategory(this.selectedCategory, this.selectedSort, this.priceMin, this.priceMax).then(posts => {
+      this.allPosts = posts;
+      // this.sortPosts();
+
+      // Gets the maximum price for a post
+      this.postMaxPrice = this.allPosts.map(p => p.getPrice).reduce((a, b) => Math.max(a, b));
+
+      if (this.priceMax >= this.postMaxPrice || this.priceMax == 0) {
+        this.priceMax = this.postMaxPrice;
+      }
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  priceMinChange(){
+    if (this.priceMin > this.priceMax) {
+      this.priceMin = this.priceMax;
     }
+
+    this.filterCategory();
+  }
+
+  priceMaxChange(){
+    if (this.priceMax < this.priceMin) {
+      this.priceMax = this.priceMin;
+    }
+
+    this.filterCategory();
   }
 
 }
