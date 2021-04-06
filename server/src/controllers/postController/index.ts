@@ -42,7 +42,7 @@ router.route("/").post(async (request: Request, response: Response) => {
   }
 });
 
-// Contact post with params id and userId`/api/post/contact/`
+// Contact post with body id and userId`/api/post/contact/`
 router.route("/contact").post(authenticateToken, async (request: Request, response: Response) => {
   const {id, userId} = request.body;
   if (!(id && userId)) return response.status(400).send("Bad Request");
@@ -58,6 +58,27 @@ router.route("/contact").post(authenticateToken, async (request: Request, respon
     return response
       .status(200)
       .json(await query("INSERT INTO postContacted (id, userId) VALUES (?, ?)", [id, userId]));
+  } catch (error) {
+    return response.status(400).send("Bad Request");
+  }
+});
+
+// Review post with body id, userId, stars and comment`/api/post/review/`
+router.route("/review").post(authenticateToken, async (request: Request, response: Response) => {
+  const {id, userId, stars, comment} = request.body;
+  if (!(id && userId)) return response.status(400).send("Bad Request");
+  try {
+    // Check for duplicates
+    const duplicate_input = "SELECT * FROM postReview WHERE id=? AND userId=?;"
+    const review = await query(duplicate_input,[id, userId]);
+    const reviewObj = Object.values(JSON.parse(JSON.stringify(review.data)))[0];
+    if (reviewObj) {
+        return response.status(200);
+    }
+    // If there is no duplicates, create new relation
+    return response
+      .status(200)
+      .json(await query("INSERT INTO postReview (id, userId, stars, comment) VALUES (?, ?, ?, ?)", [id, userId, stars, comment]));
   } catch (error) {
     return response.status(400).send("Bad Request");
   }
@@ -98,7 +119,7 @@ router.route("/:id").get(async (request: Request, response: Response) => {
 });
 
 // Get users relating to contact post with params postId`/api/post/contact/:id`
-router.route("/contact/:id").post(authenticateToken, async (request: Request, response: Response) => {
+router.route("/contact/:id").get(authenticateToken, async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
   if (!postId) return response.status(400).send("Bad Request");
   try {

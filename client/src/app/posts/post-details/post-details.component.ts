@@ -14,11 +14,13 @@ import { UserService } from 'src/app/users/user.service';
 export class PostDetailsComponent implements OnInit {
 
   contactUsers: Array<User> = [];
+  contactPopup: boolean = false;
   post: Post = new Post();
   owner: User = new User();
   user: User = new User();
   isAdmin: number = 0;
   userId: number = 0;
+  soldToUser: number = 0;
 
   constructor(private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router,
               private authService: AuthService, private userService: UserService) { }
@@ -83,8 +85,25 @@ export class PostDetailsComponent implements OnInit {
       });
     }
     // Open popup
+    this.contactPopup = true;
   }
+  closePopup() {
+    this.contactPopup = false;
+  }
+
+  /**
+   * Add chosen user if any to reviewPost, closes post in database and navigates to profile
+   */
+  markClosedPost() {
+    this.reviewPost();
+    this.closePost();
+  }
+  
+  /**
+   * Closes post in database and navigates to profile
+   */
   closePost() {
+    this.contactPopup = false;
     // Check if we are the owner of the post
     if (this.userId == this.post.getOwner) {
       this.post.setStatus = 1;
@@ -105,6 +124,20 @@ export class PostDetailsComponent implements OnInit {
     if (this.userId != this.post.getOwner) {
       this.postService.contactPost(this.post.getId,this.user.getUserId).then(data => {
         console.log("Successfully contacted post: " + this.post.getId);
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+  }
+
+  /**
+   * Add user to postReview relation in database
+   */
+   reviewPost() {
+     // Checks that user sold to is NOT the owner of the post
+    if (this.userId == this.post.getOwner && this.soldToUser > 0 && this.soldToUser != this.post.getOwner) {
+      this.postService.reviewPost(this.post.getId,this.soldToUser, -1, "").then(data => {
+        console.log("Successfully added user the post sold to: " + this.post.getId);
       }).catch(error => {
         console.log(error);
       });

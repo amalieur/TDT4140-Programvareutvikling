@@ -11,6 +11,7 @@ export class PostService {
   postUrl = "api/post/";
   categoryUrl = "api/category/";
   contactUrl = "api/post/contact/";
+  reviewUrl = "api/post/review/";
 
   categories: Array<Category>;
 
@@ -222,6 +223,31 @@ export class PostService {
 
   private contact_post(id: number, userId: number) {
     return this.http.post(this.contactUrl, {id: id, userId: userId});
+  }  
+
+  /**
+   * Contact post in database by id.
+   */
+    reviewPost(id: number, userId: number, stars: number, comment: string): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.review_post(id, userId, stars, comment).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private review_post(id: number, userId: number, stars: number, comment: string) {
+    return this.http.post(this.reviewUrl, {id: id, userId: userId, stars: stars, comment: comment});
   }  
 
   /**
