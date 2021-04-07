@@ -1,3 +1,4 @@
+import { defaultThrottleConfig } from "rxjs/internal/operators/throttle";
 import { Deserializable } from "./deserializable.model";
 import { Serializable } from "./serializable.model";
 
@@ -10,6 +11,7 @@ export class Post implements Deserializable, Serializable {
     private imageUrl: string;
     private price: number;
     private categoryid: number;
+    private status: number;
 
     constructor(input: any = null) {
         if (input) {
@@ -23,6 +25,7 @@ export class Post implements Deserializable, Serializable {
             this.imageUrl = null;
             this.price = null;
             this.categoryid = null;
+            this.status = 0;
         }
     }
 
@@ -43,7 +46,8 @@ export class Post implements Deserializable, Serializable {
             owner: this.owner,
             imageUrl: this.imageUrl,
             price: this.price,
-            categoryid: this.categoryid
+            categoryid: this.categoryid,
+            status: this.status
         };
     }
 
@@ -109,5 +113,23 @@ export class Post implements Deserializable, Serializable {
 
     set setCategory(categoryid: number) {
         this.categoryid = categoryid;
+    }
+
+    get getStatus() {
+        return this.status;
+    }
+
+    get getStatusInfo() {
+        if (this.status == 0) {
+            return "Open";
+        } else if (this.status == 2) {
+            return "Draft";
+        } else {
+            return "Closed";
+        }
+    }
+
+    set setStatus(status: number) {
+        this.status = status;
     }
 }

@@ -1,10 +1,36 @@
+<div *ngIf="givenReviewPopup" class="popupWrapper">
+    <div class="popupContainer">
+        <div *ngIf="notGivenReviews.length > 0">
+            <h3>Annonser ikke gitt omtale til:</h3>
+            <div class="popup">
+                <app-user-review-detail *ngFor="let review of notGivenReviews" [review]="review" [editable]="givenReviewPopup"></app-user-review-detail>
+            </div>
+        </div>
+        <h3>Dine omtaler:</h3>
+        <div class="popup">
+            <app-user-review-detail *ngFor="let review of givenReviews" [review]="review"></app-user-review-detail>
+            <app-button class="ownerButton" text="Lukk" (click)="closePopup()"></app-button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="receivedReviewPopup" class="popupWrapper">
+    <div class="popupContainer">
+        <h3>Omtaler fått:</h3>
+        <div class="popup">
+            <app-user-review-detail *ngFor="let review of receivedReviews" [review]="review"></app-user-review-detail>
+            <app-button class="ownerButton" text="Lukk" (click)="closePopup()"></app-button>
+        </div>
+    </div>
+</div>
+
 <div class="profile">
     <div class="infoWrapper">
         <div class="profile_info">
             <div class="titleWrapper">
                 <div class="img"></div>
                 <div class="info">
-                    <p class="name">{{user.getUsername}} Doe</p>
+                    <p class="name">{{user.getUsername}}</p>
                     <p class="email">{{user.getEmail}}</p>
                     <p class="phone_number">+47 123 45 678</p>
                 </div>
@@ -19,7 +45,7 @@
                     <i class="material-icons">star_border</i>
                 </div>
                 <div class="location">
-                    Geografi: Trondheim, Oslo
+                    Område: {{user.getLocation}}
                 </div>
                 <div class="description">
                     <pre>
@@ -34,19 +60,19 @@ Fotball er livet
                     </pre>
                 </div>
                 <a href="/profil/rediger"><app-button text="Rediger profil" class="btn pink"></app-button></a>
+                <app-button class="btn pink reviewBtn" text="Omtaler gitt" (click)="showGivenUserReviews()"></app-button>
+                <app-button class="btn pink reviewBtn" text="Omtaler fått" (click)="showReceivedUserReviews()"></app-button>
             </div>
         </div>
     </div>
     <div class="post_list">
         <h2>Mine aktive annonser</h2>
         <div class="posts">
-            <!-- All users posts for now :) -->
             <app-post-thumbnail *ngFor="let post of allPosts" [post]="post"></app-post-thumbnail>
         </div>
         <br><br>
         <h2>Mine favoritter</h2>
         <div class="posts">
-            <!-- All users posts for now :) -->
             <app-post-thumbnail *ngFor="let post of favouritedPosts" [post]="post"></app-post-thumbnail>
         </div>
     </div>

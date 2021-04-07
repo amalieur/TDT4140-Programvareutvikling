@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/authentication/auth.service';
 import { Post } from 'src/app/models/post.model';
+import { Review } from 'src/app/models/review.model';
 import { User } from 'src/app/models/user.model';
 import { PostService } from 'src/app/posts/post.service';
 import { UserService } from '../user.service';
@@ -20,6 +21,12 @@ export class UserProfileComponent implements OnInit {
   allPosts: Array<Post> = [];
   favouritedPosts: Array<Post> = [];
   user: User = new User();
+
+  givenReviews: Array<Review> = [];
+  notGivenReviews: Array<Review> = [];
+  givenReviewPopup: boolean = false;
+  receivedReviews: Array<Review> = [];
+  receivedReviewPopup: boolean = false;
   constructor(private authService: AuthService, private userService: UserService, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
@@ -28,10 +35,25 @@ export class UserProfileComponent implements OnInit {
     this.getFavouritedPosts();
   }
 
-  getPostsByUserId() {
-    // Gets all posts from database, and displays them
-    this.postService.getPostsByUserId(this.user.getUserId).then(posts => {
-      this.allPosts = posts;
+  showReceivedUserReviews() {
+    this.getUserReceivedReviewsByUserId();
+    this.receivedReviewPopup = true;
+  }
+  showGivenUserReviews() {
+    this.getUserGivenReviewsByUserId();
+    this.givenReviewPopup = true;
+  }
+  closePopup() {
+    this.receivedReviewPopup = false;
+    this.givenReviewPopup = false;
+  }
+
+  /**
+   * Gets all received reviews from database
+   */
+  getUserReceivedReviewsByUserId() {
+    this.userService.getAllReceivedUserReviews(this.user.getUserId).then(reviews => {
+      this.receivedReviews = reviews;
     }).catch(error => {
       console.log(error);
     });
@@ -48,16 +70,26 @@ export class UserProfileComponent implements OnInit {
   }
 
   /**
-   * Deletes user in database and navigates to login
+   * Gets all given reviews from database
    */
-  deleteUser() {
-    this.userService.deleteUser(this.user.getUserId).then(data => {
-      console.log("Successfully deleted user: " + this.user.getUserId);
-      this.authService.logout();
-      this.router.navigateByUrl("/login");
+  getUserGivenReviewsByUserId() {
+    this.userService.getAllGivenReviews(this.user.getUserId).then(reviews => {
+      this.givenReviews = reviews.filter((review: Review) => review.getStars > -1);
+      this.notGivenReviews = reviews.filter((review: Review) => review.getStars == -1);
     }).catch(error => {
       console.log(error);
     });
   }
+  /**
+   * Gets all posts from database, and displays them
+   */
+  getPostsByUserId() {
+    this.postService.getPostsByUserId(this.user.getUserId).then(posts => {
+      this.allPosts = posts.filter((post: Post) => post.getStatus == 0); // Active posts
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
 }
 

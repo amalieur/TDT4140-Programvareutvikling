@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Review } from 'src/app/models/review.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from '../user.service';
 import { UserGuestProfileComponent } from './user-guest-profile.component';
@@ -9,13 +10,13 @@ import { UserGuestProfileComponent } from './user-guest-profile.component';
 describe('UserGuestProfileComponent', () => {
   let component: UserGuestProfileComponent;
   let fixture: ComponentFixture<UserGuestProfileComponent>;
-  let mockPostService;
+  let mockUserService;
   const dateNow = new Date();
   
   beforeEach(async () => {
     // UserService mock setup
-    mockPostService = jasmine.createSpyObj(['getUser']);
-    mockPostService.getUser.and.returnValue(
+    mockUserService = jasmine.createSpyObj(['getUser', 'getAllReceivedUserReviews']);
+    mockUserService.getUser.and.returnValue(
       new Promise<User>(
         (resolve) => {
           resolve(new User({
@@ -27,13 +28,24 @@ describe('UserGuestProfileComponent', () => {
           }));
         })
     );
+    mockUserService.getAllReceivedUserReviews.and.returnValue(
+      new Promise<Review[]>(
+        (resolve) => {
+          resolve([new Review({
+            id: 2,
+            userId: 1,
+            stars: 5,
+            comment: "Test comment",
+          })]);
+        })
+    );
 
     await TestBed.configureTestingModule({
       declarations: [ UserGuestProfileComponent ],
       imports: [ HttpClientTestingModule, RouterTestingModule ],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: {params: {id: 1}}}},
-        { provide: UserService, useValue: mockPostService }
+        { provide: UserService, useValue: mockUserService }
       ]
     })
     .compileComponents();
@@ -54,7 +66,7 @@ describe('UserGuestProfileComponent', () => {
     expect(component.user).not.toBeNull();
 
     fixture.whenStable().then(() => {
-      expect(mockPostService.getUser).toHaveBeenCalledWith(1);
+      expect(mockUserService.getUser).toHaveBeenCalledWith(1);
       expect(component.user).toEqual(new User({
         userId: 1,
         username: "Test",
@@ -63,5 +75,12 @@ describe('UserGuestProfileComponent', () => {
         create_time: dateNow,
       }));
     });
+  });
+
+  it('should get user received reviews', async () => {
+    // Waits for ngOnInit and checks that we get reviews
+    await fixture.whenStable();
+    component.getUserReceivedReviewsByUserId();
+    expect(mockUserService.getAllReceivedUserReviews).toHaveBeenCalledWith(1);
   });
 });

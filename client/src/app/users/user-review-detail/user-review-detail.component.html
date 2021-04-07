@@ -1,0 +1,20 @@
+<div class="review">
+    <div>
+        <a [href]="'/user/'+review.getUserId"><div class="img"></div></a>
+        <div>
+            <a [href]="'/user/'+review.getUserId"><p>SellPoint bruker</p></a>
+            <div [class]="'stars ' + (editable ? 'edit' : '')">
+                <i class="material-icons" (click)="updateStars(1)">{{stars >= 1 ? 'star' : 'star_border'}}</i>
+                <i class="material-icons" (click)="updateStars(2)">{{stars >= 2 ? 'star' : 'star_border'}}</i>
+                <i class="material-icons" (click)="updateStars(3)">{{stars >= 3 ? 'star' : 'star_border'}}</i>
+                <i class="material-icons" (click)="updateStars(4)">{{stars >= 4 ? 'star' : 'star_border'}}</i>
+                <i class="material-icons" (click)="updateStars(5)">{{stars >= 5 ? 'star' : 'star_border'}}</i>
+            </div>
+        </div>
+    </div>
+    <p>
+        <a [href]="'/annonse/'+review.getId">For annonsen: {{review.getId}}</a>
+    </p>
+    <textarea [(ngModel)]="comment" [disabled]="(editable ? false : true)">{{comment}}</textarea>
+    <app-button *ngIf="editable" class="btn pink" text="Oppdater omtale" (click)="updateReview()"></app-button>
+</div>

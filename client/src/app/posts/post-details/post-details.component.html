@@ -1,3 +1,16 @@
+<div *ngIf="contactPopup" class="popupWrapper">
+    <div class="popupContainer">
+        <h2 >{{contactUsers.length > 0 ? "Choose user sold to:" : "No user found, continue?"}}</h2>
+        <div class="popup">
+            <div *ngFor="let user of contactUsers">
+                <input type="radio" [id]="user.getUserId" name="user" [(ngModel)]="soldToUser" [value]="user.getUserId">
+                <label [for]="user.getUserId">{{user.getUsername}} - {{user.getEmail}}</label>
+            </div>
+            <app-button class="ownerButton" [text]="contactUsers.length > 0 ? 'Velg bruker solgt til' : 'Marker posten solgt!'" (click)="markClosedPost()"></app-button>
+            <app-button class="ownerButton" text="Lukk" (click)="closePopup()"></app-button>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="greenBox">
         <h2>{{post.getTitle}}</h2>
@@ -7,7 +20,7 @@
             </div>
 
             <div class="ownerInfo">
-                <p>Owner: {{owner.getUsername}}</p>
+                <u id="owner" (click)="navigateOwner()">{{owner.getUsername}}</u>
                 <p>E-mail: {{owner.getEmail}}</p>
             </div>
 
@@ -21,12 +34,18 @@
 
             <p id="timestamp">Publisert: {{post.getTimestamp}}</p>
 
-            <div *ngIf="userId == post.getOwner" class="buttonContainer">
+            <div *ngIf="userId != post.getOwner" class="buttonContainer">
+                <a [href]="'mailto:'+owner.getEmail"><app-button class="ownerButton" text="Kontakt selger" (click)="contactPost()"></app-button></a>
+                <app-button *ngIf="userId != post.getOwner && !isFavourited" text="Legg til som favoritt ♡" (click)="addFavourite()"></app-button>
+                <app-button *ngIf="userId != post.getOwner && isFavourited" text="Slett fra dine favoritter" (click)="removeFavourite()"></app-button>
+            </div>
+            <div *ngIf="userId == post.getOwner || user.getIsAdmin" class="buttonContainer">
                 <app-button class="ownerButton" text="Rediger annonse" (click)="editPost()"></app-button>
                 <app-button class="ownerButton" text="Slett annonse" (click)="deletePost()"></app-button>
             </div>
-            <app-button *ngIf="userId != post.getOwner && !isFavourited" text="Legg til som favoritt ♡" (click)="addFavourite()"></app-button>
-            <app-button *ngIf="userId != post.getOwner && isFavourited" text="Slett fra dine favoritter" (click)="removeFavourite()"></app-button>
+            <div *ngIf="userId == post.getOwner && post.getStatus != 1">
+                <app-button class="ownerButton" text="Marker solgt" (click)="markClosePost()"></app-button>
+            </div>
         </div>
     </div>
 </div>
