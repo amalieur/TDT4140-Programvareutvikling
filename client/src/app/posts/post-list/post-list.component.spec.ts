@@ -32,7 +32,8 @@ describe('PostListComponent', () => {
             owner: "user",
             imageUrl: null,
             price: 49,
-            categoryid: 1
+            categoryid: 1,
+            status: 0,
           }), 
           new Post({
             id: 2,
@@ -42,7 +43,8 @@ describe('PostListComponent', () => {
             owner: "user",
             imageUrl: null,
             price: 159,
-            categoryid: 2
+            categoryid: 2,
+            status: 0,
           })
         ]);
       })
@@ -58,7 +60,8 @@ describe('PostListComponent', () => {
             owner: "user",
             imageUrl: null,
             price: 49,
-            categoryid: 1
+            categoryid: 1,
+            status: 0,
           })
         ]);
       })
