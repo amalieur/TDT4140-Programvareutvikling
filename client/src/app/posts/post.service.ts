@@ -11,6 +11,7 @@ export class PostService {
 
   postUrl = "api/post/";
   categoryUrl = "api/category/";
+  favouriteUrl = "api/post/favourite/";
   contactUrl = "api/post/contact/";
   reviewUrl = "api/post/review/";
 
@@ -370,5 +371,118 @@ export class PostService {
 
   private get_posts_by_user_id(userId: number) {
     return this.http.get(this.postUrl, {params: {userId: String(userId)}});
+  }
+
+  /**
+   * Check favourite status in database by id.
+   */
+   getFavourite(id: number, userId: number): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.get_favourite(id, userId).subscribe((data: any) => {
+          try {
+            let favourited = false;
+            if (data?.data[0]?.favourited == 1) {
+              favourited = true;
+            }
+            resolve(favourited);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_favourite(id: number, userId: number) {
+    return this.http.get(this.favouriteUrl + id + "/" + userId);
+  }
+
+  /**
+   * Delete favourite in database by id.
+   */
+  addFavourite(id: number, userId: number): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.add_favourite(id, userId).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private add_favourite(id: number, userId: number) {
+    return this.http.post(this.favouriteUrl, {id: id, userId: userId});
+  }
+
+  /**
+   * Delete favourite in database by id.
+   */
+   deleteFavourite(id: number, userId: number): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.delete_favourite(id, userId).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private delete_favourite(id: number, userId: number) {
+    return this.http.delete(this.favouriteUrl + id + "/" + userId);
+  }
+
+  /**
+   * Delete favourite in database by id.
+   */
+  getFavouritedPosts(userId: number): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.get_favourited_posts(userId).subscribe((data: any) => {
+          try {
+            let outputPosts = [];
+            for (let post of data.data) {
+              outputPosts.push(new Post(post));
+              
+              if (!post.id || post.id == 0) {
+                reject("Could not deserialize Post");
+                return;
+              }
+            }
+            resolve(outputPosts);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_favourited_posts(userId: number) {
+    return this.http.get(this.favouriteUrl+userId);
   }
 }

@@ -19,6 +19,7 @@ import { UserService } from '../user.service';
 export class UserProfileComponent implements OnInit {
   
   allPosts: Array<Post> = [];
+  favouritedPosts: Array<Post> = [];
   user: User = new User();
 
   givenReviews: Array<Review> = [];
@@ -31,8 +32,9 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
     this.getPostsByUserId();
+    this.getFavouritedPosts();
   }
-  
+
   showReceivedUserReviews() {
     this.getUserReceivedReviewsByUserId();
     this.receivedReviewPopup = true;
@@ -56,6 +58,17 @@ export class UserProfileComponent implements OnInit {
       console.log(error);
     });
   }
+
+  getFavouritedPosts() {
+    // Gets all favourited posts from database, and displays them
+    this.postService.getFavouritedPosts(this.user.getUserId).then(posts => {
+      this.favouritedPosts = posts;
+      console.log(posts);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
   /**
    * Gets all given reviews from database
    */
@@ -72,7 +85,7 @@ export class UserProfileComponent implements OnInit {
    */
   getPostsByUserId() {
     this.postService.getPostsByUserId(this.user.getUserId).then(posts => {
-      this.allPosts = posts;
+      this.allPosts = posts.filter((post: Post) => post.getStatus == 0); // Active posts
     }).catch(error => {
       console.log(error);
     });

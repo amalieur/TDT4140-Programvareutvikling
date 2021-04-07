@@ -36,13 +36,15 @@
 
             <div *ngIf="userId != post.getOwner" class="buttonContainer">
                 <a [href]="'mailto:'+owner.getEmail"><app-button class="ownerButton" text="Kontakt selger" (click)="contactPost()"></app-button></a>
+                <app-button *ngIf="userId != post.getOwner && !isFavourited" text="Legg til som favoritt ♡" (click)="addFavourite()"></app-button>
+                <app-button *ngIf="userId != post.getOwner && isFavourited" text="Slett fra dine favoritter" (click)="removeFavourite()"></app-button>
             </div>
             <div *ngIf="userId == post.getOwner || user.getIsAdmin" class="buttonContainer">
                 <app-button class="ownerButton" text="Rediger annonse" (click)="editPost()"></app-button>
                 <app-button class="ownerButton" text="Slett annonse" (click)="deletePost()"></app-button>
-                <div *ngIf="post.getStatus != 1">
-                    <app-button class="ownerButton" text="Marker solgt" (click)="markClosePost()"></app-button>
-                </div>
+            </div>
+            <div *ngIf="userId == post.getOwner && post.getStatus != 1">
+                <app-button class="ownerButton" text="Marker solgt" (click)="markClosePost()"></app-button>
             </div>
         </div>
     </div>

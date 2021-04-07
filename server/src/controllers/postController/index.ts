@@ -43,6 +43,25 @@ router.route("/").post(async (request: Request, response: Response) => {
   }
 });
 
+// Add favourite post by id and userId `/api/post/favourite/`
+router.route("/favourite").post(authenticateToken, async (request: Request, response: Response) => {
+  const {id, userId} = request.body;
+  try {
+    if (id == undefined || userId == undefined) return response.status(500).send("Error");
+        // Check for user duplicates
+        const duplicate_input = "SELECT * FROM postFavourite WHERE id=? AND userId=?;"
+        const user = await query(duplicate_input,[id, userId]);
+        const retrievedUserObj = Object.values(JSON.parse(JSON.stringify(user.data)))[0];
+		if (retrievedUserObj) {
+        return response.status(403).send("Already favourited!");
+    }
+    const input = `INSERT INTO postFavourite (id, userId) VALUES (?, ?);`;
+    response.status(200).json(await query(input, [id, userId]));
+  } catch (error) {
+    response.status(400).send("Bad Request");
+  }
+});
+
 // Contact post with body id and userId`/api/post/contact/`
 router.route("/contact").post(authenticateToken, async (request: Request, response: Response) => {
   const {id, userId} = request.body;
@@ -175,6 +194,31 @@ router.route("/:id").get(async (request: Request, response: Response) => {
   }
 });
 
+// Get status of post is favoritted by id `/api/post/favourite/:id/:userId`
+router.route("/favourite/:id/:userId").get(authenticateToken, async (request: Request, response: Response) => {
+  const id: string = request.params.id as string;
+  const userId: string = request.params.userId as string;
+  try {
+    if (id == undefined || userId == undefined) return response.status(500).send("Error");
+    const input = `SELECT COUNT(*) as favourited FROM postFavourite WHERE id = ? AND userId = ?;`;
+    response.status(200).json(await query(input, [parseInt(id), parseInt(userId)]));
+  } catch (error) {
+    response.status(400).send("Bad Request");
+  }
+});
+
+// Get favourited post of userid `/api/post/favourite/:userId`
+router.route("/favourite/:userId").get(authenticateToken, async (request: Request, response: Response) => {
+  const userId: string = request.params.userId as string;
+  try {
+    if (userId == undefined) return response.status(500).send("Error");
+    const input = `SELECT P.id, P.title, P.description, P.price, P.timestamp, P.owner, P.categoryId, P.imageUrl, P.status FROM postFavourite as PF INNER JOIN post as P ON P.id = PF.id WHERE PF.userId = ?;`;
+    response.status(200).json(await query(input, [parseInt(userId)]));
+  } catch (error) {
+    response.status(400).send("Bad Request");
+  }
+});
+
 // Get users relating to contact post with params postId: `/api/post/contact/:id`
 router.route("/contact/:id").get(authenticateToken, async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
@@ -283,4 +327,17 @@ router.route("/:id").delete(authenticateToken, async (request: Request, response
   }
 });
 
+// Remove favourites with id and userId `/api/post/favourite/:id/:userId`
+router.route("/favourite/:id/:userId").delete(authenticateToken, async (request: Request, response: Response) => {
+  const id: string = request.params.id as string;
+  const userId: string = request.params.userId as string;
+  try {
+    if (id == undefined || userId == undefined) return response.status(500).send("Error");
+    response
+      .status(200)
+      .json(await query("DELETE FROM postFavourite WHERE id=? AND userId=?;", [parseInt(id), parseInt(userId)]));
+  } catch (error) {
+    response.status(400).send("Bad Request");
+  }
+});
 export default router;
