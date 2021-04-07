@@ -17,7 +17,7 @@
 <div class="container">
 	<div class="filterContainer">
 		<div class="whiteBox">
-			<app-select [(inputModel)]="selectedCategory" (change)="filterCategory()">
+			<app-select [(inputModel)]="selectedCategory" (change)="filterCategory(true)">
 				<option value="0" selected>Velg kategori . . .</option>
 				<option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
 			</app-select>

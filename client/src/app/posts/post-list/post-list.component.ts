@@ -51,10 +51,13 @@ export class PostListComponent implements OnInit {
     // Gets all posts from database, and displays them
     this.postService.getAllPosts().then(posts => {
       this.allPosts = posts;
+    }).catch(error => {
+      console.log(error);
+    });
 
-      // Gets the maximum price for a post
-      this.postMaxPrice = this.allPosts.map(p => p.getPrice).reduce((a, b) => Math.max(a, b));
-
+    // Gets the maximum price for a post
+    this.postService.getMaxPrice(this.selectedCategory).then(maxPrice => {
+      this.postMaxPrice = maxPrice;
       if (this.priceMax >= this.postMaxPrice || this.priceMax == 0) {
         this.priceMax = this.postMaxPrice;
       }
@@ -63,18 +66,21 @@ export class PostListComponent implements OnInit {
     });
   }
 
-  filterCategory() {
+  async filterCategory(setMaxPriceRange: boolean = false) {
+    // Gets the maximum price for a post
+    if (setMaxPriceRange) {
+      await this.postService.getMaxPrice(this.selectedCategory).then(maxPrice => {
+        this.postMaxPrice = maxPrice;
+        this.priceMax = this.postMaxPrice;
+        this.priceMin = 0;
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+
     // Gets all posts by selected category
     this.postService.getPostsByCategory(this.selectedCategory, this.selectedSort, this.priceMin, this.priceMax).then(posts => {
       this.allPosts = posts;
-      // this.sortPosts();
-
-      // Gets the maximum price for a post
-      this.postMaxPrice = this.allPosts.map(p => p.getPrice).reduce((a, b) => Math.max(a, b));
-
-      if (this.priceMax >= this.postMaxPrice || this.priceMax == 0) {
-        this.priceMax = this.postMaxPrice;
-      }
     }).catch(error => {
       console.log(error);
     });

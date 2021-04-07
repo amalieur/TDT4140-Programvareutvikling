@@ -234,6 +234,31 @@ export class PostService {
   }
 
   /**
+   * Get all posts in database by specified category.
+   */
+  getMaxPrice(categoryId: number = undefined): Promise<number> {
+    return new Promise<number>(
+      (resolve, reject) => {
+        this.get_max_price(categoryId).subscribe((data: any) => {
+          try {
+            resolve(data.data[0].maxPrice);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_max_price(categoryId: number) {
+    return this.http.get(this.postUrl + "max", {params: {categoryid: String(categoryId)}});
+  }
+
+  /**
    * Get all posts in database by specified user.
    */
    getPostsByUserId(userId: number): Promise<Array<Post>> {
