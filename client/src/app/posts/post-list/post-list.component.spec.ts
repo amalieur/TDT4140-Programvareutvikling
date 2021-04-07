@@ -107,7 +107,7 @@ describe('PostListComponent', () => {
     component.selectedSort = 2;
     await component.filterCategory(true);
 
-    expect(mockPostService.getPostsByCategory).toHaveBeenCalledWith(1, 2, 0, 159);
+    expect(mockPostService.getPostsByCategory).toHaveBeenCalledWith(1, undefined, 2, 0, 159);
     expect(component.allPosts.length).toBe(1);
     expect(component.allPosts[0].getId).toBe(1);
 

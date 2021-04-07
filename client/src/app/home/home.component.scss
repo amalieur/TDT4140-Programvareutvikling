@@ -16,6 +16,7 @@ div.home {
 		position: relative;
 	}
 	div.categoryWrapper {
+		opacity: 0; /* hided as it is not used */
 		padding: 10px;
 		margin-left: 5%;
 		background: linear-gradient(90deg, #14A35A 0%, #24e072 100%);
@@ -63,5 +64,27 @@ div.home {
 			background: #FFA1A1;
 		}
 
+	}
+}
+
+div.postContainer{
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 384px);
+	gap: 30px;
+	margin-bottom: 80px;
+    transform: translateY(-150px);
+	h2 {
+		font-family: 'Josefin Sans', sans-serif;
+		position: absolute;
+		top: -50px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	p {
+		font-family: 'Josefin Sans', sans-serif;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 }
