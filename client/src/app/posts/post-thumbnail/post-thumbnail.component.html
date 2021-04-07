@@ -1,3 +1,6 @@
-<div class="postthumb">
-	<a href="javascript:void(0)" (click)="goToPost()">{{post.getTitle}}</a>
+<div class="postthumb" (click)="goToPost()">
+	<img [src]="post.getImageUrl">
+
+	<p class="price">{{post.getPrice}} kr</p>
+	<p class="title">{{post.getTitle}}</p>
 </div>

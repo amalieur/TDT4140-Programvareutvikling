@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
+import { Review } from '../models/review.model';
 
 interface IUserLogin {
   username: string;
@@ -11,7 +12,10 @@ interface IUserLogin {
   providedIn: 'root'
 })
 export class UserService {
-  userUrl = "api/user/"
+
+  userUrl = "api/user/";
+  contactUrl = "api/post/contact/";
+  reviewUrl = "api/post/review/";
 
   constructor(private http: HttpClient) { }
 
@@ -75,5 +79,150 @@ export class UserService {
   }
   private get_all_users() {
     return this.http.get(this.userUrl);
+  }
+
+  /**
+   * Get all users relating to contact post given postId from database.
+   */
+   getContactPostUsers(postId: number): Promise<Array<User>> {
+    return new Promise<Array<User>>(
+      (resolve, reject) => {
+        this.get_contact_post_users(postId).subscribe((data: any) => {
+          try {
+            let outputUsers = []; // array of users
+            for (let user of data.data) {
+              outputUsers.push(new User(user));
+
+              if (user.getId == 0) {
+                reject("Could not deserialize User");
+                return;
+              }
+            }
+            resolve(outputUsers);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private get_contact_post_users(postId: number) {
+    return this.http.get(this.contactUrl+postId);
+  }
+
+  /**
+   * Deletes an user from the database by id.
+   */
+   deleteUser(id: number): Promise<User> {
+    return new Promise<User>(
+      (resolve, reject) => {
+        this.delete_user(id).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private delete_user(id: number) {
+    return this.http.delete(this.userUrl + id);
+  }
+  
+  // /api/user/:userId
+  updateUser(user: User, userId: number): Promise<string> {
+    return new Promise<string>(
+      (resolve, reject) => {
+        this.update_user(user, userId).subscribe((data: any) => {
+          try {
+            resolve(data.data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private update_user(user: User, userId: number) {
+    return this.http.put(this.userUrl + userId, user.serialize());
+  }
+
+  /**
+   * Get all received user reviews from database.
+   */
+   getAllReceivedUserReviews(userId: number): Promise<Array<Review>> {
+    return new Promise<Array<Review>>(
+      (resolve, reject) => {
+        this.get_all_received_user_reviews(userId).subscribe((data: any) => {
+          try {
+            let outputReview = []; // array of reviews
+            for (let review of data.data) {
+              outputReview.push(new Review(review));
+
+              if (review.getId == 0 || review.getUserId == 0) {
+                reject("Could not deserialize Review");
+                return;
+              }
+            }
+            resolve(outputReview);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private get_all_received_user_reviews(userId: number) {
+    return this.http.get(this.reviewUrl + 'received/' + userId);
+  }
+
+  /**
+   * Get all user reviews from database.
+   */
+   getAllGivenReviews(userId: number): Promise<Array<Review>> {
+    return new Promise<Array<Review>>(
+      (resolve, reject) => {
+        this.get_all_given_user_reviews(userId).subscribe((data: any) => {
+          try {
+            let outputReview = []; // array of reviews
+            for (let review of data.data) {
+              outputReview.push(new Review(review));
+
+              if (review.getId == 0 || review.getUserId == 0) {
+                reject("Could not deserialize Review");
+                return;
+              }
+            }
+            resolve(outputReview);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+  private get_all_given_user_reviews(userId: number) {
+    return this.http.get(this.reviewUrl + 'given/' + userId);
   }
 }

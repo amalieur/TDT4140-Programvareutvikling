@@ -1,5 +1,29 @@
 div.postthumb {
 	padding: 10px;
-	margin: 10px;
-	background-color: rgba(0,0,0,.1);
+	background-color: #FFA1A1;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+	font-family: 'Josefin Sans', sans-serif;
+	width: 384px;
+	cursor: pointer;
+
+	img{
+		object-fit: cover;
+		width: 364px;
+		height: 364px;
+		border: 4px #e98686 solid;
+	}
+
+	p.price{
+		position: relative;
+		top: -31px;
+		left: 15px;
+		text-shadow: -1px 1px 4px #000000;
+    	color: white;
+		font-size: 16pt;
+	}
+
+	p.title{
+		margin-top: -10px;
+		font-size: 18pt;
+	}
 }

@@ -1,3 +1,18 @@
 button{
-    padding: 5px;
+    padding: 10px;
+    width: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 16pt;
+    border: none;
+    background-color: #FFA1A1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    outline: none;
+}
+
+button:hover{
+    background-color: #e98686;
+}
+
+button:active{
+    background-color: #e07d7d;
 }

@@ -1,8 +1,46 @@
-<div>
-	<app-select [(inputModel)]="selectedCategory" (change)="filterCategory()">
-		<option value="0" selected>Ingen kategori</option>
-		<option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
-	</app-select>
+<div class="title">
+	<h2>ANNONSER</h2>
+</div>
 
-    <app-post-thumbnail *ngFor="let post of allPosts" [post]="post"></app-post-thumbnail>
+<div class="sortContainer">
+	<app-select [(inputModel)]="selectedSort" (change)="filterCategory()">
+		<option value="0" selected>Sorter etter . . .</option>
+		<option value="1" >Pris: Lav til høy</option>
+		<option value="2" >Pris: Høy til lav</option>
+		<option value="3" >Alfabetisk: A til Å</option>
+		<option value="4" >Alfabetisk: Å til A</option>
+		<option value="5" >Nyeste først</option>
+		<option value="6" >Eldste først</option>
+	</app-select>
+</div>
+
+<div class="container">
+	<div class="filterContainer">
+		<div class="whiteBox">
+			<app-select [(inputModel)]="selectedCategory" (change)="filterCategory(true)">
+				<option value="0" selected>Velg kategori . . .</option>
+				<option *ngFor="let category of categories" [value]="category.getCategoryId">{{category.getName}}</option>
+			</app-select>
+
+			<!-- Doesn't do anything yet -->
+			<div class="areaContainer">
+				<u>Område</u>
+				<label *ngFor="let area of areas">
+					<input type="checkbox" [(ngModel)]="area.checked" class="checkbox">
+					{{area.name}}
+				</label>
+			</div>
+
+			<div class="priceRangeContainer">
+				<u>Pris</u>
+				<p>Fra kr {{priceMin}}</p>
+				<p id="rightText">Til kr {{priceMax}}</p>
+				<input type="range" min="0" [max]="postMaxPrice" [(ngModel)]="priceMin" class="priceRange" id="priceRangeMin" (change)="priceMinChange()">
+				<input type="range" min="0" [max]="postMaxPrice" [(ngModel)]="priceMax" class="priceRange" id="priceRangeMax" (change)="priceMaxChange()">
+			</div>
+		</div>
+	</div>
+	<div class="postContainer">
+		<app-post-thumbnail *ngFor="let post of allPosts" [post]="post"></app-post-thumbnail>
+	</div>
 </div>

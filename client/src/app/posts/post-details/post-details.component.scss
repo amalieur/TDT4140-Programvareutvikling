@@ -1,0 +1,103 @@
+div.popupWrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 2rem;
+    z-index: 100;
+    div.popupContainer {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        padding-top: 40px;
+        div.popup {
+            padding: 20px;
+        }
+    }
+}
+
+div.container{
+    margin-top: 250px;
+    margin-bottom: 100px;
+    font-family: 'Josefin Sans', sans-serif;
+
+    div.greenBox{
+        background: linear-gradient(#24e072 0%, #14A35A 100%);
+        padding: 20px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        width: 66%;
+        margin: auto;
+
+        h2{
+            color: white;
+            margin-bottom: 18px;
+        }
+
+        div.whiteBox{
+            background-color: white;
+            box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+
+            u#owner{
+                color: #222222;
+                cursor: pointer;
+                font-size: 20pt;
+            }
+
+            div.pinkBox{
+                background-color: #FFA1A1;
+                padding: 15px;
+                width: 66%;
+                margin: auto;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+
+                img{
+                    width: 100%;
+                }
+            }
+
+            div.ownerInfo{
+                width: 300px;
+                margin: auto;
+                margin-top: 20px;
+            }
+
+            div.buttonContainer{
+                margin-top: 30px;
+                display: grid;
+                gap: 15px;
+            }
+
+            hr{
+				margin: 20px;
+			}
+
+            p{
+				font-size: 16pt;
+			}
+
+            h3{
+                font-size: 30pt;
+                margin-left: 30px;
+            }
+
+            p#description{
+                margin-top: 30px;
+            }
+
+            p#timestamp{
+                margin-top: 30px;
+                font-size: 14pt;
+            }
+        }
+    }
+}

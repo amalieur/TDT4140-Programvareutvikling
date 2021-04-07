@@ -1,0 +1,118 @@
+div.popupWrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 2rem;
+    z-index: 100;
+    div.popupContainer {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        padding-top: 40px;
+        max-width: 70%;
+        min-width: 300px;
+        width: 70%;
+        div.popup {
+            padding: 20px;
+        }
+    }
+}
+
+:host > .profile {
+    margin-top: 200px;
+    display:flex;
+    justify-content: center;
+    padding: 0 5% 5% 5%;
+    font-family: 'Josefin Sans', sans-serif;
+    transform: translateY(-100px);
+    .infoWrapper {
+        order: 2;
+        margin-top: 40px;
+    }
+}
+div.profile_info {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(90deg, #14A35A 0%, #24e072 100%);
+    padding: 10px;
+    width: 30%;
+    min-width: 300px;
+    max-width: 400px;
+    & > div.titleWrapper {
+        display: flex;
+        div.info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            p {
+                padding: 2px;
+            }
+            .name {
+                font-size: 2rem;
+            }
+        }
+        div.img {
+            min-width: 80px;
+            width: 80px;
+            height: 80px;
+            background-color: coral;
+            border-radius: 50%;
+            margin: 10px;
+        }
+    }
+    & > div.cardWrapper {
+        color: #000;
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        padding: 20px 10px;
+        pre {
+            font-size: 0.75rem;
+            padding: 5px;
+        }
+    }
+}
+div.post_list {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+    & > h2 {
+        display: inline-block;
+        width: 235px;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        font-weight: 500;
+        border-bottom: 1px solid #797979;
+        transform: translateY(-20px);
+    }
+    & > a {
+        align-self: flex-end;
+        margin-top: 20px;
+    }
+}
+div.posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,300px);
+    grid-gap: 10px;
+}
+:host ::ng-deep app-post-thumbnail div.postthumb {
+    width: 300px;
+    & > img {
+        width: 280px !important;
+        height: 280px !important;
+    }
+}
