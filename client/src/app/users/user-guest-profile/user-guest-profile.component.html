@@ -14,9 +14,10 @@
             <div class="titleWrapper">
                 <div class="img"></div>
                 <div class="info">
-                    <p class="name">{{user.getUsername}}</p>
+                    <p class="name">{{user.getFirstName}} {{user.getLastName}}</p>
+                    <p class="username">{{user.getUsername}}</p>
                     <p class="email">{{user.getEmail}}</p>
-                    <p class="phone_number">+47 123 45 678</p>
+                    <p class="phone_number">+47 {{user.getMobileNo}}</p>
                 </div>
             </div>
             <div class="cardWrapper">
@@ -49,7 +50,7 @@ Fotball er livet
     </div>
     
     <div class="post_list">
-        <h2>Aktive annonser</h2>
+        <h2>Brukerens annonser</h2>
         <div class="posts">
             <!-- All users posts for now :) -->
             <app-post-thumbnail *ngFor="let post of userPosts" [post]="post"></app-post-thumbnail>

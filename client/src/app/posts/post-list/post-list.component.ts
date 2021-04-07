@@ -80,7 +80,7 @@ export class PostListComponent implements OnInit {
 
     // Gets all posts by selected category
     await this.postService.getPostsByCategory(this.selectedCategory, this.selectedSort, this.priceMin, this.priceMax).then(posts => {
-      this.allPosts = posts;
+      this.allPosts = posts.filter((post: Post) => post.getStatus == 0); // Filter out closed post
     }).catch(error => {
       console.log(error);
     });

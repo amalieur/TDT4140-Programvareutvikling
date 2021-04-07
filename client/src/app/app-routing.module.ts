@@ -8,7 +8,6 @@ import { UserLoginFormComponent } from './users/user-login-form/user-login-form.
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { UserGuestProfileComponent } from './users/user-guest-profile/user-guest-profile.component';
 import { HomeComponent } from './home/home.component';
-import { UserProfileEditFormComponent } from './users/user-profile-edit-form/user-profile-edit-form.component';
 
 
 const routes: Routes = [
@@ -21,7 +20,7 @@ const routes: Routes = [
 
   { path: 'user/:id', component: UserGuestProfileComponent },
   { path: 'profil', component: UserProfileComponent },
-  { path: 'profil/rediger', component: UserProfileEditFormComponent},
+  { path: 'profil/rediger', component: UserRegistrationFormComponent},
   { path: 'register', component: UserRegistrationFormComponent },
   { path: 'login', component: UserLoginFormComponent }
 ];
