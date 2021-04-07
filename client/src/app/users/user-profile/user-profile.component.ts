@@ -18,20 +18,30 @@ import { UserService } from '../user.service';
 export class UserProfileComponent implements OnInit {
   
   allPosts: Array<Post> = [];
+  favouritedPosts: Array<Post> = [];
   user: User = new User();
   constructor(private authService: AuthService, private userService: UserService, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
     this.getPostsByUserId();
+    this.getFavouritedPosts();
   }
-  placeholder() {
-    console.log(":)");
-  }
+
   getPostsByUserId() {
     // Gets all posts from database, and displays them
     this.postService.getPostsByUserId(this.user.getUserId).then(posts => {
       this.allPosts = posts;
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  getFavouritedPosts() {
+    // Gets all favourited posts from database, and displays them
+    this.postService.getFavouritedPosts(this.user.getUserId).then(posts => {
+      this.favouritedPosts = posts;
+      console.log(posts);
     }).catch(error => {
       console.log(error);
     });

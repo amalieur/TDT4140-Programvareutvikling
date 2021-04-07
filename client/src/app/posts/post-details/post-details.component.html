@@ -25,6 +25,8 @@
                 <app-button class="ownerButton" text="Rediger annonse" (click)="editPost()"></app-button>
                 <app-button class="ownerButton" text="Slett annonse" (click)="deletePost()"></app-button>
             </div>
+            <app-button *ngIf="userId != post.getOwner && !isFavourited" text="Legg til som favoritt ♡" (click)="addFavourite()"></app-button>
+            <app-button *ngIf="userId != post.getOwner && isFavourited" text="Slett fra dine favoritter" (click)="removeFavourite()"></app-button>
         </div>
     </div>
 </div>
