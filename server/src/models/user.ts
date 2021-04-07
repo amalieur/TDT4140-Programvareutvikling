@@ -7,6 +7,9 @@ interface IUser{
     create_time?: Date;
     isAdmin: number;
     location: string;
+    firstName: string;
+    lastName: string;
+    mobileNo: string;
 }
 
 export default IUser;

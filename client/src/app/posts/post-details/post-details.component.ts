@@ -20,6 +20,7 @@ export class PostDetailsComponent implements OnInit {
   user: User = new User();
   isAdmin: number = 0;
   userId: number = 0;
+  isFavourited: boolean = false;
   soldToUser: number = 0;
 
   constructor(private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router,
@@ -39,7 +40,8 @@ export class PostDetailsComponent implements OnInit {
     // Gets Post with id from database
     this.postService.getPost(id).then(post => {
       this.post = post;
-
+      // Check if post is favourited
+      this.checkFavourite();
       // Gets Post owner from database
       this.userService.getUser(this.post.getOwner).then(user => {
         this.owner = user;
@@ -81,6 +83,18 @@ export class PostDetailsComponent implements OnInit {
   }
 
   /**
+   * Add post to favourites in database
+   */
+  addFavourite() {
+    // Check if user is not the owner of the post
+    if (this.userId != this.post.getOwner) {
+      this.postService.addFavourite(this.post.getId, this.userId).then(data => {
+        console.log("Successfully added post to favourites: " + this.post.getId);
+        this.isFavourited = true;
+      });
+    }
+  }
+  /**
    * Get users in relation postContacted in database and opens popup
    */
   markClosePost() {
@@ -91,8 +105,19 @@ export class PostDetailsComponent implements OnInit {
         console.log(error);
       });
     }
-    // Open popup
-    this.contactPopup = true;
+  }
+
+  /**
+   * Check if post is favourited in database
+   */
+  checkFavourite() {
+    // Check if user is not the owner of the post
+    if (this.userId != this.post.getOwner) {
+      this.postService.getFavourite(this.post.getId, this.userId).then(data => {
+        console.log("Successfully received post from favourites: " + this.post.getId);
+        this.isFavourited = data;
+      });
+    }
   }
   closePopup() {
     this.contactPopup = false;
@@ -119,6 +144,18 @@ export class PostDetailsComponent implements OnInit {
         this.router.navigateByUrl("/profil");
       }).catch(error => {
         console.log(error);
+      });
+    }
+  }
+  /**
+   * Remove post from favourites in database
+   */
+   removeFavourite() {
+    // Check if user is not the owner of the post
+    if (this.userId != this.post.getOwner) {
+      this.postService.deleteFavourite(this.post.getId, this.userId).then(data => {
+        console.log("Successfully removed post from favourites: " + this.post.getId);
+        this.isFavourited = false;
       });
     }
   }
