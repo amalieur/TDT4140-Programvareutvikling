@@ -1,3 +1,33 @@
+div.popupWrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 2rem;
+    z-index: 100;
+    div.popupContainer {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        padding-top: 40px;
+        max-width: 70%;
+        min-width: 300px;
+        width: 70%;
+        div.popup {
+            padding: 20px;
+        }
+    }
+}
+
 :host > .profile {
     margin-top: 200px;
     display:flex;
@@ -8,6 +38,9 @@
     .infoWrapper {
         order: 2;
         margin-top: 40px;
+    }
+    .reviewBtn {
+        margin-top: 15px;
     }
 }
 div.profile_info {
@@ -37,7 +70,7 @@ div.profile_info {
             min-width: 80px;
             width: 80px;
             height: 80px;
-            background-color: coral;
+            background-color: #FFA1A1;
             border-radius: 50%;
             margin: 10px;
         }
@@ -71,6 +104,7 @@ div.post_list {
     }
     & > a {
         align-self: flex-end;
+        margin-top: 20px;
     }
 }
 div.posts {

@@ -8,6 +8,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 import { UserGuestProfileComponent } from './user-guest-profile/user-guest-profile.component';
 import { UserProfileEditFormComponent } from './user-profile-edit-form/user-profile-edit-form.component';
+import { UserReviewDetailComponent } from './user-review-detail/user-review-detail.component';
 
 
 
@@ -17,7 +18,8 @@ import { UserProfileEditFormComponent } from './user-profile-edit-form/user-prof
     UserProfileComponent,
     UserLoginFormComponent,
     UserGuestProfileComponent,
-    UserProfileEditFormComponent
+    UserProfileEditFormComponent,
+    UserReviewDetailComponent
   ],
   imports: [
     CommonModule,

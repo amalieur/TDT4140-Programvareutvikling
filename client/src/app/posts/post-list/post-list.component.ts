@@ -50,7 +50,7 @@ export class PostListComponent implements OnInit {
   getPosts() {
     // Gets all posts from database, and displays them
     this.postService.getAllPosts().then(posts => {
-      this.allPosts = posts;
+      this.allPosts = posts.filter((post: Post) => post.getStatus == 0); // Filter out closed post
     }).catch(error => {
       console.log(error);
     });
