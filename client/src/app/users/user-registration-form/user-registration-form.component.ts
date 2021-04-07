@@ -15,6 +15,7 @@ export class UserRegistrationFormComponent implements OnInit {
   username: string = "";
   email: string = "";
   phone_number: string = "";
+  location: string = "Velg fylke . . .";
   password: string = "";
   confirm_password: string = "";
 
@@ -49,6 +50,10 @@ export class UserRegistrationFormComponent implements OnInit {
       this.setStatusMessage("Mobilnummer kan ikke være tom");
       return false;
     }
+    else if (this.location == "Velg fylke . . .") {
+      this.setStatusMessage("Fylke må være valgt");
+      return false;
+    }
     else if (this.password == "") {
       this.setStatusMessage("Passordet kan ikke være tom");
       return false;
@@ -76,6 +81,7 @@ export class UserRegistrationFormComponent implements OnInit {
         email: this.email,
         password: this.password,
         isAdmin: 0,
+        location: this.location
       });
 
       // Adds user to database and redirects to the homepage afterwards
