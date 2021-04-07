@@ -20,9 +20,7 @@
             </div>
 
             <div class="ownerInfo">
-                <a [href]="'/user/'+owner.getUserId">
-                    <p>Owner: {{owner.getUsername}}</p>
-                </a>
+                <u id="owner" (click)="navigateOwner()">{{owner.getUsername}}</u>
                 <p>E-mail: {{owner.getEmail}}</p>
             </div>
 

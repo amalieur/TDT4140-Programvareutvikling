@@ -9,6 +9,20 @@
 			<app-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-input>
 			<app-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-input>
 			<app-input [(inputModel)]="phone_number" label="Mobilnummer" (blur)="checkForm()"></app-input>
+			<app-select [(inputModel)]="location">
+				<option selected>Velg fylke . . .</option>
+				<option>Agder</option>
+				<option>Innlandet</option>
+				<option>Møre og Romsdal</option>
+				<option>Nordland</option>
+				<option>Oslo</option>
+				<option>Rogaland</option>
+				<option>Troms og Finnmark</option>
+				<option>Trøndelag</option>
+				<option>Vestfold og Telemark</option>
+				<option>Vestland</option>
+				<option>Viken</option>
+			</app-select>
 			<app-input [(inputModel)]="password" type="password" label="Passord" (blur)="checkForm()"></app-input>
 			<app-input [(inputModel)]="confirm_password" type="password" label="Bekreft passord" (blur)="checkForm()"></app-input>
 			<p class="status">{{statusMessage}}</p>

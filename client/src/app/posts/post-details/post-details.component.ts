@@ -23,12 +23,12 @@ export class PostDetailsComponent implements OnInit {
   soldToUser: number = 0;
 
   constructor(private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router,
-              private authService: AuthService, private userService: UserService) { }
+    private authService: AuthService, private userService: UserService) { }
 
   ngOnInit() {
     // Gets current user information
     this.user = this.authService.getCurrentUser(false);
-    
+
     // If user is logged in, assign userId and isAdmin
     this.userId = this.user.getUserId;
     this.isAdmin = this.user.getIsAdmin;
@@ -50,7 +50,14 @@ export class PostDetailsComponent implements OnInit {
       console.log(error);
     });
   }
-  
+
+  /**
+   * Navigates to owner's profile
+   */
+  navigateOwner() {
+    this.router.navigateByUrl("/user/" + this.owner.getUserId);
+  }
+
   /**
    * Moves to edit page
    */

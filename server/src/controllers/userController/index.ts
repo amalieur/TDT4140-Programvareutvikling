@@ -8,18 +8,19 @@ const router = express.Router();
 /* ============================= CREATE ============================= */
 // Create an user `/api/user/`
 router.route('/').post(async (request: Request, response: Response) => {
-	const {username, email, password, isAdmin, create_time} = request.body; // destructuring
+	const {username, email, password, isAdmin, location, create_time} = request.body; // destructuring
 	try {
 		const user: IUser = {
 			"username": username,
 			"email": email,
             "password": password,
 			"isAdmin": isAdmin || 0,
+			"location": location || null
 		};
 		if (Object.values(user).filter(p => p == undefined).length > 0) return response.status(500).send("Error");
-		const input = (`INSERT INTO user(username, email, password, isAdmin) VALUES (?,?,?,?)`);
+		const input = (`INSERT INTO user(username, email, password, isAdmin, location) VALUES (?,?,?,?,?)`);
 		return response.status(200).json(
-			await query(input,Object.values(user))
+			await query(input, Object.values(user))
 		);
 	} catch (error) {
 		return response.status(400).send("Bad Request");
@@ -40,7 +41,7 @@ router.route('/').get(async (_: Request, response: Response) => {
 router.route('/:userId').get(async (request: Request, response: Response) => {
 	const userId = request.params.userId;
 	try {
-		const input = `SELECT userId, username, email, create_time FROM user WHERE userId=?;`
+		const input = `SELECT userId, username, email, create_time, location FROM user WHERE userId=?;`
 		response.status(200).json(await query(input,[userId]));
 	} catch (error) {
 		response.status(400).send("Bad Request");
