@@ -6,6 +6,7 @@ interface IUser{
     password: string;
     create_time?: Date;
     isAdmin: number;
+    location: string;
 }
 
 export default IUser;

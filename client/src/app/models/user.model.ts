@@ -8,6 +8,7 @@ export class User implements Deserializable, Serializable {
     private password: string;
     private create_time: Date;
     private isAdmin: number;
+    private location: string;
 
     constructor(input: any = null) {
         if (input) {
@@ -19,6 +20,7 @@ export class User implements Deserializable, Serializable {
             this.password = null;
             this.create_time = new Date();
             this.isAdmin = 0;
+            this.location = null;
         }
     }
 
@@ -27,7 +29,7 @@ export class User implements Deserializable, Serializable {
         console.log(this);
         return this;
     }
-    
+
     serialize(): Object {
         return {
             userId: this.userId,
@@ -36,6 +38,7 @@ export class User implements Deserializable, Serializable {
             password: this.password,
             create_time: this.create_time,
             isAdmin: this.isAdmin,
+            location: this.location
         };
     }
 
@@ -84,6 +87,14 @@ export class User implements Deserializable, Serializable {
     }
 
     set setIsAdmin(isAdmin: number) {
-        isAdmin = this.isAdmin;
+        this.isAdmin = isAdmin;
+    }
+
+    get getLocation() {
+        return this.location;
+    }
+
+    set setLocation(location: string){
+        this.location = location;
     }
 }

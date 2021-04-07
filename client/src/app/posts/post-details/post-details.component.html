@@ -7,7 +7,7 @@
             </div>
 
             <div class="ownerInfo">
-                <p>Owner: {{owner.getUsername}}</p>
+                <u id="owner" (click)="navigateOwner()">{{owner.getUsername}}</u>
                 <p>E-mail: {{owner.getEmail}}</p>
             </div>
 
