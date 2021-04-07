@@ -281,10 +281,10 @@ export class PostService {
   /**
    * Get all posts in database by specified category.
    */
-  getPostsByCategory(categoryId: number): Promise<Array<Post>> {
+  getPostsByCategory(categoryId: number, sort: number, minPrice: number, maxPrice: number): Promise<Array<Post>> {
     return new Promise<Array<Post>>(
       (resolve, reject) => {
-        this.get_posts_by_category(categoryId).subscribe((data: any) => {
+        this.get_posts_by_category(categoryId, sort, minPrice, maxPrice).subscribe((data: any) => {
           try {
             let outputPosts = [];
             for (let post of data.data) {
@@ -309,8 +309,33 @@ export class PostService {
     );
   }
 
-  private get_posts_by_category(categoryId: number) {
-    return this.http.get(this.postUrl, {params: {categoryid: String(categoryId)}});
+  private get_posts_by_category(categoryId: number, sort: number, minPrice: number, maxPrice: number) {
+    return this.http.get(this.postUrl, {params: {categoryid: String(categoryId), sort: String(sort), min_price: String(minPrice), max_price: String(maxPrice)}});
+  }
+
+  /**
+   * Get all posts in database by specified category.
+   */
+  getMaxPrice(categoryId: number = undefined): Promise<number> {
+    return new Promise<number>(
+      (resolve, reject) => {
+        this.get_max_price(categoryId).subscribe((data: any) => {
+          try {
+            resolve(data.data[0].maxPrice);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_max_price(categoryId: number) {
+    return this.http.get(this.postUrl + "max", {params: {categoryid: String(categoryId)}});
   }
 
   /**

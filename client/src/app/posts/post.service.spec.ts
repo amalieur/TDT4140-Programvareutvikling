@@ -265,7 +265,7 @@ describe('PostService', () => {
   describe('getPostsByCategory', () => {
     it('should get posts by category', () => {
       // Gets posts by category and checks values
-      service.getPostsByCategory(2).then(posts => {
+      service.getPostsByCategory(2, 0, 0, 100).then(posts => {
         for (let i = 0; i < posts.length; i++) {
           expect(posts[i].getId).toBe(i + 1);
           expect(posts[i].getTitle).toBe("Test" + (i + 1));
@@ -276,7 +276,7 @@ describe('PostService', () => {
       });
 
       // Mocks and checks HTTP request
-      const req = httpMock.expectOne("api/post/?categoryid=2");
+      const req = httpMock.expectOne("api/post/?categoryid=2&sort=0&min_price=0&max_price=100");
       expect(req.request.method).toBe("GET");
       req.flush({
         data: [{
@@ -303,12 +303,12 @@ describe('PostService', () => {
 
     it('should reject on invalid post', () => {
       // Gets invalid post, should go to catch
-      service.getPostsByCategory(52).then(posts => {
+      service.getPostsByCategory(52, 0, 0, 100).then(posts => {
         fail();
       }).catch(error => {});
 
       // Mocks and checks HTTP request
-      const req = httpMock.expectOne("api/post/?categoryid=52");
+      const req = httpMock.expectOne("api/post/?categoryid=52&sort=0&min_price=0&max_price=100");
       expect(req.request.method).toBe("GET");
       req.flush({
         data: [{
@@ -322,12 +322,44 @@ describe('PostService', () => {
 
     it('should reject on http error', () => {
       // Gets HTTP error instead of post, should catch
-      service.getPostsByCategory(35).then(post => {
+      service.getPostsByCategory(35, 0, 0, 100).then(post => {
         fail();
       }).catch(error => {});
 
       // Mocks and checks HTTP request
-      const req = httpMock.expectOne("api/post/?categoryid=35");
+      const req = httpMock.expectOne("api/post/?categoryid=35&sort=0&min_price=0&max_price=100");
+      expect(req.request.method).toBe("GET");
+      req.error(new ErrorEvent("400"));
+    });
+  });
+
+  describe('getMaxPrice', () => {
+    it('should get posts by category', () => {
+      // Gets posts by category and checks values
+      service.getMaxPrice(2).then(maxPrice => {
+        expect(maxPrice).toBe(99);
+      }).catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/max?categoryid=2");
+      expect(req.request.method).toBe("GET");
+      req.flush({
+        data: [{
+          maxPrice: 99
+        }]
+      });
+    });
+
+    it('should reject on http error', () => {
+      // Gets HTTP error instead of maxPrice, should catch
+      service.getMaxPrice(2).then(maxPrice => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/max?categoryid=2");
       expect(req.request.method).toBe("GET");
       req.error(new ErrorEvent("400"));
     });
