@@ -1,6 +1,33 @@
+div.popupWrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 2rem;
+    z-index: 100;
+    div.popupContainer {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        padding-top: 40px;
+        div.popup {
+            padding: 20px;
+        }
+    }
+}
+
 div.container{
     margin-top: 250px;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     font-family: 'Josefin Sans', sans-serif;
 
     div.greenBox{

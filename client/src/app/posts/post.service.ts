@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
 import { Post } from '../models/post.model';
+import { Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ export class PostService {
 
   postUrl = "api/post/";
   categoryUrl = "api/category/";
+  contactUrl = "api/post/contact/";
+  reviewUrl = "api/post/review/";
 
   categories: Array<Category>;
 
@@ -196,15 +199,92 @@ export class PostService {
 
   private update_post(id: number, post: Post) {
     return this.http.put(this.postUrl + id, post.serialize());
+  }
+
+  /**
+   * Contact post in database by id.
+   */
+   contactPost(id: number, userId: number): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.contact_post(id, userId).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private contact_post(id: number, userId: number) {
+    return this.http.post(this.contactUrl, {id: id, userId: userId});
   }  
+
+  /**
+   * Contact post in database by id.
+   */
+  reviewPost(id: number, userId: number, stars: number, comment: string): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.review_post(id, userId, stars, comment).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private review_post(id: number, userId: number, stars: number, comment: string) {
+    return this.http.post(this.reviewUrl, {id: id, userId: userId, stars: stars, comment: comment});
+  }
+
+  /**
+   * Update post in database by id.
+   */
+  updateReview(review: Review): Promise<any> {
+    console.log(review);
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.update_review(review).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private update_review(review: Review) {
+    return this.http.put(this.reviewUrl, review.serialize());
+  }
+
 
   /**
    * Get all posts in database by specified category.
    */
-  getPostsByCategory(categoryId: number): Promise<Array<Post>> {
+  getPostsByCategory(categoryId: number, sort: number, minPrice: number, maxPrice: number): Promise<Array<Post>> {
     return new Promise<Array<Post>>(
       (resolve, reject) => {
-        this.get_posts_by_category(categoryId).subscribe((data: any) => {
+        this.get_posts_by_category(categoryId, sort, minPrice, maxPrice).subscribe((data: any) => {
           try {
             let outputPosts = [];
             for (let post of data.data) {
@@ -229,8 +309,33 @@ export class PostService {
     );
   }
 
-  private get_posts_by_category(categoryId: number) {
-    return this.http.get(this.postUrl, {params: {categoryid: String(categoryId)}});
+  private get_posts_by_category(categoryId: number, sort: number, minPrice: number, maxPrice: number) {
+    return this.http.get(this.postUrl, {params: {categoryid: String(categoryId), sort: String(sort), min_price: String(minPrice), max_price: String(maxPrice)}});
+  }
+
+  /**
+   * Get all posts in database by specified category.
+   */
+  getMaxPrice(categoryId: number = undefined): Promise<number> {
+    return new Promise<number>(
+      (resolve, reject) => {
+        this.get_max_price(categoryId).subscribe((data: any) => {
+          try {
+            resolve(data.data[0].maxPrice);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private get_max_price(categoryId: number) {
+    return this.http.get(this.postUrl + "max", {params: {categoryid: String(categoryId)}});
   }
 
   /**

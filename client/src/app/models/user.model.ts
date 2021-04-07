@@ -26,7 +26,6 @@ export class User implements Deserializable, Serializable {
 
     deserialize(input: Object): this {
         Object.assign(this, input);
-        console.log(this);
         return this;
     }
 
