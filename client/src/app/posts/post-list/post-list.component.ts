@@ -79,7 +79,7 @@ export class PostListComponent implements OnInit {
     }
 
     // Gets all posts by selected category
-    this.postService.getPostsByCategory(this.selectedCategory, this.selectedSort, this.priceMin, this.priceMax).then(posts => {
+    await this.postService.getPostsByCategory(this.selectedCategory, this.selectedSort, this.priceMin, this.priceMax).then(posts => {
       this.allPosts = posts;
     }).catch(error => {
       console.log(error);
