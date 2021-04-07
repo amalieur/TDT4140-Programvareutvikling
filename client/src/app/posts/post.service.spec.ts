@@ -2,6 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { Category } from '../models/category.model';
 import { Post } from '../models/post.model';
+import { Review } from '../models/review.model';
 
 import { PostService } from './post.service';
 
@@ -402,5 +403,108 @@ describe('PostService', () => {
       req.error(new ErrorEvent("400"));
     });
   });
-});
 
+  describe('contactPost', () => {
+    it('should add post and user postContacted relation', () => {
+      // Add relation of post with id = 2 and user with id = 1
+      service.contactPost(2, 1)
+      .then(data => {})
+      .catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/contact/");
+      expect(req.request.method).toBe("POST");
+      req.flush({
+        data: []
+      });
+    });
+
+    it('should reject on http error', () => {
+      // Add relation of post with id = 2 and user with id = 1, but should catch HTTP error
+      service.contactPost(2, 1).then(data => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/contact/");
+      expect(req.request.method).toBe("POST");
+      req.error(new ErrorEvent("400"));
+    });
+  });
+
+  describe('reviewPost', () => {
+    it('should add review', () => {
+      // Add review on post with id = 2, user with id = 1 and 5 stars given
+      service.reviewPost(2, 1, 5, "Test comment")
+      .then(data => {})
+      .catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/review/");
+      expect(req.request.method).toBe("POST");
+      req.flush({
+        data: []
+      });
+    });
+
+    it('should reject on http error', () => {
+      // Add review on post with id = 2, user with id = 1 and 5 stars given, but should catch HTTP error
+      service.reviewPost(2, 1, 5, "Test comment").then(data => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/review/");
+      expect(req.request.method).toBe("POST");
+      req.error(new ErrorEvent("400"));
+    });
+  });
+
+  describe('updateReview', () => {
+    it('should update review', () => {
+      let review = new Review({
+        id: 2,
+        userId: 1,
+        stars: 5,
+        comment: "Test comment",
+      });
+      
+      // Updates review with id = 2 and userId = 1
+      service.updateReview(review)
+      .then(data => {})
+      .catch(error => {
+        fail();
+      });
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/review/");
+      expect(req.request.method).toBe("PUT");
+      req.flush({
+        data: []
+      });
+    });
+
+    it('should reject on http error', () => {
+      let review = new Review({
+        id: 2,
+        userId: 1,
+        stars: 5,
+        comment: "Test comment",
+      });
+
+      // Updates review with id = 2 and userId = 1, but should catch HTTP error
+      service.updateReview(review).then(data => {
+        fail();
+      }).catch(error => {});
+
+      // Mocks and checks HTTP request
+      const req = httpMock.expectOne("api/post/review/");
+      expect(req.request.method).toBe("PUT");
+      req.error(new ErrorEvent("400"));
+    });
+  });
+});

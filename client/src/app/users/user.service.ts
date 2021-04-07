@@ -190,7 +190,7 @@ export class UserService {
     );
   }
   private get_all_received_user_reviews(userId: number) {
-    return this.http.get(this.reviewUrl + '/received/' + userId);
+    return this.http.get(this.reviewUrl + 'received/' + userId);
   }
 
   /**
@@ -223,6 +223,6 @@ export class UserService {
     );
   }
   private get_all_given_user_reviews(userId: number) {
-    return this.http.get(this.reviewUrl + '/given/' + userId);
+    return this.http.get(this.reviewUrl + 'given/' + userId);
   }
 }

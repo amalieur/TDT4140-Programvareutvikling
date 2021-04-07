@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from 'src/app/authentication/auth.service';
+import { Review } from 'src/app/models/review.model';
 import { User } from 'src/app/models/user.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UserLoginFormComponent } from '../user-login-form/user-login-form.component';
@@ -27,11 +28,33 @@ describe('UserProfileComponent', () => {
     }));
 
     // UserService mock setup
-    mockUserService = jasmine.createSpyObj(['deleteUser']);
+    mockUserService = jasmine.createSpyObj(['deleteUser', 'getAllGivenReviews', 'getAllReceivedUserReviews']);
     mockUserService.deleteUser.and.returnValue(
       new Promise<any>(
         (resolve) => {
           resolve({data: []})
+        })
+    );
+    mockUserService.getAllGivenReviews.and.returnValue(
+      new Promise<Review[]>(
+        (resolve) => {
+          resolve([new Review({
+            id: 2,
+            userId: 1,
+            stars: 5,
+            comment: "Test comment",
+          })]);
+        })
+    );
+    mockUserService.getAllReceivedUserReviews.and.returnValue(
+      new Promise<Review[]>(
+        (resolve) => {
+          resolve([new Review({
+            id: 2,
+            userId: 1,
+            stars: 5,
+            comment: "Test comment",
+          })]);
         })
     );
     
@@ -75,10 +98,17 @@ describe('UserProfileComponent', () => {
     }));
   });
 
-  it('should delete current user', async () => {
-    // Waits for ngOnInit and checks that we can delete the current user
+  it('should get user given reviews', async () => {
+    // Waits for ngOnInit and checks that we get reviews
     await fixture.whenStable();
-    component.deleteUser();
-    expect(mockUserService.deleteUser).toHaveBeenCalledWith(4);
+    component.getUserGivenReviewsByUserId();
+    expect(mockUserService.getAllGivenReviews).toHaveBeenCalledWith(4);
+  });
+
+  it('should get user received reviews', async () => {
+    // Waits for ngOnInit and checks that we get reviews
+    await fixture.whenStable();
+    component.getUserReceivedReviewsByUserId();
+    expect(mockUserService.getAllReceivedUserReviews).toHaveBeenCalledWith(4);
   });
 });
