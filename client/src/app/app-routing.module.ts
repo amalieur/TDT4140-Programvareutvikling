@@ -7,6 +7,7 @@ import { UserRegistrationFormComponent } from './users/user-registration-form/us
 import { UserLoginFormComponent } from './users/user-login-form/user-login-form.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { UserGuestProfileComponent } from './users/user-guest-profile/user-guest-profile.component';
+import { AdminCategoryComponent} from './categories/admin-category/admin-category.component';
 
 const routes: Routes = [
   { path: 'annonse/ny', component: PostFormComponent },
@@ -17,7 +18,9 @@ const routes: Routes = [
   { path: 'user/:id', component: UserGuestProfileComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'register', component: UserRegistrationFormComponent },
-  { path: 'login', component: UserLoginFormComponent }
+  { path: 'login', component: UserLoginFormComponent },
+  
+  { path: 'admin/category', component: AdminCategoryComponent }
 ];
 
 @NgModule({
