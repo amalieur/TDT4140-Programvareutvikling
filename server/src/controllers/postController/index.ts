@@ -150,10 +150,10 @@ router.route("/").get(async (request: Request, response: Response) => {
 router.route("/max").get(async (request: Request, response: Response) => {
   const { categoryid } = request.query as { [key: string]: string };
   try {
-    let input = `SELECT MAX(p.price) as maxPrice FROM post as p `;
+    let input = `SELECT MAX(p.price) as maxPrice FROM post as p WHERE p.status=0`;
 
     if (categoryid && categoryid != "undefined" && categoryid != "0") {
-      input += `WHERE p.categoryid=?`;
+      input += ` AND p.categoryid=?`;
     }
 
     response.status(200).json(await query(input, [categoryid]));

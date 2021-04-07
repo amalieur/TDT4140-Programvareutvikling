@@ -9,6 +9,9 @@ export class User implements Deserializable, Serializable {
     private create_time: Date;
     private isAdmin: number;
     private location: string;
+    private firstName: string;
+    private lastName: string;
+    private mobileNo: string;
 
     constructor(input: any = null) {
         if (input) {
@@ -21,6 +24,9 @@ export class User implements Deserializable, Serializable {
             this.create_time = new Date();
             this.isAdmin = 0;
             this.location = null;
+            this.firstName = null;
+            this.lastName = null;
+            this.mobileNo = null;
         }
     }
 
@@ -37,7 +43,10 @@ export class User implements Deserializable, Serializable {
             password: this.password,
             create_time: this.create_time,
             isAdmin: this.isAdmin,
-            location: this.location
+            location: this.location,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            mobileNo: this.mobileNo
         };
     }
 
@@ -95,5 +104,29 @@ export class User implements Deserializable, Serializable {
 
     set setLocation(location: string){
         this.location = location;
+    }
+
+    get getFirstName() {
+        return this.firstName;
+    }
+
+    set setFirstName(firstName: string){
+        this.firstName = firstName;
+    }
+
+    get getLastName() {
+        return this.lastName;
+    }
+
+    set setLastName(lastName: string){
+        this.lastName = lastName;
+    }
+
+    get getMobileNo() {
+        return this.mobileNo;
+    }
+
+    set setMobileNo(mobileNo: string){
+        this.mobileNo = mobileNo;
     }
 }

@@ -1,6 +1,6 @@
 <div class="registrationForm">
 	<div class="cardWrapper">
-		<h3>Registrer din profil</h3>
+		<h3>{{user?'Rediger profil':'Registrer bruker'}}</h3>
 		<div>
 			<div class="split">
 				<app-input class="splittedInput" [(inputModel)]="firstname" label="Fornavn" (blur)="checkForm()"></app-input>
@@ -9,7 +9,7 @@
 			<app-input [(inputModel)]="username" label="Brukernavn" (blur)="checkForm()"></app-input>
 			<app-input [(inputModel)]="email" label="Epost" (blur)="checkForm()"></app-input>
 			<app-input [(inputModel)]="phone_number" label="Mobilnummer" (blur)="checkForm()"></app-input>
-			<app-select [(inputModel)]="location">
+			<app-select [(inputModel)]="location" label="Fylke">
 				<option selected>Velg fylke . . .</option>
 				<option>Agder</option>
 				<option>Innlandet</option>
@@ -26,7 +26,9 @@
 			<app-input [(inputModel)]="password" type="password" label="Passord" (blur)="checkForm()"></app-input>
 			<app-input [(inputModel)]="confirm_password" type="password" label="Bekreft passord" (blur)="checkForm()"></app-input>
 			<p class="status">{{statusMessage}}</p>
-			<app-button (click)="registerUser()" text="Registrer profil" class="btn pink"></app-button>
+			<app-button (click)="registerUser()" [text]="user?'Lagre endringer':'Registrer profil'" class="btn pink"></app-button>
+
+			<app-button *ngIf="user" (click)="deleteUser()" text="Slett bruker"></app-button>
 		</div>
 	</div>
 </div>
