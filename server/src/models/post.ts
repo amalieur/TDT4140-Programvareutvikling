@@ -7,7 +7,7 @@ interface IPost {
 	owner: number;
 	categoryid: number;
 	imageUrl: string;
-	status: number;
+	status?: number;
 }
 
 // Eksporterer IPost til bruk i andre filer.

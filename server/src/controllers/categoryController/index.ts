@@ -19,12 +19,12 @@ const category = new Category();
 
 /* ============================= CREATE ============================= */
 // Create category `/api/category/`
-router.route('/').post(adminPermission, async (request: Request, response: Response) => {
-	const {categoryName} = request.body;
+router.route('/').post(authenticateToken, adminPermission, async (request: Request, response: Response) => {
+	const {name} = request.body;
 	try {
 		const input = (` INSERT INTO category(name) VALUES (?);`)
 		return response.status(200).json(
-            await query(input,[categoryName])
+            await query(input, [name])
         );
 	} catch (error) {
 		return response.status(400).send("Bad Request");
@@ -52,7 +52,7 @@ router.route('/:categoryid').get(async (request: Request, response: Response) =>
 });
 
 /* ============================= UPDATE ============================= */
-router.route('/').put(authenticateToken, async (request: Request, response: Response) => {
+router.route('/').put(authenticateToken, adminPermission, async (request: Request, response: Response) => {
     const categoryid = request.params.categoryid;
 	const {categoryName} = request.body;
 	try {
@@ -64,7 +64,7 @@ router.route('/').put(authenticateToken, async (request: Request, response: Resp
 
 /* ============================= DELETE ============================= */
 // remove category with id `/api/category/#categoryid`
-router.route('/').delete(authenticateToken, async (request: Request, response: Response) => {
+router.route('/').delete(authenticateToken, adminPermission, async (request: Request, response: Response) => {
     const categoryid = request.params.categoryid;
 	try {
 		response.status(200).json(await query("DELETE FROM category WHERE categoryid = ?",[categoryid]));

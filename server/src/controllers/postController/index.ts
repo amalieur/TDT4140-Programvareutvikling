@@ -31,13 +31,12 @@ router.route("/").post(async (request: Request, response: Response) => {
       timestamp: timestamp,
       owner: owner,
       categoryid: categoryid,
-      imageUrl: imageUrl,
-      status: status,
+      imageUrl: imageUrl
     };
 
     if (Object.values(post).filter((p) => p == undefined).length > 0)
       return response.status(500).send("Error");
-    const input = `INSERT INTO post(title, description, price, timestamp, owner, categoryid, imageUrl, status) VALUES (?,?,?,?,?,?,?,?)`;
+    const input = `INSERT INTO post(title, description, price, timestamp, owner, categoryid, imageUrl) VALUES (?,?,?,?,?,?,?)`;
     return response.status(200).json(await query(input, Object.values(post)));
   } catch (error) {
     return response.status(400).send("Bad Request");

@@ -70,7 +70,7 @@ export class PostDetailsComponent implements OnInit {
    */
   deletePost() {
     // Check if we are the owner of the post
-    if (this.userId == this.post.getOwner) {
+    if (this.userId == this.post.getOwner || this.user.getIsAdmin) {
       this.postService.deletePost(this.post.getId).then(data => {
         console.log("Successfully deleted post: " + this.post.getId);
         this.router.navigateByUrl("/annonse");

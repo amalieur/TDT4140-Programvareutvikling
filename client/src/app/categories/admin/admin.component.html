@@ -1,0 +1,16 @@
+<div class="categoryForm">
+    <div class="cardWrapper">
+        <h3>Alle kategorier</h3>
+        <div>
+            <p *ngFor="let category of categories">{{category.getName}}</p>
+        </div>
+	</div>
+	<div class="cardWrapper">
+		<h3>Legg til kategori</h3>
+		<div>
+			<app-input [(inputModel)]="name" label="Kategorinavn" (blur)="checkForm()"></app-input>
+			<p class="status">{{statusMessage}}</p>
+			<app-button (click)="addCategory()" text="Legg til"></app-button>
+		</div>
+	</div>
+</div>
