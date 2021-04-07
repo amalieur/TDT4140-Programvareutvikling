@@ -5,6 +5,7 @@ import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from '../user.service';
 import { PostService } from 'src/app/posts/post.service';
+import { Review } from 'src/app/models/review.model';
 
 @Component({
   selector: 'app-user-guest-profile',
@@ -15,6 +16,8 @@ export class UserGuestProfileComponent implements OnInit {
 
   user: User = new User();
   userPosts: Array<Post> = [];
+  receivedReviews: Array<Review> = [];
+  receivedReviewPopup: boolean = false;
   
   constructor(private userService: UserService, private authService: AuthService, private postService: PostService, private activatedRoute: ActivatedRoute, private router: Router) { }
   
@@ -44,6 +47,24 @@ export class UserGuestProfileComponent implements OnInit {
     this.postService.getPostsByUserId(this.user.getUserId).then(posts => {
       this.userPosts = posts;
       console.log(this.userPosts,[this.user.getUserId]);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  showReceivedUserReviews() {
+    this.getUserReceivedReviewsByUserId();
+    this.receivedReviewPopup = true;
+  }
+  closePopup() {
+    this.receivedReviewPopup = false;
+  }
+  /**
+   * Gets all received reviews from database
+   */
+   getUserReceivedReviewsByUserId() {
+    this.userService.getAllReceivedUserReviews(this.user.getUserId).then(reviews => {
+      this.receivedReviews = reviews;
     }).catch(error => {
       console.log(error);
     });

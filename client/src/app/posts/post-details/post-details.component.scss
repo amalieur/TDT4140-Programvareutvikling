@@ -9,6 +9,7 @@ div.popupWrapper {
     top: 0;
     left: 0;
     font-size: 2rem;
+    z-index: 100;
     div.popupContainer {
         display: flex;
         position: relative;

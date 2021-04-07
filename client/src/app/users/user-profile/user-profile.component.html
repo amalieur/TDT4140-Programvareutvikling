@@ -1,3 +1,29 @@
+<div *ngIf="givenReviewPopup" class="popupWrapper">
+    <div class="popupContainer">
+        <div *ngIf="notGivenReviews.length > 0">
+            <h3>Annonser ikke gitt omtale til:</h3>
+            <div class="popup">
+                <app-user-review-detail *ngFor="let review of notGivenReviews" [review]="review" [editable]="givenReviewPopup"></app-user-review-detail>
+            </div>
+        </div>
+        <h3>Dine omtaler:</h3>
+        <div class="popup">
+            <app-user-review-detail *ngFor="let review of givenReviews" [review]="review"></app-user-review-detail>
+            <app-button class="ownerButton" text="Lukk" (click)="closePopup()"></app-button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="receivedReviewPopup" class="popupWrapper">
+    <div class="popupContainer">
+        <h3>Omtaler fått:</h3>
+        <div class="popup">
+            <app-user-review-detail *ngFor="let review of receivedReviews" [review]="review"></app-user-review-detail>
+            <app-button class="ownerButton" text="Lukk" (click)="closePopup()"></app-button>
+        </div>
+    </div>
+</div>
+
 <div class="profile">
     <div class="infoWrapper">
         <div class="profile_info">
@@ -34,6 +60,8 @@ Fotball er livet
                     </pre>
                 </div>
                 <a href="/profil/rediger"><app-button text="Rediger profil" class="btn pink"></app-button></a>
+                <app-button class="btn pink reviewBtn" text="Omtaler gitt" (click)="showGivenUserReviews()"></app-button>
+                <app-button class="btn pink reviewBtn" text="Omtaler fått" (click)="showReceivedUserReviews()"></app-button>
             </div>
         </div>
     </div>

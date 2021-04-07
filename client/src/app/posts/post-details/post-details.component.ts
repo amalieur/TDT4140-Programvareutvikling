@@ -74,7 +74,7 @@ export class PostDetailsComponent implements OnInit {
   }
 
   /**
-   * Closes post in database and navigates to profile
+   * Get users in relation postContacted in database and opens popup
    */
   markClosePost() {
     if (this.contactUsers.length <= 0) {

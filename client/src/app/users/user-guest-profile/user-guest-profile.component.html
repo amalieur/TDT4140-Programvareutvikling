@@ -1,3 +1,13 @@
+<div *ngIf="receivedReviewPopup" class="popupWrapper">
+    <div class="popupContainer">
+        <h3>Omtaler fått:</h3>
+        <div class="popup">
+            <app-user-review-detail *ngFor="let review of receivedReviews" [review]="review"></app-user-review-detail>
+            <app-button class="ownerButton" text="Lukk" (click)="closePopup()"></app-button>
+        </div>
+    </div>
+</div>
+
 <div class="profile">
     <div class="infoWrapper">
         <div class="profile_info">
@@ -34,8 +44,10 @@ Fotball er livet
                     </pre>
                 </div>
             </div>
+            <app-button class="btn pink reviewBtn" text="Se brukerens omtaler" (click)="showReceivedUserReviews()"></app-button>
         </div>
     </div>
+    
     <div class="post_list">
         <h2>Aktive annonser</h2>
         <div class="posts">

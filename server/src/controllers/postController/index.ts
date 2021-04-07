@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import query from "../../services/db_query";
 import express from "express";
 import IPost from "../../models/post";
+import IReview from "../../models/review";
 import Category from "../../models/category";
 import authenticateToken from '../../middlewares/auth';
 
@@ -118,7 +119,7 @@ router.route("/:id").get(async (request: Request, response: Response) => {
   }
 });
 
-// Get users relating to contact post with params postId`/api/post/contact/:id`
+// Get users relating to contact post with params postId: `/api/post/contact/:id`
 router.route("/contact/:id").get(authenticateToken, async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
   if (!postId) return response.status(400).send("Bad Request");
@@ -131,7 +132,56 @@ router.route("/contact/:id").get(authenticateToken, async (request: Request, res
   }
 });
 
+// Get user given reviews with params postId: `/api/post/review/given/:id`
+router.route("/review/given/:id").get(authenticateToken, async (request: Request, response: Response) => {
+  const userId: string = request.params.id as string;
+  if (!userId) return response.status(400).send("Bad Request");
+  try {
+    return response
+      .status(200)
+      .json(await query("SELECT * FROM postReview WHERE userId = ?;", [userId]));
+  } catch (error) {
+    return response.status(400).send("Bad Request");
+  }
+});
+
+// Get user received reviews with params postId: `/api/post/review/received/:id`
+router.route("/review/received/:id").get(authenticateToken, async (request: Request, response: Response) => {
+  const userId: string = request.params.id as string;
+  if (!userId) return response.status(400).send("Bad Request");
+  try {
+    return response
+      .status(200)
+      .json(await query("SELECT PR.id, PR.userId, PR.stars, PR.comment FROM postReview as PR INNER JOIN post as P ON P.id = PR.id where P.owner = ?;", [userId]));
+  } catch (error) {
+    return response.status(400).send("Bad Request");
+  }
+});
+
 /* ============================= UPDATE ============================= */
+// Edit review with id `/api/review/`
+router.route("/review").put(authenticateToken, async (request: Request, response: Response) => {
+  const {
+    id,
+    userId,
+    stars,
+    comment,
+  } = request.body;
+  try {
+    const review: IReview = {
+      id: id,
+      userId: userId,
+      stars: stars,
+      comment: comment
+    };
+    response
+      .status(200)
+      .json(await query("UPDATE postReview SET stars = ?, comment = ? WHERE (id = ?) and (userId = ?);", [stars, comment, id, userId]));
+  } catch (error) {
+    response.status(400).send("Bad Request");
+  }
+});
+
 // Edit post with id `/api/post/:id`
 router.route("/:id").put(authenticateToken, async (request: Request, response: Response) => {
   const postId: string = request.params.id as string;
@@ -164,7 +214,6 @@ router.route("/:id").put(authenticateToken, async (request: Request, response: R
     response.status(400).send("Bad Request");
   }
 });
-
 /* ============================= DELETE ============================= */
 // Remove post with id `/api/post/:id`
 router.route("/:id").delete(authenticateToken, async (request: Request, response: Response) => {

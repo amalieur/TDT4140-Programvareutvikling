@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
 import { Post } from '../models/post.model';
+import { Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root'
@@ -228,7 +229,7 @@ export class PostService {
   /**
    * Contact post in database by id.
    */
-    reviewPost(id: number, userId: number, stars: number, comment: string): Promise<any> {
+  reviewPost(id: number, userId: number, stars: number, comment: string): Promise<any> {
     return new Promise<any>(
       (resolve, reject) => {
         this.review_post(id, userId, stars, comment).subscribe((data: any) => {
@@ -248,7 +249,34 @@ export class PostService {
 
   private review_post(id: number, userId: number, stars: number, comment: string) {
     return this.http.post(this.reviewUrl, {id: id, userId: userId, stars: stars, comment: comment});
-  }  
+  }
+
+  /**
+   * Update post in database by id.
+   */
+  updateReview(review: Review): Promise<any> {
+    console.log(review);
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.update_review(review).subscribe((data: any) => {
+          try {
+            resolve(data);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
+
+  private update_review(review: Review) {
+    return this.http.put(this.reviewUrl, review.serialize());
+  }
+
 
   /**
    * Get all posts in database by specified category.

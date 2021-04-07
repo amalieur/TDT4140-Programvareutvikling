@@ -8,6 +8,8 @@
             <app-input type="password" [(inputModel)]="confirm_password" label="Bekreft passord" (blur)="checkForm()"></app-input>
 			<p class="status">{{statusMessage}}</p>
 			<app-button (click)="updateUser()" text="Lagre endringer"></app-button>
+			<app-button (click)="deleteUser()" text="Slett bruker"></app-button>
+			<a href="/profil"><app-button text="Tilbake til profil"></app-button></a>
 		</div>
 	</div>
 </div>

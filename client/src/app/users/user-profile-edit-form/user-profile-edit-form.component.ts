@@ -103,6 +103,19 @@ export class UserProfileEditFormComponent implements OnInit {
   setStatusMessage(message: string) {
     this.statusMessage = message;
   }
+
+  /**
+   * Deletes user in database and navigates to login
+   */
+   deleteUser() {
+    this.userService.deleteUser(this.user.getUserId).then(data => {
+      console.log("Successfully deleted user: " + this.user.getUserId);
+      this.authService.logout();
+      this.router.navigateByUrl("/login");
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 }
 
 
