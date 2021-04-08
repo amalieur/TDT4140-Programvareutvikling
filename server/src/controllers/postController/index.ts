@@ -105,9 +105,10 @@ router.route("/review").post(authenticateToken, async (request: Request, respons
 });
 
 /* ============================= READ ============================= */
-// Get all posts `/api/post/?categoryid=:categoryid&userId=:userId&sort=:sort&min_price=:min_price&max_price=:max_price`
+// Get all posts `/api/post/?categoryid=:categoryid&&userId=:userId&location=:location&sort=:sort&min_price=:min_price&max_price=:max_price`
 router.route("/").get(async (request: Request, response: Response) => {
-  let { categoryid, userId, sort, min_price, max_price } = request.query as { [key: string]: string };
+  let { categoryid, userId, location, sort, min_price, max_price } = request.query as { [key: string]: string };
+  let locationFilter: any = undefined;
   try {
     let input = `SELECT p.id, p.title, p.description, p.price, p.timestamp, p.owner, p.categoryid, p.imageUrl, p.status 
     FROM post as p`;
@@ -115,28 +116,31 @@ router.route("/").get(async (request: Request, response: Response) => {
     if (categoryid == "undefined" || categoryid == "0") {
       categoryid = "";
     }
-
-    if (categoryid || userId || min_price || max_price) input += ` WHERE `;
+    if (location && location != "undefined") {
+      input += ` INNER JOIN user as u ON p.owner = u.userId`;
+      locationFilter = JSON.parse(location);
+    }
+    if (categoryid || userId || location || min_price || max_price) input += ` WHERE `;
     const params = Object.entries({
       categoryId: categoryid,
-      owner: userId
+      owner: userId,
+      location: locationFilter
     }).filter((param) => param[1])
-    // Add p.categoryId = ? AND p.owner = ? respectively if it is not undefined    
-    input += params.map((param) => `p.${param[0]} = ?`).join(" AND ")
+    // Add "p.categoryId = ? AND p.owner = ? AND (u.location = ? OR u.location = ? ...)" respectively if it is not undefined    
+    input += params.map((param) => `${param[0] == "location" ? `(${param[1].map((_: string) => `u.location = ?`).join(" OR ")})` : `p.${param[0]} = ?`}`).join(" AND ");
 
     // Filters posts by price
-    if (min_price) {
-      if (categoryid) {
+    if (min_price && min_price != "undefined") {
+      if (categoryid || userId || locationFilter) {
         input += ` AND`;
       }
       input += ` p.price >= ${min_price}`
     }
-    if (max_price) {
+    if (max_price && max_price != "undefined") {
       input += ` AND p.price <= ${max_price}`
     }
-
     // Sorts posts
-    if (sort && sort != "0") {
+    if (sort && sort != "0" && sort != "undefined") {
       switch(sort){
         case "1":
           input += " ORDER BY p.price ASC"
@@ -158,8 +162,7 @@ router.route("/").get(async (request: Request, response: Response) => {
           break;
       }
     }
-
-    response.status(200).json(await query(input, params.map((param) => param[1])));
+    response.status(200).json(await query(input, params.flatMap((param: any) => param[1])));
   } catch (error) {
     response.status(400).send("Bad Request");
   }

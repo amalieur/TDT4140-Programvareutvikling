@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Review } from 'src/app/models/review.model';
 import { User } from 'src/app/models/user.model';
+import { UserLoginFormComponent } from '../user-login-form/user-login-form.component';
 import { UserService } from '../user.service';
 import { UserGuestProfileComponent } from './user-guest-profile.component';
 
@@ -42,7 +43,13 @@ describe('UserGuestProfileComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ UserGuestProfileComponent ],
-      imports: [ HttpClientTestingModule, RouterTestingModule ],
+      imports: [ 
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'user', component: UserGuestProfileComponent},
+          { path: 'login', component: UserLoginFormComponent},
+        ])
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: {params: {id: 1}}}},
         { provide: UserService, useValue: mockUserService }

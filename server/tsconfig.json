@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "rootDir": ".",
     "outDir": "build",
-    "target": "es6",
+    "target": "es2019",
     "allowJs": true,
     "sourceMap": true,
     "skipLibCheck": true,

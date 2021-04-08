@@ -1,6 +1,8 @@
 <div class="body">
 	<div class="navbar">
-		<span class="logo" (click)="navigate('/')">SellPoint</span>
+		<span class="logo" (click)="navigate('/')">
+			<img src="../assets/img/SellPointLogo1.png" alt="logo">
+		</span>
 		<nav>
 			<span *ngIf="user.getIsAdmin" (click)="navigate('/admin/category')">Admin</span>
 			<span (click)="navigate('/annonse')">Annonser</span>
@@ -26,7 +28,7 @@
 </div>
 <div class="footer">
 	<div class="logo">
-		<h1>SELLPOINT LOGO</h1>
+		<a style="display: block;" href="/"><img src="../assets/img/SellPointLogo2.png" alt="logo"></a>
 	</div>
 	<div class="info">
 		<div class="bedrift">

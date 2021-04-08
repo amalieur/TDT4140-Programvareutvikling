@@ -12,3 +12,9 @@
         </div>
     </div>
 </div>
+<div class="postContainer">
+    <h2>Annonser i nærheten av deg</h2>
+    <p *ngIf="this.user.getUserId == 0">Logg inn for å se annonsene...</p>
+    <p *ngIf="this.user.getUserId != 0 && allPosts.length == 0">Ingen annonser i nærheten av deg...</p>
+    <app-post-thumbnail *ngFor="let post of allPosts" [post]="post"></app-post-thumbnail>
+</div>
