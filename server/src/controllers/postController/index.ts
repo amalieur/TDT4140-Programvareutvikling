@@ -116,7 +116,7 @@ router.route("/").get(async (request: Request, response: Response) => {
     if (categoryid == "undefined" || categoryid == "0") {
       categoryid = "";
     }
-    if (location) {
+    if (location && location != "undefined") {
       input += ` INNER JOIN user as u ON p.owner = u.userId`;
       locationFilter = JSON.parse(location);
     }

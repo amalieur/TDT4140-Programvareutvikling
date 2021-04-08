@@ -1,5 +1,7 @@
 div.body{
 	min-height: calc(100vh - 200px);
+	margin-bottom: 50px;
+	overflow-y: hidden;
 }
 
 div.navbar {
@@ -18,6 +20,10 @@ div.navbar {
 		font-size: 40px;
 		font-weight: bold;
 		cursor: pointer;
+		img {
+			width: 170px;
+    		transform: translateY(3px);
+		}
 	}
 	nav {
 		span{
