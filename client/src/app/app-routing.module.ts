@@ -7,6 +7,7 @@ import { UserRegistrationFormComponent } from './users/user-registration-form/us
 import { UserLoginFormComponent } from './users/user-login-form/user-login-form.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { UserGuestProfileComponent } from './users/user-guest-profile/user-guest-profile.component';
+import { AdminComponent} from './categories/admin/admin.component';
 import { HomeComponent } from './home/home.component';
 
 
@@ -22,7 +23,9 @@ const routes: Routes = [
   { path: 'profil', component: UserProfileComponent },
   { path: 'profil/rediger', component: UserRegistrationFormComponent},
   { path: 'register', component: UserRegistrationFormComponent },
-  { path: 'login', component: UserLoginFormComponent }
+  { path: 'login', component: UserLoginFormComponent },
+  
+  { path: 'admin/category', component: AdminComponent }
 ];
 
 @NgModule({

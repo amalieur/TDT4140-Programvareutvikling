@@ -108,7 +108,30 @@ export class PostService {
   private add_post(post: Post) {
     return this.http.post(this.postUrl, post.serialize());
   }
+  /**
+   * Adds category to database
+   */
+   addCategory(category: Category): Promise<string> {
+    return new Promise<string>(
+      (resolve, reject) => {
+        this.add_category(category).subscribe((data: any) => {
+          try {
+            resolve(data.status);
+          } catch (err: any) {
+            reject(err);
+          }
+        },
+        (err: any) => {
+          console.log(err.message);
+          reject(err);
+        });
+      }
+    );
+  }
 
+  private add_category(category: Category) {
+    return this.http.post(this.categoryUrl, category.serialize());
+  }
 
   /**
    * Get all categories from database.

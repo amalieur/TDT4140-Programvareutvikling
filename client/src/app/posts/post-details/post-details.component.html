@@ -40,11 +40,11 @@
                 <app-button *ngIf="userId != post.getOwner && isFavourited" text="Slett fra dine favoritter" (click)="removeFavourite()"></app-button>
             </div>
             <div *ngIf="userId == post.getOwner || user.getIsAdmin" class="buttonContainer">
-                <app-button class="ownerButton" text="Rediger annonse" (click)="editPost()"></app-button>
-                <app-button class="ownerButton" text="Slett annonse" (click)="deletePost()"></app-button>
-            </div>
-            <div *ngIf="userId == post.getOwner && post.getStatus != 1">
-                <app-button class="ownerButton" text="Marker solgt" (click)="markClosePost()"></app-button>
+                <app-button *ngIf="userId == post.getOwner" class="ownerButton" text="Rediger annonse" (click)="editPost()"></app-button>
+                <app-button *ngIf="userId == post.getOwner || user.getIsAdmin" class="ownerButton" text="Slett annonse" (click)="deletePost()"></app-button>
+                <div *ngIf="userId == post.getOwner && post.getStatus != 1">
+                    <app-button class="ownerButton" text="Marker solgt" (click)="markClosePost()"></app-button>
+                </div>
             </div>
         </div>
     </div>

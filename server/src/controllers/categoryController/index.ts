@@ -2,6 +2,8 @@ import { Response, Request } from "express";
 import query from '../../services/db_query';
 import express from 'express';
 import Category from '../../models/category';
+import authenticateToken from '../../middlewares/auth';
+import adminPermission from '../../middlewares/adminPermission';
 
 const router = express.Router();
 const category = new Category();
@@ -17,12 +19,12 @@ const category = new Category();
 
 /* ============================= CREATE ============================= */
 // Create category `/api/category/`
-router.route('/').post(async (request: Request, response: Response) => {
-	const {category} = request.body;
+router.route('/').post(authenticateToken, adminPermission, async (request: Request, response: Response) => {
+	const {name} = request.body;
 	try {
 		const input = (` INSERT INTO category(name) VALUES (?);`)
 		return response.status(200).json(
-            await query(input,[category])
+            await query(input, [name])
         );
 	} catch (error) {
 		return response.status(400).send("Bad Request");
@@ -50,10 +52,19 @@ router.route('/:categoryid').get(async (request: Request, response: Response) =>
 });
 
 /* ============================= UPDATE ============================= */
+router.route('/').put(authenticateToken, adminPermission, async (request: Request, response: Response) => {
+    const categoryid = request.params.categoryid;
+	const {categoryName} = request.body;
+	try {
+		response.status(200).json(await query("UPDATE category SET name=? WHERE categoryid=?;", [categoryName, categoryid]));
+	} catch (error) {
+		response.status(400).send("Bad Request");
+	}
+});
 
 /* ============================= DELETE ============================= */
 // remove category with id `/api/category/#categoryid`
-router.route('/').delete(async (request: Request, response: Response) => {
+router.route('/').delete(authenticateToken, adminPermission, async (request: Request, response: Response) => {
     const categoryid = request.params.categoryid;
 	try {
 		response.status(200).json(await query("DELETE FROM category WHERE categoryid = ?",[categoryid]));

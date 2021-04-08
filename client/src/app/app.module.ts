@@ -10,6 +10,7 @@ import { UserModule } from './users/user.module';
 import { AuthModule } from './authentication/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './categories/admin/admin.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -18,7 +19,8 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
